@@ -3,11 +3,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.adminfaces</groupId>
-    <artifactId>admin-starter</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <groupId>com.metremobile.dashboard</groupId>
+    <artifactId>dashboard</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>admin-starter</name>
+    <name>Dashboard</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
