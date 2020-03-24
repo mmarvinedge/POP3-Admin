@@ -12,6 +12,7 @@ package com.metremobbi.model;
 public class Product {
     
     private int id;
+    private String photo;
     private String name;
     private String sku;
     private Double price;
@@ -26,6 +27,14 @@ public class Product {
         this.id = id;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
     public String getName() {
         return name;
     }

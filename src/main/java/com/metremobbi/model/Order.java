@@ -5,6 +5,8 @@
  */
 package com.metremobbi.model;
 
+import java.util.List;
+
 /**
  *
  * @author JOAO PAULO
@@ -17,6 +19,7 @@ public class Order {
     private Double deliveryCost; // taxa de entrega
     private Double subtotal;
     private Double total;
+    private List<Product> products;
     private Status status;
     private StatusHistory statusHistory;
     
@@ -90,6 +93,14 @@ public class Order {
 
     public void setStatusHistory(StatusHistory statusHistory) {
         this.statusHistory = statusHistory;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
     
 }
