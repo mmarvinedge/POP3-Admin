@@ -5,10 +5,15 @@
  */
 package com.metremobbi.model;
 
+import java.util.List;
+
 /**
  *
  * @author JOAO PAULO
  */
 public class Company {
+    
+    private String storeName;
+    private List<Address> address;
     
 }
