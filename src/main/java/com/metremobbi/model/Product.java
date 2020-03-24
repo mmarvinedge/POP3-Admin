@@ -56,6 +56,11 @@ public class Product {
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" + "name=" + name + ", sku=" + sku + ", price=" + price + ", obs=" + obs + ", companyId=" + companyId + '}';
+    }
     
     
 }
