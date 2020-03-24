@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Address {
     
+    private int id;
     private String country;
     private String city;
     private String suburb;
@@ -22,6 +23,14 @@ public class Address {
     private String state;
     private String zip;
     private String auto;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCountry() {
         return country;

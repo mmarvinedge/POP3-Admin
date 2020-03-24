@@ -11,12 +11,30 @@ package com.metremobbi.model;
  */
 public class Product {
     
+    private int id;
+    private String photo;
     private String name;
     private String sku;
     private Double price;
     private String obs;
     private String companyId;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
     public String getName() {
         return name;
     }
