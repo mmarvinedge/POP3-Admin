@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.adminfaces.starter.model;
+package com.metremobbi.model;
 
 import java.io.Serializable;
 

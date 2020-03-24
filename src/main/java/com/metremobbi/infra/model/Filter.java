@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.infra.model;
+package com.metremobbi.infra.model;
 
 
 import java.io.Serializable;

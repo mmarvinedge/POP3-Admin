@@ -1,6 +1,6 @@
-package com.github.adminfaces.starter.util;
+package com.metremobbi.util;
 
-import com.github.adminfaces.starter.model.Car;
+import com.metremobbi.model.Car;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
