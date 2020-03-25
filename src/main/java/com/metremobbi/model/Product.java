@@ -6,12 +6,13 @@
 package com.metremobbi.model;
 
 import com.metremobbi.enums.CATEGORY;
+import java.io.Serializable;
 
 /**
  *
  * @author JOAO PAULO
  */
-public class Product {
+public class Product implements Serializable{
     
     private int id;
     private String photo;

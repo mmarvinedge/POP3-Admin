@@ -5,10 +5,10 @@
  */
 package com.metremobbi.bean;
 
-import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.infra.model.Filter;
-import com.metremobbi.model.Car;
+import static com.metremobbi.util.Utils.addDetailMessage;
 import com.metremobbi.model.Product;
+import com.metremobbi.enums.CATEGORY;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,9 @@ public class ProductMB implements Serializable {
     @Setter
     private List<Product> selectedProducts;
     LazyDataModel<Product> productLazy;
-    
+    @Getter @Setter
+    List<Product> filteredValue;
+
     public ProductMB() {
         products = new ArrayList<>();
     }
@@ -73,12 +75,16 @@ public class ProductMB implements Serializable {
     
     
     public void save(){
+        products.add(product);
         System.out.println("Produto: " + product.toString() + " salvo com sucesso");
+        addDetailMessage("Produto Salvo com sucesso!");
         novo();
     }
     
     public void delete(){
-        System.out.println("Produto: " + product.toString() + " deletado com sucesso");
+        products.removeAll(selectedProducts);
+        System.out.println(selectedProducts.size() + " deletados com sucesso!");
+        addDetailMessage("Produtos deletado com sucesso!");
         novo();
     }
     
