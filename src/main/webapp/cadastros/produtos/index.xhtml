@@ -61,7 +61,7 @@
 
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
-                                 rowKey="#{p.sku}" lazy="true" paginator="true" emptyMessage="Nenhum Registro encontrado"
+                                 rowKey="#{p.sku}" lazy="true" paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
@@ -78,7 +78,7 @@
                         <p:column headerText="SKU" sortBy="#{p.sku}" filterBy="#{p.sku}" filterMatchMode="contains">
                             <h:outputText value="#{p.sku}" />
                         </p:column>
-                        <p:column headerText="Descricão" sortBy="#{p.name}" filterBy="#{p.name}" filterMatchMode="contains">
+                        <p:column headerText="Descricão" filterBy="#{p.name}" filterMatchMode="contains">
                             <h:outputText value="#{p.name}" />
                         </p:column>
                         <p:column headerText="Preço" sortBy="#{p.price}" filterBy="#{p.price}" filterMatchMode="contains">
@@ -95,6 +95,61 @@
                                  icon="fa fa-close"/>
             </p:confirmDialog>
         </h:form>
-        <ui:include src="modalNewProduct.xhtml" />
+
+
+        <p:dialog widgetVar="modalNewProduct" id="modalNewProduct" width="60%" header="Cadastro de Produtos"
+                  modal="true" position="top" responsive="true" >
+            <h:form id="frmNewProduct">
+                <p:panel styleClass="box-primary card">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Salvar" action="#{productMB.save}" update="@form"
+                                         icon="fa fa-check" styleClass="btn-primary"/>
+                    </div>
+                    <div class="box-primary">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Descrição" for="inptName"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputText id="inptName" value="#{productMB.product.name}" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptName" /> 
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Preço" for="inptPrice"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputNumber id="inptPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptPrice" /> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Observação" for="inptObs"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputTextarea id="inptObs" value="#{productMB.product.obs}" />
+                                    <span class="help-block"> 
+                                        <p:message for="inptObs" /> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </p:panel>
+
+            </h:form>
+        </p:dialog>
+
+
     </ui:define>
 </ui:composition>
