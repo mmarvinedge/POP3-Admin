@@ -61,12 +61,11 @@
 
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
-                                 rowKey="#{p.sku}" lazy="true" paginator="true" emptyMessage="Nenhum Produto encontrado"
+                                 rowKey="#{p.sku}" paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
-                                 filteredValue="#{productMB.filteredValue}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
-                                 rowsPerPageTemplate="5,10,15,20,30">
+                                 rowsPerPageTemplate="5,10,15,20,30" >
 
                         <p:ajax event="rowSelectCheckbox" update="@(.ui-button)"/>
                         <p:ajax event="rowUnselectCheckbox" update="@(.ui-button)"/>
@@ -79,7 +78,7 @@
                         <p:column headerText="SKU" sortBy="#{p.sku}" filterBy="#{p.sku}" filterMatchMode="contains">
                             <h:outputText value="#{p.sku}" />
                         </p:column>
-                        <p:column headerText="Descricão" filterBy="#{p.name}" filterMatchMode="contains">
+                        <p:column headerText="Descricão" sortBy="#{p.name}" filterBy="#{p.name}" filterMatchMode="contains">
                             <h:outputText value="#{p.name}" />
                         </p:column>
                         <p:column headerText="Preço" sortBy="#{p.price}" filterBy="#{p.price}" filterMatchMode="contains">
