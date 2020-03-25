@@ -63,6 +63,7 @@
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
                                  rowKey="#{p.sku}" lazy="true" paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
+                                 filteredValue="#{productMB.filteredValue}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
                                  rowsPerPageTemplate="5,10,15,20,30">
@@ -98,14 +99,27 @@
 
 
         <p:dialog widgetVar="modalNewProduct" id="modalNewProduct" width="60%" header="Cadastro de Produtos"
-                  modal="true" position="top" responsive="true" >
+                  modal="true" position="top" responsive="true" resizable="false">
             <h:form id="frmNewProduct">
                 <p:panel styleClass="box-primary card">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
-                        <p:commandButton value="Salvar" action="#{productMB.save}" update="@form"
+                        <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
                                          icon="fa fa-check" styleClass="btn-primary"/>
                     </div>
                     <div class="box-primary">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-sm-12 ui-g-2 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="SKU" for="inptSku"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputText id="inptSku" value="#{productMB.product.sku}" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptSku" /> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui-g ui-fluid">
                             <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">

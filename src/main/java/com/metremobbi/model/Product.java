@@ -5,11 +5,13 @@
  */
 package com.metremobbi.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author JOAO PAULO
  */
-public class Product {
+public class Product implements Serializable{
     
     private int id;
     private String photo;
