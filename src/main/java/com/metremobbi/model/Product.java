@@ -5,6 +5,8 @@
  */
 package com.metremobbi.model;
 
+import com.metremobbi.enums.CATEGORY;
+
 /**
  *
  * @author JOAO PAULO
@@ -16,7 +18,9 @@ public class Product {
     private String name;
     private String sku;
     private Double price;
+    private CATEGORY category;
     private String obs;
+    
     private String companyId;
 
     public int getId() {
@@ -75,6 +79,14 @@ public class Product {
         this.companyId = companyId;
     }
 
+    public CATEGORY getCategory() {
+        return category;
+    }
+
+    public void setCategory(CATEGORY category) {
+        this.category = category;
+    }
+    
     @Override
     public String toString() {
         return "Product{" + "name=" + name + ", sku=" + sku + ", price=" + price + ", obs=" + obs + ", companyId=" + companyId + '}';

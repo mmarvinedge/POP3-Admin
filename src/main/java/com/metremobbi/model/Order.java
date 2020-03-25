@@ -5,6 +5,7 @@
  */
 package com.metremobbi.model;
 
+import com.metremobbi.enums.STATUS;
 import java.util.List;
 
 /**
@@ -20,16 +21,9 @@ public class Order {
     private Double subtotal;
     private Double total;
     private List<Product> products;
-    private Status status;
+    private STATUS status;
     private StatusHistory statusHistory;
-    
-    enum Status {
-        PLACED,
-        CONFIRMED,
-        DISPATCHED,
-        DELIVERED,
-        CANCELED
-    }
+     
 
     public Integer getItemNumber() {
         return itemNumber;
@@ -79,11 +73,11 @@ public class Order {
         this.total = total;
     }
 
-    public Status getStatus() {
+    public STATUS getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(STATUS status) {
         this.status = status;
     }
 

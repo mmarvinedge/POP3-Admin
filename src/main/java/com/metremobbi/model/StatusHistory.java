@@ -5,7 +5,7 @@
  */
 package com.metremobbi.model;
 
-import com.metremobbi.model.Order.Status;
+import com.metremobbi.enums.STATUS;
 
 /**
  *
@@ -16,7 +16,7 @@ public class StatusHistory {
     private String updatedBy;
     private String updatedAt;
     private String statusInt;
-    private Status status;
+    private STATUS status;
     private String stateInt;
 
     public String getUpdatedBy() {
@@ -43,11 +43,11 @@ public class StatusHistory {
         this.statusInt = statusInt;
     }
 
-    public Status getStatus() {
+    public STATUS getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(STATUS status) {
         this.status = status;
     }
 

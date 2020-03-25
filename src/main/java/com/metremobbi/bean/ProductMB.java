@@ -5,6 +5,9 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.enums.CATEGORY;
+import com.metremobbi.infra.model.Filter;
+import com.metremobbi.model.Car;
 import com.metremobbi.model.Product;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ import javax.inject.Named;
  */
 @ManagedBean
 @ViewScoped
-public class ProductMB implements Serializable{
+public class ProductMB implements Serializable {
 
     @Getter
     @Setter
@@ -35,7 +38,7 @@ public class ProductMB implements Serializable{
     @Setter
     private List<Product> selectedProducts;
     LazyDataModel<Product> productLazy;
-
+    
     public ProductMB() {
         products = new ArrayList<>();
     }
@@ -56,12 +59,14 @@ public class ProductMB implements Serializable{
         p1.setCompanyId("1");
         p1.setPrice(15.5);
         p1.setSku("01");
+        p1.setCategory(CATEGORY.ICE);
         products.add(p1);
         Product p2 = new Product();
         p2.setName("produto 2");
         p2.setCompanyId("1");
         p2.setPrice(9.5);
         p2.setSku("02");
+        p2.setCategory(CATEGORY.DRINKS);
         products.add(p2);
         System.out.println("adicionou: " + products.size() + " produtos na lista");
     }
@@ -76,4 +81,5 @@ public class ProductMB implements Serializable{
         System.out.println("Produto: " + product.toString() + " deletado com sucesso");
         novo();
     }
+    
 }
