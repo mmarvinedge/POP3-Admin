@@ -61,7 +61,7 @@
 
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
-                                 rowKey="#{p.sku}" lazy="true" paginator="true" emptyMessage="Nenhum Produto encontrado"
+                                 rowKey="#{p.sku}"  paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
                                  filteredValue="#{productMB.filteredValue}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
