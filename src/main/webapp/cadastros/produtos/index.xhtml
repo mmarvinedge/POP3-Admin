@@ -86,8 +86,8 @@
                                 <f:convertNumber type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Categoria" sortBy="#{p.category.descrition}" filterBy="#{p.category.descrition}" filterMatchMode="contains">
-                            <h:outputText value="#{p.category.descrition}" />
+                        <p:column headerText="Categoria" sortBy="#{p.categoryMain.name}" filterBy="#{p.categoryMain.name}" filterMatchMode="contains">
+                            <h:outputText value="#{p.categoryMain.name}" />
                         </p:column>
 
                     </p:dataTable>
@@ -108,7 +108,7 @@
                 <p:panel styleClass="box-primary card">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
-                                         icon="fa fa-check" type="submit" styleClass="btn-primary"/>
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modal').hide();"/>
                     </div>
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
                                     <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
-                                                     value="#{productMB.product.category}" id="category">
+                                                     value="#{productMB.product.categoryMain.name}" id="category">
                                         <f:selectItem itemLabel="Selecione uma categoria..."/>
                                         <f:selectItem itemValue="LUNCH" itemLabel="Almoço"/>
                                         <f:selectItem itemValue="SNACK" itemLabel="Lanche"/>

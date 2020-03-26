@@ -8,8 +8,8 @@ package com.metremobbi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.metremobbi.enums.CATEGORY;
-import com.metremobbi.model.dto.Category;
+import com.metremobbi.model.Category;
+import com.metremobbi.model.Attribute;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,11 +34,9 @@ public class Product implements Serializable {
     private String imageBase64;
     private Double price;
     private String companyId;
-    @JsonIgnore
-    private CATEGORY category;
+    private Category categoryMain;
     private List<Category> categories;
-    @JsonIgnore
-    private String attributes;
+    private List<Attribute> attributes;
 
     public String getId() {
         return id;
@@ -78,14 +76,6 @@ public class Product implements Serializable {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
-    }
-
-    public CATEGORY getCategory() {
-        return category;
-    }
-
-    public void setCategory(CATEGORY category) {
-        this.category = category;
     }
 
     public Boolean getEnable() {
@@ -136,14 +126,6 @@ public class Product implements Serializable {
         this.imageBase64 = imageBase64;
     }
 
-    public String getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(String attributes) {
-        this.attributes = attributes;
-    }
-
     public List<Category> getCategories() {
         return categories;
     }
@@ -152,9 +134,25 @@ public class Product implements Serializable {
         this.categories = categories;
     }
 
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public Category getCategoryMain() {
+        return categoryMain;
+    }
+
+    public void setCategoryMain(Category categoryMain) {
+        this.categoryMain = categoryMain;
+    }
+    
     @Override
     public String toString() {
-        return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", category=" + category + ", attributes=" + attributes + '}';
+        return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", attributes=" + attributes + '}';
     }
 
 }
