@@ -6,6 +6,8 @@
 package com.metremobbi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.metremobbi.enums.CATEGORY;
 import java.io.Serializable;
 
@@ -13,9 +15,9 @@ import java.io.Serializable;
  *
  * @author JOAO PAULO
  */
+@JsonInclude(Include.NON_NULL)
 public class Product implements Serializable {
 
-    private int id;
     private String sku;
     private String name;
     @JsonIgnore
@@ -29,16 +31,10 @@ public class Product implements Serializable {
     private String imageBase64;
     private Double price;
     private String companyId;
+    @JsonIgnore
     private CATEGORY category;
+    @JsonIgnore
     private String attributes;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -138,7 +134,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", category=" + category + ", attributes=" + attributes + '}';
+        return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", category=" + category + ", attributes=" + attributes + '}';
     }
 
 }
