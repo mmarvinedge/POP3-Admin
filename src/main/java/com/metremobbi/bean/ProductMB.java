@@ -83,6 +83,7 @@ public class ProductMB implements Serializable {
                 //products.add(product);
                 System.out.println("Produto: " + product.toString() + " salvo com sucesso");
                 addDetailMessage("Produto Salvo com sucesso!");
+                products.add(product);
                 novo();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -97,7 +98,7 @@ public class ProductMB implements Serializable {
     }
 
     public void delete() throws IOException {
-        service.deleteProduct(products);
+        service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
         System.out.println(selectedProducts.size() + " deletados com sucesso!");
         addDetailMessage("Produtos deletados com sucesso!");

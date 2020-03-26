@@ -72,12 +72,12 @@ public class ProductService {
 
     public void deleteProduct(List<Product> products) throws IOException {
         for (Product p : products) {
-            RequestBody body = RequestBody.create(new Gson().toJson(p.getId()), JSON); // new
+            RequestBody body = RequestBody.create(new Gson().toJson(p), JSON); // new
             Request request = new Request.Builder()
                     .url(URL + "/product/")
                     .delete(body)
                     .build();
-
+            System.out.println("vou deletar o produto "+ p.getName());
             Response response = client.newCall(request).execute();
             System.out.println(response.body().string());
         }
