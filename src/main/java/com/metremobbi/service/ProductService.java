@@ -23,10 +23,21 @@ public class ProductService {
     
     private final OkHttpClient httpClient = new OkHttpClient();
     
-    public List<Product> getProducts(){
+    public List<Product> getProducts() throws IOException{
         List<Product> saida = new ArrayList();
-        String jsonProducts;
+        Request request = new Request.Builder()
+                .url("localhost:4000/product/")
+                .get()
+                .header("company_id", "1")
+                .build();
         
+        try (Response response = httpClient.newCall(request).execute()) {
+
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            // Get response body
+            System.out.println(response.body().string());
+        }
         
         return saida;
     }
@@ -36,13 +47,13 @@ public class ProductService {
                 .add("sku", product.getSku())
                 .add("name", product.getName())
                 .add("price", product.getPrice().toString())
-                .add("category", product.getCategory().getDescrition())
+                .add("category", product.getCategory().toString())
                 .add("obs", product.getObs())
+                .add("companyId", "1")
                 .build();
 
         Request request = new Request.Builder()
-                .url("https://localhost:4000/product/")
-                .addHeader("User-Agent", "OkHttp Bot")
+                .url("http://localhost:4000/product/")
                 .post(productBody)
                 .build();
         

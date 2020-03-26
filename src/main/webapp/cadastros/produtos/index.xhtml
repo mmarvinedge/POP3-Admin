@@ -108,7 +108,7 @@
                 <p:panel styleClass="box-primary card">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
-                                         icon="fa fa-check" immediate="true" styleClass="btn-primary"/>
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary"/>
                     </div>
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
@@ -177,9 +177,7 @@
                             </div>
                         </div>
                     </div>
-
                 </p:panel>
-
             </h:form>
         </p:dialog>
 

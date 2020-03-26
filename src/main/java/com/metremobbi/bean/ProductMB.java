@@ -50,6 +50,8 @@ public class ProductMB implements Serializable {
 
     public ProductMB() {
         products = new ArrayList<>();
+        product = new Product();
+        service = new ProductService();
     }
 
     public void novo() {
@@ -58,7 +60,7 @@ public class ProductMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        addProdutosTestes();
+        //addProdutosTestes();
 
     }
 
