@@ -20,6 +20,7 @@ import java.util.List;
 @JsonInclude(Include.NON_NULL)
 public class Product implements Serializable {
 
+    private String id;
     private String sku;
     private String name;
     @JsonIgnore
@@ -38,6 +39,14 @@ public class Product implements Serializable {
     private List<Category> categories;
     @JsonIgnore
     private String attributes;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

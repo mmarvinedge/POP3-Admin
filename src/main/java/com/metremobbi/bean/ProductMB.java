@@ -64,55 +64,43 @@ public class ProductMB implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            //addProdutosTestes();
             get();
         } catch (IOException ex) {
             products = new ArrayList();
         }
     }
 
-    public void addProdutosTestes() {
-        novo();
-        Product p1 = new Product();
-        p1.setName("produto 1");
-        p1.setCompanyId("1");
-        p1.setPrice(15.5);
-        p1.setSku("01");
-        p1.setCategory(CATEGORY.ICE);
-        products.add(p1);
-        Product p2 = new Product();
-        p2.setName("produto 2");
-        p2.setCompanyId("1");
-        p2.setPrice(9.5);
-        p2.setSku("02");
-        p2.setCategory(CATEGORY.DRINKS);
-        products.add(p2);
-        System.out.println("adicionou: " + products.size() + " produtos na lista");
-    }
-
     public void get() throws IOException {
         products = service.getProducts();
     }
 
-    public void save() {
+    public void save() throws IOException {
+        System.out.println("id produto " + product.getId());
         System.out.println("produto " + product.getName());
-        try {
-            service.postProduct(product);
-            //products.add(product);
-            System.out.println("Produto: " + product.toString() + " salvo com sucesso");
-            addDetailMessage("Produto Salvo com sucesso!");
+        if (product.getId() == null) {
+            try {
+                service.postProduct(product);
+                //products.add(product);
+                System.out.println("Produto: " + product.toString() + " salvo com sucesso");
+                addDetailMessage("Produto Salvo com sucesso!");
+                novo();
+            } catch (Exception e) {
+                e.printStackTrace();
+                addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
+            }
+        } else {
+            service.putProduct(product);
+            System.out.println("Produto: " + product.toString() + " atualizado com sucesso");
+            addDetailMessage("Produto atualizado com sucesso!");
             novo();
-        } catch (Exception e) {
-            e.printStackTrace();
-            addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
         }
-
     }
 
-    public void delete() {
+    public void delete() throws IOException {
+        service.deleteProduct(products);
         products.removeAll(selectedProducts);
         System.out.println(selectedProducts.size() + " deletados com sucesso!");
-        addDetailMessage("Produtos deletado com sucesso!");
+        addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
 

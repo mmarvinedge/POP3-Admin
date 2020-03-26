@@ -70,4 +70,28 @@ public class ProductService {
         System.out.println(response.body().string());
     }
 
+    public void deleteProduct(List<Product> products) throws IOException {
+        for (Product p : products) {
+            RequestBody body = RequestBody.create(new Gson().toJson(p.getId()), JSON); // new
+            Request request = new Request.Builder()
+                    .url(URL + "/product/")
+                    .delete(body)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
+        }
+    }
+
+    public void putProduct(Product product) throws IOException {
+        RequestBody body = RequestBody.create(new Gson().toJson(product), JSON); // new
+        Request request = new Request.Builder()
+                .url(URL + "/product/")
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
+    }
+
 }
