@@ -61,12 +61,11 @@
 
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
-                                 rowKey="#{p.sku}"  paginator="true" emptyMessage="Nenhum Produto encontrado"
+                                 rowKey="#{p.sku}" paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
-                                 filteredValue="#{productMB.filteredValue}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
-                                 rowsPerPageTemplate="5,10,15,20,30">
+                                 rowsPerPageTemplate="5,10,15,20,30" >
 
                         <p:ajax event="rowSelectCheckbox" update="@(.ui-button)"/>
                         <p:ajax event="rowUnselectCheckbox" update="@(.ui-button)"/>
@@ -76,14 +75,19 @@
 
                         <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
 
-                        <p:column headerText="SKU" sortBy="#{p.sku}" filterBy="#{p.sku}" filterMatchMode="contains">
+                        <p:column headerText="Código" sortBy="#{p.sku}" filterBy="#{p.sku}" style="width: 10% !important" filterMatchMode="contains">
                             <h:outputText value="#{p.sku}" />
                         </p:column>
-                        <p:column headerText="Descricão" filterBy="#{p.name}" filterMatchMode="contains">
+                        <p:column headerText="Descricão" sortBy="#{p.name}" filterBy="#{p.name}" filterMatchMode="contains">
                             <h:outputText value="#{p.name}" />
                         </p:column>
                         <p:column headerText="Preço" sortBy="#{p.price}" filterBy="#{p.price}" filterMatchMode="contains">
-                            <h:outputText value="#{p.price}" />
+                            <h:outputText value="#{p.price}" >
+                                <f:convertNumber type="currency"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Categoria" sortBy="#{p.category.descrition}" filterBy="#{p.category.descrition}" filterMatchMode="contains">
+                            <h:outputText value="#{p.category.descrition}" />
                         </p:column>
 
                     </p:dataTable>
@@ -104,7 +108,7 @@
                 <p:panel styleClass="box-primary card">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
-                                         icon="fa fa-check" styleClass="btn-primary"/>
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary"/>
                     </div>
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
@@ -121,7 +125,7 @@
                             </div>
                         </div>
                         <div class="ui-g ui-fluid">
-                            <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="Descrição" for="inptName"/>
                                 </div>
@@ -132,7 +136,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="Preço" for="inptPrice"/>
                                 </div>
@@ -141,6 +145,21 @@
                                     <span class="help-block"> 
                                         <p:message for="inptPrice" /> 
                                     </span>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Categoria" for="category"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
+                                                     value="#{productMB.product.category}" id="category">
+                                        <f:selectItem itemLabel="Selecione uma categoria..."/>
+                                        <f:selectItem itemValue="LUNCH" itemLabel="Almoço"/>
+                                        <f:selectItem itemValue="SNACK" itemLabel="Lanche"/>
+                                        <f:selectItem itemValue="ICE" itemLabel="Sorvete"/>
+                                        <f:selectItem itemValue="DRINKS" itemLabel="Bebidas"/>
+                                    </p:selectOneMenu>
                                 </div>
                             </div>
                         </div>
@@ -158,9 +177,7 @@
                             </div>
                         </div>
                     </div>
-
                 </p:panel>
-
             </h:form>
         </p:dialog>
 
