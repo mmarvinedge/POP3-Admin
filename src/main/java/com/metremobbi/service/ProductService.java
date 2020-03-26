@@ -46,8 +46,11 @@ public class ProductService {
                 throw new IOException("Unexpected code " + response);
             }
             // Get response body
-            System.out.println(response.body().string());
-            saida = new Gson().fromJson(response.body().string(), new TypeToken<List<Product>>(){}.getType());
+            String json = response.body().string();
+            System.out.println(json);
+
+            saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
+            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             saida = new ArrayList();

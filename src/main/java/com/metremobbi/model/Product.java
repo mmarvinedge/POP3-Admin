@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.metremobbi.enums.CATEGORY;
+import com.metremobbi.model.dto.Category;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Product implements Serializable {
     private String companyId;
     @JsonIgnore
     private CATEGORY category;
+    private List<Category> categories;
     @JsonIgnore
     private String attributes;
 
@@ -130,6 +133,14 @@ public class Product implements Serializable {
 
     public void setAttributes(String attributes) {
         this.attributes = attributes;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     @Override
