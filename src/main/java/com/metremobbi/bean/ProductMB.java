@@ -9,9 +9,12 @@ import static com.metremobbi.util.Utils.addDetailMessage;
 import com.metremobbi.model.Product;
 import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.service.ProductService;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -60,8 +63,12 @@ public class ProductMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        //addProdutosTestes();
-
+        try {
+            //addProdutosTestes();
+            get();
+        } catch (IOException ex) {
+            products = new ArrayList();
+        }
     }
 
     public void addProdutosTestes() {
@@ -83,15 +90,19 @@ public class ProductMB implements Serializable {
         System.out.println("adicionou: " + products.size() + " produtos na lista");
     }
 
+    public void get() throws IOException {
+        products = service.getProducts();
+    }
+
     public void save() {
-        System.out.println("produto "+ product.getName());
+        System.out.println("produto " + product.getName());
         try {
             service.postProduct(product);
             //products.add(product);
             System.out.println("Produto: " + product.toString() + " salvo com sucesso");
             addDetailMessage("Produto Salvo com sucesso!");
             novo();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
         }

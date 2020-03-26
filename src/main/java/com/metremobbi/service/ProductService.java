@@ -6,6 +6,7 @@
 package com.metremobbi.service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.metremobbi.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +36,9 @@ public class ProductService {
     public List<Product> getProducts() throws IOException {
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
-                .url("localhost:4000/product/")
-                .get()
+                .url(URL + "/product/")
                 .header("company_id", idCompany)
+                .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
@@ -45,6 +46,10 @@ public class ProductService {
             }
             // Get response body
             System.out.println(response.body().string());
+            saida = new Gson().fromJson(response.body().string(), new TypeToken<List<Product>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new ArrayList();
         }
         return saida;
     }

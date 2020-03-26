@@ -5,6 +5,7 @@
  */
 package com.metremobbi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.metremobbi.enums.CATEGORY;
 import java.io.Serializable;
 
@@ -12,17 +13,24 @@ import java.io.Serializable;
  *
  * @author JOAO PAULO
  */
-public class Product implements Serializable{
-    
+public class Product implements Serializable {
+
     private int id;
-    private String photo;
-    private String name;
     private String sku;
+    private String name;
+    @JsonIgnore
+    private String order;
+    private Boolean enable;
+    private String description;
+    private Boolean availability;
+    @JsonIgnore
+    private String imageType;
+    @JsonIgnore
+    private String imageBase64;
     private Double price;
-    private CATEGORY category;
-    private String obs;
-    
     private String companyId;
+    private CATEGORY category;
+    private String attributes;
 
     public int getId() {
         return id;
@@ -32,14 +40,6 @@ public class Product implements Serializable{
         this.id = id;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-    
     public String getName() {
         return name;
     }
@@ -64,14 +64,6 @@ public class Product implements Serializable{
         this.price = price;
     }
 
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
     public String getCompanyId() {
         return companyId;
     }
@@ -87,11 +79,66 @@ public class Product implements Serializable{
     public void setCategory(CATEGORY category) {
         this.category = category;
     }
-    
+
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
+
     @Override
     public String toString() {
-        return "Product{" + "name=" + name + ", sku=" + sku + ", price=" + price + ", obs=" + obs + ", companyId=" + companyId + '}';
+        return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", category=" + category + ", attributes=" + attributes + '}';
     }
-    
-    
+
 }
