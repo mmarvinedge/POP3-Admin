@@ -10,6 +10,7 @@ import static com.metremobbi.util.Utils.uploadNew;
 import com.metremobbi.model.Product;
 import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.model.Attribute;
+import com.metremobbi.model.Category;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +51,9 @@ public class ProductMB implements Serializable {
     private List<Product> products;
     @Getter
     @Setter
+    private List<Category> categoryList;
+    @Getter
+    @Setter
     private List<Product> selectedProducts;
     LazyDataModel<Product> productLazy;
     @Getter
@@ -64,6 +68,7 @@ public class ProductMB implements Serializable {
         product = new Product();
         service = new ProductService();
         atributtes = new ArrayList<>();
+        categoryList = new ArrayList<>();
     }
 
     public void novo() {
@@ -76,11 +81,13 @@ public class ProductMB implements Serializable {
             get();
         } catch (IOException ex) {
             products = new ArrayList();
+            categoryList = new ArrayList();
         }
     }
 
     public void get() throws IOException {
         products = service.getProducts();
+        categoryList = service.getCategoryList();
     }
 
     public void save() throws IOException {
@@ -113,7 +120,7 @@ public class ProductMB implements Serializable {
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
-    
+
     public void uploadPhoto(FileUploadEvent event) {
         InputStream finput;
         try {
@@ -127,9 +134,7 @@ public class ProductMB implements Serializable {
         }
     }
 
-//    public void loadImage64(String photo) throws IOException {
-//        byte[] decodedBytes = Base64.getDecoder().decode(photo);
-//        FileUtils.writeByteArrayToFile(new File(""), decodedBytes);
-//    }
-    
+    public void debug(){
+        System.out.println("value Category: " + product.getCategoryMain().getName());
+    }
 }

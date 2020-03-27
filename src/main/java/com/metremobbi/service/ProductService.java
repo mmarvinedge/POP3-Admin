@@ -7,6 +7,7 @@ package com.metremobbi.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.metremobbi.model.Category;
 import com.metremobbi.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,6 +93,32 @@ public class ProductService {
 
         Response response = client.newCall(request).execute();
         System.out.println(response.body().string());
+    }
+    
+    
+    //find the category in api
+    public List<Category> getCategoryList() throws IOException {
+        List<Category> saida = new ArrayList();
+        Request request = new Request.Builder()
+                .url(URL + "/category/")
+                .header("company_id", idCompany)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            // Get response body
+            String json = response.body().string();
+            System.out.println(json);
+
+            saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new ArrayList();
+        }
+        return saida;
     }
 
 }
