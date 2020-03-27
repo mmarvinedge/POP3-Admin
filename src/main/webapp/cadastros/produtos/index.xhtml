@@ -155,13 +155,19 @@
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
                                     <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
-                                                     value="#{productMB.product.categoryMain.name}" id="category">
+                                                     value="#{productMB.product.categoryMain}" id="category" filter="true"
+                                                     filterMatchMode="contains" effect="fade" converter="Converter">
                                         <f:selectItem itemLabel="Selecione uma categoria..."/>
-                                        <f:selectItem itemValue="LUNCH" itemLabel="Almoço"/>
-                                        <f:selectItem itemValue="SNACK" itemLabel="Lanche"/>
-                                        <f:selectItem itemValue="ICE" itemLabel="Sorvete"/>
-                                        <f:selectItem itemValue="DRINKS" itemLabel="Bebidas"/>
+                                        <f:selectItems value="#{productMB.categoryList}" var="cat" itemValue="#{cat}" itemLabel="#{cat.name}"/>
+                                        <!--                                        <f:selectItem itemValue="LUNCH" itemLabel="Almoço"/>
+                                                                                <f:selectItem itemValue="SNACK" itemLabel="Lanche"/>
+                                                                                <f:selectItem itemValue="ICE" itemLabel="Sorvete"/>
+                                                                                <f:selectItem itemValue="DRINKS" itemLabel="Bebidas"/>-->
+                                        <p:ajax event="itemSelect" listener="#{productMB.debug()}" />
                                     </p:selectOneMenu>
+                                    <span class="help-block"> 
+                                        <p:message for="category" /> 
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -180,14 +186,14 @@
                             <div class="ui-sm-12 ui-g-8 ui-g-nopad">
                                 <div class="ui-sm-12 ui-g-12">
                                     <div class="img-wrap">
-                                        <p:outputLabel value="Foto (PNG 30KB max) " />
+                                        <p:outputLabel value="Foto (PNG 50KB max) " />
                                         <small>Somente PNG (Ideal 256x256) fundo transparente</small>
                                         <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
                                                       uploadLabel="Enviar" cancelLabel="Cancelar" label="Escolher" auto="false"
-                                                      update="photo" sizeLimit="1760000" fileLimit="3" allowTypes="/(\.|\/)(png)$/" />
+                                                      update="photo" sizeLimit="500000" fileLimit="3" allowTypes="/(\.|\/)(png)$/" />
                                         <hr/>
                                         <h:panelGroup id="photo">
-                                            <img src="data:image/png;base64, #{productMB.product.imageBase64}" width="200" height="200" />
+                                            <img src="data:#{productMB.product.imageType};base64, #{productMB.product.imageBase64}" width="200" height="200" />
                                         </h:panelGroup>
                                     </div>
                                 </div>
@@ -198,45 +204,7 @@
                 </p:panel>
 
                 <p:fieldset legend="Adicionais">
-                    <div class="ui-g ui-fluid">
-                        <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                            <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Descrição" for="inptAdc"/>
-                            </div>
-                            <div class="ui-sm-12 ui-g-12" >
-                                <p:inputText id="inptAdc" value="#{productMB.product.name}" required="true"/>
-                                <span class="help-block"> 
-                                    <p:message for="inptAdc" /> 
-                                </span>
-                            </div>
-                        </div>
-                        <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                            <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Preço" for="inptPriceAdc"/>
-                            </div>
-                            <div class="ui-sm-12 ui-g-12" >
-                                <p:inputNumber id="inptPriceAdc" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
-                                <span class="help-block"> 
-                                    <p:message for="inptPriceAdc" /> 
-                                </span>
-                            </div>
-                        </div>
-                        <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                            <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Categoria" for="categoryAdc"/>
-                            </div>
-                            <div class="ui-sm-12 ui-g-12" >
-                                <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
-                                                 value="#{productMB.product.categoryMain.name}" id="categoryAdc">
-                                    <f:selectItem itemLabel="Selecione uma categoria..."/>
-                                    <f:selectItem itemValue="Almoço" itemLabel="Almoço"/>
-                                    <f:selectItem itemValue="Lanche" itemLabel="Lanche"/>
-                                    <f:selectItem itemValue="Sorvete" itemLabel="Sorvete"/>
-                                    <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
-                                </p:selectOneMenu>
-                            </div>
-                        </div>
-                    </div>
+
                 </p:fieldset>
             </h:form>
         </p:dialog>
