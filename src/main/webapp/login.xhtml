@@ -97,13 +97,12 @@
                     <p:messages closable="true"/>
 
                     <div class="form-group has-feedback">
-                        <p:inputText value="#{logonMB.email}" type="email" styleClass="form-control" placeholder="Just type any value"
-                                     required="true"
-                                     requiredMessage="E-mail é obrigatório."/>
+                        <p:inputText value="#{logonMB.userLogin.userName}" type="email" styleClass="form-control" placeholder="Just type any value"
+                                     required="true" requiredMessage="E-mail é obrigatório."/>
                         <i class="fa fa-envelope form-control-feedback" ></i>
                     </div>
                     <div class="form-group has-feedback">
-                        <p:inputText value="#{logonMB.password}" type="password" styleClass="form-control"
+                        <p:inputText value="#{logonMB.userLogin.password}" type="password" styleClass="form-control"
                                      placeholder="Just type any value" required="true"
                                      requiredMessage="Digite sua senha."/>
                         <i class="fa fa-lock form-control-feedback" style="font-size: 18px"></i>

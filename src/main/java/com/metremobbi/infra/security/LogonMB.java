@@ -11,37 +11,61 @@ import java.io.Serializable;
 
 import static com.metremobbi.util.Utils.addDetailMessage;
 import com.github.adminfaces.template.config.AdminConfig;
+import com.metremobbi.model.User;
+import com.metremobbi.service.UserService;
+import java.security.NoSuchAlgorithmException;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by rmpestano on 12/20/14.
  *
  * This is just a login example.
  *
- * AdminSession uses isLoggedIn to determine if user must be redirect to login page or not.
- * By default AdminSession isLoggedIn always resolves to true so it will not try to redirect user.
+ * AdminSession uses isLoggedIn to determine if user must be redirect to login
+ * page or not. By default AdminSession isLoggedIn always resolves to true so it
+ * will not try to redirect user.
  *
- * If you already have your authorization mechanism which controls when user must be redirect to initial page or logon
- * you can skip this class.
+ * If you already have your authorization mechanism which controls when user
+ * must be redirect to initial page or logon you can skip this class.
  */
 @Named
 @SessionScoped
 @Specializes
 public class LogonMB extends AdminSession implements Serializable {
 
-    private String currentUser;
+    @Getter
+    @Setter
+    private User userLogin;
+    @Getter
+    @Setter
+    private User currentUser;
     private String email;
     private String password;
     private boolean remember;
     @Inject
     private AdminConfig adminConfig;
+    @Getter
+    @Setter
+    private UserService service;
 
+    public LogonMB() {
+        service = new UserService();
+        userLogin = new User();
+        currentUser = new User();
+    }
 
-    public void login() throws IOException {
-        currentUser = email;
-        addDetailMessage("Logged in successfully as <b>" + email + "</b>");
-        Faces.getExternalContext().getFlash().setKeepMessages(true);
-        Faces.redirect(adminConfig.getIndexPage());
+    public void login() throws IOException, NoSuchAlgorithmException {
+        currentUser = service.login(userLogin);
+        if (currentUser != null) {
+            addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
+            Faces.getExternalContext().getFlash().setKeepMessages(true);
+            Faces.redirect(adminConfig.getIndexPage());
+        } else {
+            addDetailMessage("Login ou senha inválidos, tente novamente!", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
     @Override
@@ -74,11 +98,4 @@ public class LogonMB extends AdminSession implements Serializable {
         this.remember = remember;
     }
 
-    public String getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(String currentUser) {
-        this.currentUser = currentUser;
-    }
 }
