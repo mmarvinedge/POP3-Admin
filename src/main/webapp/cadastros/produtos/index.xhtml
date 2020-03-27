@@ -201,52 +201,39 @@
                     <div class="ui-g ui-fluid">
                         <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                             <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Descrição" for="inptName"/>
+                                <p:outputLabel value="Descrição" for="inptAdc"/>
                             </div>
                             <div class="ui-sm-12 ui-g-12" >
-                                <p:inputText id="inptName" value="#{productMB.product.name}" required="true"/>
+                                <p:inputText id="inptAdc" value="#{productMB.product.name}" required="true"/>
                                 <span class="help-block"> 
-                                    <p:message for="inptName" /> 
+                                    <p:message for="inptAdc" /> 
                                 </span>
                             </div>
                         </div>
                         <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                             <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Preço" for="inptPrice"/>
+                                <p:outputLabel value="Preço" for="inptPriceAdc"/>
                             </div>
                             <div class="ui-sm-12 ui-g-12" >
-                                <p:inputNumber id="inptPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
+                                <p:inputNumber id="inptPriceAdc" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
                                 <span class="help-block"> 
-                                    <p:message for="inptPrice" /> 
+                                    <p:message for="inptPriceAdc" /> 
                                 </span>
                             </div>
                         </div>
                         <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                             <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Categoria" for="category"/>
+                                <p:outputLabel value="Categoria" for="categoryAdc"/>
                             </div>
                             <div class="ui-sm-12 ui-g-12" >
                                 <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
-                                                 value="#{productMB.product.categoryMain.name}" id="category">
+                                                 value="#{productMB.product.categoryMain.name}" id="categoryAdc">
                                     <f:selectItem itemLabel="Selecione uma categoria..."/>
                                     <f:selectItem itemValue="Almoço" itemLabel="Almoço"/>
                                     <f:selectItem itemValue="Lanche" itemLabel="Lanche"/>
                                     <f:selectItem itemValue="Sorvete" itemLabel="Sorvete"/>
                                     <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
                                 </p:selectOneMenu>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-g ui-fluid">
-                        <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
-                            <div class="ui-sm-12 ui-g-12">
-                                <p:outputLabel value="Descrição" for="inptObs"/>
-                            </div>
-                            <div class="ui-sm-12 ui-g-12" >
-                                <p:inputTextarea id="inptObs" value="#{productMB.product.description}" />
-                                <span class="help-block"> 
-                                    <p:message for="inptObs" /> 
-                                </span>
                             </div>
                         </div>
                     </div>

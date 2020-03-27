@@ -54,17 +54,20 @@ public class LogonMB extends AdminSession implements Serializable {
     public LogonMB() {
         service = new UserService();
         userLogin = new User();
-        currentUser = new User();
+        currentUser = null;
     }
 
     public void login() throws IOException, NoSuchAlgorithmException {
+        currentUser = new User();
         currentUser = service.login(userLogin);
-        if (currentUser != null) {
+        if (currentUser.getUserName() != null) {
             addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
             Faces.getExternalContext().getFlash().setKeepMessages(true);
             Faces.redirect(adminConfig.getIndexPage());
         } else {
             addDetailMessage("Login ou senha inválidos, tente novamente!", FacesMessage.SEVERITY_ERROR);
+            Faces.getExternalContext().getFlash().setKeepMessages(true);
+            Faces.validationFailed();
         }
     }
 
