@@ -7,15 +7,18 @@ package com.metremobbi.service;
 
 import com.google.gson.Gson;
 import com.metremobbi.model.User;
+import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.faces.application.FacesMessage;
 import javax.xml.bind.DatatypeConverter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -33,15 +36,7 @@ public class UserService {
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public User login(User user) throws IOException, NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        String passwordBefore = user.getPassword();
-        md.update(passwordBefore.getBytes());
-        byte[] digest = md.digest();
-        String myHash = DatatypeConverter
-                .printHexBinary(digest).toUpperCase();
-        System.out.println(myHash);
         User u = new User();
-        user.setPassword(myHash);
         RequestBody body = RequestBody.create(new Gson().toJson(user), JSON); // new
         Request request = new Request.Builder()
                 .url(URL + "/user/login")
@@ -55,7 +50,7 @@ public class UserService {
             return u;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return u;
         }
     }
 }

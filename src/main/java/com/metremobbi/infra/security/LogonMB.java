@@ -42,8 +42,6 @@ public class LogonMB extends AdminSession implements Serializable {
     @Getter
     @Setter
     private User currentUser;
-    private String email;
-    private String password;
     private boolean remember;
     @Inject
     private AdminConfig adminConfig;
@@ -54,40 +52,27 @@ public class LogonMB extends AdminSession implements Serializable {
     public LogonMB() {
         service = new UserService();
         userLogin = new User();
-        currentUser = new User();
+        currentUser = null;
     }
 
     public void login() throws IOException, NoSuchAlgorithmException {
+        currentUser = new User();
         currentUser = service.login(userLogin);
-        if (currentUser != null) {
+        if (currentUser.getUserName() != null) {
             addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
             Faces.getExternalContext().getFlash().setKeepMessages(true);
             Faces.redirect(adminConfig.getIndexPage());
         } else {
+            System.out.println("elseeeeeeeeee");
             addDetailMessage("Login ou senha inválidos, tente novamente!", FacesMessage.SEVERITY_ERROR);
+            Faces.validationFailed();
+            currentUser = null;
         }
     }
 
     @Override
     public boolean isLoggedIn() {
-
         return currentUser != null;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public boolean isRemember() {
