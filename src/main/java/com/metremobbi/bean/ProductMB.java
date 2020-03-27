@@ -6,9 +6,14 @@
 package com.metremobbi.bean;
 
 import static com.metremobbi.util.Utils.addDetailMessage;
+import static com.metremobbi.util.Utils.uploadNew;
 import com.metremobbi.model.Product;
 import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.service.ProductService;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +24,10 @@ import javax.faces.bean.ViewScoped;
 import javax.print.attribute.standard.Severity;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.codec.binary.Base64;
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.PrimeFacesContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -84,14 +91,14 @@ public class ProductMB implements Serializable {
     }
 
     public void save() {
-        System.out.println("produto "+ product.getName());
+        System.out.println("produto " + product.getName());
         try {
             service.postProduct(product);
             //products.add(product);
             System.out.println("Produto: " + product.toString() + " salvo com sucesso");
             addDetailMessage("Produto Salvo com sucesso!");
             novo();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
         }
@@ -104,5 +111,23 @@ public class ProductMB implements Serializable {
         addDetailMessage("Produtos deletado com sucesso!");
         novo();
     }
+    
+    public void uploadPhoto(FileUploadEvent event) {
+        InputStream finput;
+        try {
+            finput = event.getFile().getInputstream();
+            byte[] imageBytes = new byte[(int) event.getFile().getSize()];
+            finput.read(imageBytes, 0, imageBytes.length);
+            finput.close();
+            String imageStr = Base64.encodeBase64String(imageBytes);
+            product.setPhoto(imageStr);
+        } catch (Exception e) {
+        }
+    }
 
+//    public void loadImage64(String photo) throws IOException {
+//        byte[] decodedBytes = Base64.getDecoder().decode(photo);
+//        FileUtils.writeByteArrayToFile(new File(""), decodedBytes);
+//    }
+    
 }
