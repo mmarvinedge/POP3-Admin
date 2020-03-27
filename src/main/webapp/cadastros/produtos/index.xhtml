@@ -112,7 +112,7 @@
                     </div>
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
-                            <div class="ui-sm-12 ui-g-2 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-2 ui-g-nopad">
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="SKU" for="inptSku"/>
                                 </div>
@@ -123,6 +123,8 @@
                                     </span>
                                 </div>
                             </div>
+                            <p:spacer width="10%" />
+
                         </div>
                         <div class="ui-g ui-fluid">
                             <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
@@ -174,6 +176,22 @@
                                         <p:message for="inptObs" /> 
                                     </span>
                                 </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-8 ui-g-nopad">
+                                <div class="ui-sm-12 ui-g-12">
+                                    <div class="img-wrap">
+                                        <p:outputLabel value="Foto (PNG 30KB max) " />
+                                        <small>Somente PNG (Ideal 256x256) fundo transparente</small>
+                                        <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                      uploadLabel="Enviar" cancelLabel="Cancelar" label="Escolher" auto="false"
+                                                      update="photo" sizeLimit="1760000" fileLimit="3" allowTypes="/(\.|\/)(png)$/" />
+                                        <hr/>
+                                        <h:panelGroup id="photo">
+                                            <img src="data:image/png;base64, #{productMB.product.imageBase64}" width="200" height="200" />
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                                <hr/>
                             </div>
                         </div>
                     </div>
@@ -235,6 +253,7 @@
                 </p:fieldset>
             </h:form>
         </p:dialog>
+
 
 
     </ui:define>
