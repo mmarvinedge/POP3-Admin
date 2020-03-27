@@ -9,6 +9,7 @@ import static com.metremobbi.util.Utils.addDetailMessage;
 import static com.metremobbi.util.Utils.uploadNew;
 import com.metremobbi.model.Product;
 import com.metremobbi.enums.CATEGORY;
+import com.metremobbi.model.Attribute;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,11 +55,15 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     List<Product> filteredValue;
+    @Getter
+    @Setter
+    List<Attribute> atributtes;
 
     public ProductMB() {
         products = new ArrayList<>();
         product = new Product();
         service = new ProductService();
+        atributtes = new ArrayList<>();
     }
 
     public void novo() {
