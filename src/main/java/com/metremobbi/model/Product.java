@@ -5,41 +5,47 @@
  */
 package com.metremobbi.model;
 
-import com.metremobbi.enums.CATEGORY;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.metremobbi.model.Category;
+import com.metremobbi.model.Attribute;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author JOAO PAULO
  */
-public class Product implements Serializable{
-    
-    private int id;
-    private String photo;
-    private String name;
-    private String sku;
-    private Double price;
-    private CATEGORY category;
-    private String obs;
-    
-    private String companyId;
+@JsonInclude(Include.NON_NULL)
+public class Product implements Serializable {
 
-    public int getId() {
+    private String id;
+    private String sku;
+    private String name;
+    @JsonIgnore
+    private String order;
+    private Boolean enable;
+    private String description;
+    private Boolean availability;
+    @JsonIgnore
+    private String imageType;
+    @JsonIgnore
+    private String imageBase64;
+    private Double price;
+    private String companyId;
+    private Category categoryMain;
+    private List<Category> categories;
+    private List<Attribute> attributes;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-    
     public String getName() {
         return name;
     }
@@ -64,14 +70,6 @@ public class Product implements Serializable{
         this.price = price;
     }
 
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
     public String getCompanyId() {
         return companyId;
     }
@@ -80,18 +78,81 @@ public class Product implements Serializable{
         this.companyId = companyId;
     }
 
-    public CATEGORY getCategory() {
-        return category;
+    public Boolean getEnable() {
+        return enable;
     }
 
-    public void setCategory(CATEGORY category) {
-        this.category = category;
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public Category getCategoryMain() {
+        return categoryMain;
+    }
+
+    public void setCategoryMain(Category categoryMain) {
+        this.categoryMain = categoryMain;
     }
     
     @Override
     public String toString() {
-        return "Product{" + "name=" + name + ", sku=" + sku + ", price=" + price + ", obs=" + obs + ", companyId=" + companyId + '}';
+        return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", attributes=" + attributes + '}';
     }
-    
-    
+
 }

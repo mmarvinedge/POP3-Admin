@@ -10,13 +10,13 @@ import static com.metremobbi.util.Utils.uploadNew;
 import com.metremobbi.model.Product;
 import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.service.ProductService;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -67,48 +67,45 @@ public class ProductMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        //addProdutosTestes();
-
-    }
-
-    public void addProdutosTestes() {
-        novo();
-        Product p1 = new Product();
-        p1.setName("produto 1");
-        p1.setCompanyId("1");
-        p1.setPrice(15.5);
-        p1.setSku("01");
-        p1.setCategory(CATEGORY.ICE);
-        products.add(p1);
-        Product p2 = new Product();
-        p2.setName("produto 2");
-        p2.setCompanyId("1");
-        p2.setPrice(9.5);
-        p2.setSku("02");
-        p2.setCategory(CATEGORY.DRINKS);
-        products.add(p2);
-        System.out.println("adicionou: " + products.size() + " produtos na lista");
-    }
-
-    public void save() {
-        System.out.println("produto " + product.getName());
         try {
-            service.postProduct(product);
-            //products.add(product);
-            System.out.println("Produto: " + product.toString() + " salvo com sucesso");
-            addDetailMessage("Produto Salvo com sucesso!");
-            novo();
-        } catch (Exception e) {
-            e.printStackTrace();
-            addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
+            get();
+        } catch (IOException ex) {
+            products = new ArrayList();
         }
-
     }
 
-    public void delete() {
+    public void get() throws IOException {
+        products = service.getProducts();
+    }
+
+    public void save() throws IOException {
+        System.out.println("id produto " + product.getId());
+        System.out.println("produto " + product.getName());
+        if (product.getId() == null) {
+            try {
+                service.postProduct(product);
+                //products.add(product);
+                System.out.println("Produto: " + product.toString() + " salvo com sucesso");
+                addDetailMessage("Produto Salvo com sucesso!");
+                products.add(product);
+                novo();
+            } catch (Exception e) {
+                e.printStackTrace();
+                addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
+            }
+        } else {
+            service.putProduct(product);
+            System.out.println("Produto: " + product.toString() + " atualizado com sucesso");
+            addDetailMessage("Produto atualizado com sucesso!");
+            novo();
+        }
+    }
+
+    public void delete() throws IOException {
+        service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
         System.out.println(selectedProducts.size() + " deletados com sucesso!");
-        addDetailMessage("Produtos deletado com sucesso!");
+        addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
     
@@ -120,7 +117,7 @@ public class ProductMB implements Serializable {
             finput.read(imageBytes, 0, imageBytes.length);
             finput.close();
             String imageStr = Base64.encodeBase64String(imageBytes);
-            product.setPhoto(imageStr);
+            product.setImageBase64(imageStr);
         } catch (Exception e) {
         }
     }

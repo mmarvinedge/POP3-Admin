@@ -6,11 +6,13 @@
 package com.metremobbi.service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.metremobbi.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import okhttp3.FormBody;
+import static java.util.stream.Collectors.toCollection;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -35,16 +37,23 @@ public class ProductService {
     public List<Product> getProducts() throws IOException {
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
-                .url("localhost:4000/product/")
-                .get()
+                .url(URL + "/product/")
                 .header("company_id", idCompany)
+                .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
             // Get response body
-            System.out.println(response.body().string());
+            String json = response.body().string();
+            System.out.println(json);
+
+            saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new ArrayList();
         }
         return saida;
     }
@@ -57,6 +66,30 @@ public class ProductService {
                 .header("company_id", idCompany)
                 .post(body)
                 .build();
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
+    }
+
+    public void deleteProduct(List<Product> products) throws IOException {
+        for (Product p : products) {
+            RequestBody body = RequestBody.create(new Gson().toJson(p), JSON); // new
+            Request request = new Request.Builder()
+                    .url(URL + "/product/")
+                    .delete(body)
+                    .build();
+            System.out.println("vou deletar o produto "+ p.getName());
+            Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
+        }
+    }
+
+    public void putProduct(Product product) throws IOException {
+        RequestBody body = RequestBody.create(new Gson().toJson(product), JSON); // new
+        Request request = new Request.Builder()
+                .url(URL + "/product/")
+                .put(body)
+                .build();
+
         Response response = client.newCall(request).execute();
         System.out.println(response.body().string());
     }
