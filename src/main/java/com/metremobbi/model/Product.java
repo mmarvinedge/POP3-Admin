@@ -111,6 +111,9 @@ public class Product implements Serializable {
     }
 
     public String getImageType() {
+        if (imageType == null || imageType.isEmpty()) {
+            imageType = "image/png";
+        }
         return imageType;
     }
 
