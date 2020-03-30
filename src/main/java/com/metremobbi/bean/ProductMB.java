@@ -6,9 +6,7 @@
 package com.metremobbi.bean;
 
 import static com.metremobbi.util.Utils.addDetailMessage;
-import static com.metremobbi.util.Utils.uploadNew;
 import com.metremobbi.model.Product;
-import com.metremobbi.enums.CATEGORY;
 import com.metremobbi.model.Attribute;
 import com.metremobbi.model.Category;
 import com.metremobbi.service.ProductService;
@@ -17,18 +15,13 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.print.attribute.standard.Severity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
-import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeFacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 

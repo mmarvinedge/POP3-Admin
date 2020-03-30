@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        <ui:param name="title" value="Produtos"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Controle seus Usuários
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="frmProduct" >
+            <p:focus context="@form"/>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+
+                        <p:commandButton action="#{userMB.novo}" icon="fa fa-plus"
+                                         value="Novo" styleClass="btn-primary" update="modalNewUser" oncomplete="PF('modalNewUser').show()"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Editar" action="#{userMB.setUser(userMB.usersSelected.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
+                                         disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
+                                         oncomplete="PF('modalNewUser').show()" icon="fa fa-edit"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Deletar" icon="fa fa-trash" styleClass="btn-danger"
+                                         action="#{userMB.delete}"
+                                         disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                         process="@this" update="@form"
+                                         >
+                            <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
+                        </p:commandButton>
+                    </div>
+
+                    <p:splitButton value="Novo" action="#{userMB.novo}"
+                                   icon="fa fa-plus"  update="modalNewUser" oncomplete="PF('modalNewUser').show()"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+
+                        <p:menuitem value="Editar" update="@(.ui-dialog)" action="#{userMB.setUser(userMB.usersSelected.get(0))}"
+                                    oncomplete="PF('modalNewUser').show()"
+                                    disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
+                                    icon="fa fa-edit"
+                                    />
+                        <p:menuitem value="Deletar" action="#{userMB.delete}"
+                                    process="@this" update="@form"
+                                    disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                    icon="fa fa-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
+                        </p:menuitem>
+                    </p:splitButton>
+
+                    <p:separator/>
+                    <p:dataTable id="tblUser" widgetVar="usersTable" var="u" value="#{userMB.users}" rows="5"
+                                 rowKey="#{u.userName}" paginator="true" emptyMessage="Nenhum usuário encontrado"
+                                 paginatorPosition="bottom" selection="#{userMB.usersSelected}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                 currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
+                                 rowsPerPageTemplate="5,10,15,20,30" >
+
+                        <p:ajax event="rowSelectCheckbox" update="@(.ui-button)"/>
+                        <p:ajax event="rowUnselectCheckbox" update="@(.ui-button)"/>
+                        <p:ajax event="rowSelect" update="@(.ui-button)"/>
+                        <p:ajax event="rowUnselect" update="@(.ui-button)"/>
+                        <p:ajax event="toggleSelect" update="@(.ui-button)"/>
+
+                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
+
+                        <p:column headerText="Nome" sortBy="#{u.name}" filterBy="#{u.name}" filterMatchMode="contains">
+                            <h:outputText value="#{u.name}"/>
+                        </p:column>
+                        <p:column headerText="Login" sortBy="#{u.userName}" filterBy="#{u.userName}" filterMatchMode="contains">
+                            <h:outputText value="#{u.userName}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Sim" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="Não" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+
+        <p:dialog widgetVar="modalNewUser" id="modalNewUser" width="60%" header="Cadastro de usuário"
+                  modal="true" position="top" responsive="true" resizable="false">
+            <h:form id="frmNewUser">
+                <p:panel styleClass="box-primary card">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Salvar" action="#{userMB.save}" update="@form, :frmProduct"
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modalNewUser').hide();"/>
+                    </div>
+                    <div class="box-primary">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Nome" for="inptName"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputText id="inptName" value="#{userMB.user.name}" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptName" /> 
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Usuário" for="inptUsername"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputText id="inptUsername" value="#{userMB.user.userName}" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptUsername" /> 
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Senha" for="inptPassword"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <p:inputText id="inptPassword" value="#{userMB.user.password}" type="password" required="true"/>
+                                    <span class="help-block"> 
+                                        <p:message for="inptPassword" /> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

@@ -6,19 +6,17 @@
 package com.metremobbi.service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.metremobbi.model.User;
-import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.faces.application.FacesMessage;
-import javax.xml.bind.DatatypeConverter;
+import java.util.ArrayList;
+import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -31,7 +29,7 @@ public class UserService {
 
     public static final String URL = "http://localhost:4000";
 
-    public static final String idCompany = "5e56b4471c9d4400008ecda2";
+    public String idCompany = "5e56b4471c9d4400008ecda2";
 
     private final OkHttpClient httpClient = new OkHttpClient();
 
@@ -52,5 +50,65 @@ public class UserService {
             e.printStackTrace();
             return u;
         }
+    }
+    
+    public List<User> getUsers() {
+        List<User> saida = new ArrayList();
+        Request request = new Request.Builder()
+                .url(URL + "/user/")
+                .header("company_id", idCompany)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            // Get response body
+            String json = response.body().string();
+            System.out.println(json);
+
+            saida = new Gson().fromJson(json, new TypeToken<List<User>>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new ArrayList();
+        }
+        return saida;
+    }
+    
+    public void postUser(User user) throws IOException{
+        RequestBody body = RequestBody.create(new Gson().toJson(user), JSON); // new
+        // RequestBody body = RequestBody.create(JSON, json); // old
+        Request request = new Request.Builder()
+                .url(URL + "/user/")
+                .header("company_id", idCompany)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
+    }
+    
+    public void deleteUser(List<User> users) throws IOException {
+        for (User u : users) {
+            RequestBody body = RequestBody.create(new Gson().toJson(u), JSON); // new
+            Request request = new Request.Builder()
+                    .url(URL + "/user/")
+                    .delete(body)
+                    .build();
+            System.out.println("vou deletar o usuário "+ u.getName());
+            Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
+        }
+    }
+    
+    public void putUser(User user) throws IOException {
+        RequestBody body = RequestBody.create(new Gson().toJson(user), JSON); // new
+        Request request = new Request.Builder()
+                .url(URL + "/user/")
+                .put(body)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
     }
 }
