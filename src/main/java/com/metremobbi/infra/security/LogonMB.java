@@ -60,6 +60,7 @@ public class LogonMB extends AdminSession implements Serializable {
         currentUser = new User();
         currentUser = service.login(userLogin);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", currentUser);
+        
         if (currentUser.getUserName() != null) {
             addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
             Faces.getExternalContext().getFlash().setKeepMessages(true);

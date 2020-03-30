@@ -1,6 +1,7 @@
 package com.metremobbi.util;
 
 import com.metremobbi.model.Car;
+import com.metremobbi.model.User;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 
 /**
@@ -25,7 +27,6 @@ import org.primefaces.event.FileUploadEvent;
 public class Utils implements Serializable {
 
     private List<Car> cars;
-
 
     @PostConstruct
     public void init() {
@@ -55,7 +56,7 @@ public class Utils implements Serializable {
     public List<Car> getCars() {
         return cars;
     }
-    
+
     public static String uploadNew(FileUploadEvent event) throws IOException {
         String path = "C:\\";
         String filename = event.getFile().getFileName();
@@ -65,7 +66,6 @@ public class Utils implements Serializable {
         return fileNameOut;
     }
 
-    
     public static void copyFile(String fileName, InputStream in, String destino) {
         try {
             OutputStream out = new FileOutputStream(new File(destino + fileName));
@@ -81,5 +81,9 @@ public class Utils implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    
+
+    public static User usuarioLogado() {
+        return (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentUser");
+    }
+
 }

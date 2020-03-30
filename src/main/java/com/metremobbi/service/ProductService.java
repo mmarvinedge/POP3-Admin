@@ -10,9 +10,11 @@ import com.google.gson.reflect.TypeToken;
 import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.Product;
+import com.metremobbi.util.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,8 +28,7 @@ import okhttp3.Response;
  */
 public class ProductService {
 
-    @Getter
-    private LogonMB logonMB;
+    private final String companyID = Utils.usuarioLogado().getCompanyId();
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
@@ -37,10 +38,11 @@ public class ProductService {
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public List<Product> getProducts() throws IOException {
+        System.out.println(companyID);
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(URL + "/product/")
-                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
+                .header("company_id", companyID)
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
@@ -65,7 +67,7 @@ public class ProductService {
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
                 .url(URL + "/product/save")
-                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
+                .header("company_id", companyID)
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
@@ -79,7 +81,7 @@ public class ProductService {
                     .url(URL + "/product/")
                     .delete(body)
                     .build();
-            System.out.println("vou deletar o produto "+ p.getName());
+            System.out.println("vou deletar o produto " + p.getName());
             Response response = client.newCall(request).execute();
             System.out.println(response.body().string());
         }
@@ -95,14 +97,13 @@ public class ProductService {
         Response response = client.newCall(request).execute();
         System.out.println(response.body().string());
     }
-    
-    
+
     //find the category in api
     public List<Category> getCategoryList() throws IOException {
         List<Category> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(URL + "/category/")
-                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
+                .header("company_id", companyID)
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
@@ -111,7 +112,7 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println("Categorias: "+json);
+            System.out.println("Categorias: " + json);
 
             saida = new Gson().fromJson(json, new TypeToken<List<Category>>() {
             }.getType());
