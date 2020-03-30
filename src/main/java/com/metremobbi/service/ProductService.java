@@ -7,16 +7,13 @@ package com.metremobbi.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.Product;
+import com.metremobbi.util.Constantes;
 import com.metremobbi.util.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
-import lombok.Getter;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -30,10 +27,7 @@ public class ProductService {
 
     private final String companyID = Utils.usuarioLogado().getCompanyId();
 
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
-
-    public static final String URL = "http://localhost:4000";
 
     private final OkHttpClient httpClient = new OkHttpClient();
 
@@ -41,7 +35,7 @@ public class ProductService {
         System.out.println(companyID);
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
-                .url(URL + "/product/")
+                .url(Constantes.URL + "/product/")
                 .header("company_id", companyID)
                 .get()
                 .build();
@@ -63,10 +57,10 @@ public class ProductService {
     }
 
     public void postProduct(Product product) throws IOException {
-        RequestBody body = RequestBody.create(new Gson().toJson(product), JSON); // new
+        RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
-                .url(URL + "/product/save")
+                .url(Constantes.URL + "/product/save")
                 .header("company_id", companyID)
                 .post(body)
                 .build();
@@ -76,9 +70,9 @@ public class ProductService {
 
     public void deleteProduct(List<Product> products) throws IOException {
         for (Product p : products) {
-            RequestBody body = RequestBody.create(new Gson().toJson(p), JSON); // new
+            RequestBody body = RequestBody.create(new Gson().toJson(p), Constantes.JSON); // new
             Request request = new Request.Builder()
-                    .url(URL + "/product/")
+                    .url(Constantes.URL + "/product/")
                     .delete(body)
                     .build();
             System.out.println("vou deletar o produto " + p.getName());
@@ -88,9 +82,9 @@ public class ProductService {
     }
 
     public void putProduct(Product product) throws IOException {
-        RequestBody body = RequestBody.create(new Gson().toJson(product), JSON); // new
+        RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         Request request = new Request.Builder()
-                .url(URL + "/product/")
+                .url(Constantes.URL + "/product/")
                 .put(body)
                 .build();
 
@@ -102,7 +96,7 @@ public class ProductService {
     public List<Category> getCategoryList() throws IOException {
         List<Category> saida = new ArrayList();
         Request request = new Request.Builder()
-                .url(URL + "/category/")
+                .url(Constantes.URL + "/category/")
                 .header("company_id", companyID)
                 .get()
                 .build();

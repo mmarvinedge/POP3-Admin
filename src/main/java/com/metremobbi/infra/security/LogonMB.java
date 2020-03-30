@@ -71,13 +71,7 @@ public class LogonMB extends AdminSession implements Serializable {
             currentUser = null;
         }
     }
-   
-    public User getCompanyIdSession(){
-        User u = new User();
-        u = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentUser");
-        return u;
-    }
-    
+       
     @Override
     public boolean isLoggedIn() {
         return currentUser != null;
