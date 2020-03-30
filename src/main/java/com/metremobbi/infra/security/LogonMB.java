@@ -63,7 +63,6 @@ public class LogonMB extends AdminSession implements Serializable {
             Faces.getExternalContext().getFlash().setKeepMessages(true);
             Faces.redirect(adminConfig.getIndexPage());
         } else {
-            System.out.println("elseeeeeeeeee");
             addDetailMessage("Login ou senha inválidos, tente novamente!", FacesMessage.SEVERITY_ERROR);
             Faces.validationFailed();
             currentUser = null;
