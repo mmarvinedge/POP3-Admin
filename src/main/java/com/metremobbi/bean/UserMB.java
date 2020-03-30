@@ -5,6 +5,7 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.User;
 import com.metremobbi.service.UserService;
 import static com.metremobbi.util.Utils.addDetailMessage;
@@ -44,6 +45,8 @@ public class UserMB implements Serializable {
     @Getter
     @Setter
     List<User> filteredValue;
+    @Getter
+    private LogonMB logonMB;
 
     public UserMB() {
         service = new UserService();
@@ -73,7 +76,7 @@ public class UserMB implements Serializable {
     public void save() {
         if (user.getId() == null) {
             try {
-                user.setCompanyId(service.idCompany);
+                user.setCompanyId(logonMB.getCurrentUser().getCompanyId());
                 service.postUser(user);
                 System.out.println("Usuário " + user.getName() + " inserido com sucesso!");
                 addDetailMessage("Usuário inserido com sucesso.");
@@ -99,12 +102,12 @@ public class UserMB implements Serializable {
     public void delete() throws IOException {
         Integer size = users.size();
         service.deleteUser(usersSelected);
+        users.remove(usersSelected);
         if (size > 1) {
             addDetailMessage("Usuários deletados com sucesso.");
         } else {
             addDetailMessage("Usuário deletado com sucesso.");
         }
-        users.remove(usersSelected);
     }
 
 }

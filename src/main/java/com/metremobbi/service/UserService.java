@@ -7,11 +7,13 @@ package com.metremobbi.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.User;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,9 +30,10 @@ public class UserService {
     OkHttpClient client = new OkHttpClient();
 
     public static final String URL = "http://localhost:4000";
-
-    public String idCompany = "5e56b4471c9d4400008ecda2";
-
+    
+    @Getter
+    private LogonMB logonMB;
+    
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public User login(User user) throws IOException, NoSuchAlgorithmException {
@@ -56,7 +59,7 @@ public class UserService {
         List<User> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(URL + "/user/")
-                .header("company_id", idCompany)
+                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
@@ -81,7 +84,7 @@ public class UserService {
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
                 .url(URL + "/user/")
-                .header("company_id", idCompany)
+                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();

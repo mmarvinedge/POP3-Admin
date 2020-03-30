@@ -7,13 +7,13 @@ package com.metremobbi.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import static java.util.stream.Collectors.toCollection;
+import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,12 +26,13 @@ import okhttp3.Response;
  */
 public class ProductService {
 
+    @Getter
+    private LogonMB logonMB;
+
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
 
     public static final String URL = "http://localhost:4000";
-
-    public static final String idCompany = "5e56b4471c9d4400008ecda2";
 
     private final OkHttpClient httpClient = new OkHttpClient();
 
@@ -39,7 +40,7 @@ public class ProductService {
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(URL + "/product/")
-                .header("company_id", idCompany)
+                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
@@ -64,7 +65,7 @@ public class ProductService {
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
                 .url(URL + "/product/save")
-                .header("company_id", idCompany)
+                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
@@ -101,7 +102,7 @@ public class ProductService {
         List<Category> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(URL + "/category/")
-                .header("company_id", idCompany)
+                .header("company_id", logonMB.getCompanyIdSession().getCompanyId())
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {

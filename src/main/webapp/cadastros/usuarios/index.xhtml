@@ -20,7 +20,7 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:form id="frmProduct" >
+        <h:form id="frmUser" >
             <p:focus context="@form"/>
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -92,14 +92,11 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog widgetVar="modalNewUser" id="modalNewUser" width="60%" header="Cadastro de usuário"
+        <p:dialog widgetVar="modalNewUser" id="modalNewUser" header="Cadastro de usuário"
                   modal="true" position="top" responsive="true" resizable="false">
             <h:form id="frmNewUser">
                 <p:panel styleClass="box-primary card">
-                    <div id="main-buttons" class="hidden-sm hidden-xs">
-                        <p:commandButton value="Salvar" action="#{userMB.save}" update="@form, :frmProduct"
-                                         icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modalNewUser').hide();"/>
-                    </div>
+
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
                             <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
@@ -135,6 +132,10 @@
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div id="main-buttons" style="text-align: right;">
+                            <p:commandButton value="Salvar" action="#{userMB.save}" update="@form, :frmUser"
+                                             icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modalNewUser').hide();"/>
                         </div>
                     </div>
                 </p:panel>

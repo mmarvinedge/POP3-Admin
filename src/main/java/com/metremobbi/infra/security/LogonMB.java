@@ -15,6 +15,7 @@ import com.metremobbi.model.User;
 import com.metremobbi.service.UserService;
 import java.security.NoSuchAlgorithmException;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class LogonMB extends AdminSession implements Serializable {
     @Getter
     @Setter
     private UserService service;
-
+    
     public LogonMB() {
         service = new UserService();
         userLogin = new User();
@@ -58,6 +59,7 @@ public class LogonMB extends AdminSession implements Serializable {
     public void login() throws IOException, NoSuchAlgorithmException {
         currentUser = new User();
         currentUser = service.login(userLogin);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", currentUser);
         if (currentUser.getUserName() != null) {
             addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
             Faces.getExternalContext().getFlash().setKeepMessages(true);
@@ -68,7 +70,13 @@ public class LogonMB extends AdminSession implements Serializable {
             currentUser = null;
         }
     }
-
+   
+    public User getCompanyIdSession(){
+        User u = new User();
+        u = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentUser");
+        return u;
+    }
+    
     @Override
     public boolean isLoggedIn() {
         return currentUser != null;
