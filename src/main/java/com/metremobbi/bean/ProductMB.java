@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -59,6 +60,7 @@ public class ProductMB implements Serializable {
     public ProductMB() {
         products = new ArrayList<>();
         product = new Product();
+        product.setCategoryMain(new Category());
         service = new ProductService();
         atributtes = new ArrayList<>();
         categoryList = new ArrayList<>();
@@ -81,6 +83,7 @@ public class ProductMB implements Serializable {
     public void get() throws IOException {
         products = service.getProducts();
         categoryList = service.getCategoryList();
+        System.out.println("CATEGORIAS: "+Arrays.toString(categoryList.toArray()));
     }
 
     public void save() throws IOException {

@@ -110,7 +110,7 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
+            System.out.println("Categorias: "+json);
 
             saida = new Gson().fromJson(json, new TypeToken<List<Category>>() {
             }.getType());
