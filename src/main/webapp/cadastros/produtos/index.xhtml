@@ -154,15 +154,14 @@
                                     <p:outputLabel value="Categoria" for="category"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
+                                    <ui:repeat value=" #{productMB.categoryList}" var="va">
+                                        #{va}
+                                    </ui:repeat>
                                     <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                      value="#{productMB.product.categoryMain}" id="category" filter="true"
                                                      filterMatchMode="contains" effect="fade" converter="Converter">
                                         <f:selectItem itemLabel="Selecione uma categoria..."/>
-                                        <f:selectItems value="#{productMB.categoryList}" var="cat" itemValue="#{cat}" itemLabel="#{cat.name}"/>
-                                        <!--                                        <f:selectItem itemValue="LUNCH" itemLabel="Almoço"/>
-                                                                                <f:selectItem itemValue="SNACK" itemLabel="Lanche"/>
-                                                                                <f:selectItem itemValue="ICE" itemLabel="Sorvete"/>
-                                                                                <f:selectItem itemValue="DRINKS" itemLabel="Bebidas"/>-->
+                                        <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats}"/>
                                         <p:ajax event="itemSelect" listener="#{productMB.debug()}" />
                                     </p:selectOneMenu>
                                     <span class="help-block"> 
