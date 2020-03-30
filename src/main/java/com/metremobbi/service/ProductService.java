@@ -112,7 +112,7 @@ public class ProductService {
             String json = response.body().string();
             System.out.println(json);
 
-            saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
+            saida = new Gson().fromJson(json, new TypeToken<List<Category>>() {
             }.getType());
         } catch (Exception e) {
             e.printStackTrace();
