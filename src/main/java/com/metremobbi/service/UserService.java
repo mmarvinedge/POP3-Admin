@@ -62,7 +62,6 @@ public class UserService {
             // Get response body
             String json = response.body().string();
             System.out.println(json);
-
             saida = new Gson().fromJson(json, new TypeToken<List<User>>() {
             }.getType());
         } catch (Exception e) {
@@ -78,7 +77,6 @@ public class UserService {
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/user/")
-                .header("company_id", Utils.usuarioLogado().getCompanyId())
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
@@ -104,7 +102,6 @@ public class UserService {
                 .url(Constantes.URL + "/user/")
                 .put(body)
                 .build();
-
         Response response = client.newCall(request).execute();
         System.out.println(response.body().string());
     }
