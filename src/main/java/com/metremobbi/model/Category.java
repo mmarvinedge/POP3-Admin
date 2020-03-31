@@ -21,9 +21,6 @@ public class Category implements Serializable {
     private String order;
     private Boolean enable;
     private String description;
-    @JsonIgnore
-    private String companyId;
-    private Boolean main;
 
     public String getId() {
         return id;
@@ -64,15 +61,7 @@ public class Category implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Boolean getMain() {
-        return main;
-    }
-
-    public void setMain(Boolean main) {
-        this.main = main;
-    }
-    
+   
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", enable=" + enable + ", description=" + description + '}';

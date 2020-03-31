@@ -14,15 +14,18 @@ import com.metremobbi.util.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ViewScoped;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  *
  * @author PICHAU
  */
+@ViewScoped
 public class ProductService {
 
     private final String companyID = Utils.usuarioLogado().getCompanyId();
@@ -59,6 +62,8 @@ public class ProductService {
     public void postProduct(Product product) throws IOException {
         System.out.println(Constantes.URL);
         product.setCompanyId(companyID);
+        product.setCategories(new ArrayList());
+        product.getCategories().add(product.getCategoryMain());
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
@@ -66,6 +71,7 @@ public class ProductService {
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
+        ResponseBody b = response.body();
         System.out.println(response.body().string());
     }
 
@@ -98,7 +104,6 @@ public class ProductService {
         List<Category> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/category/")
-                .header("company_id", companyID)
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
@@ -108,7 +113,6 @@ public class ProductService {
             // Get response body
             String json = response.body().string();
             System.out.println("Categorias: " + json);
-
             saida = new Gson().fromJson(json, new TypeToken<List<Category>>() {
             }.getType());
         } catch (Exception e) {

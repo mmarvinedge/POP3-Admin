@@ -132,7 +132,7 @@
                                                  filterMatchMode="contains" effect="fade" converter="Converter">
                                     <f:selectItem itemLabel="Selecione uma categoria..."/>
                                     <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
-                                    <p:ajax event="itemSelect" listener="#{productMB.debug()}" />
+                                    <p:ajax event="itemSelect" update="@this" listener="#{productMB.debug()}" />
                                 </p:selectOneMenu>
                                 <span class="help-block"> 
                                     <p:message for="category" /> 
@@ -172,7 +172,7 @@
                             </div>
                         </div>
                         <div id="main-buttons" style="text-align: right;">
-                            <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct" immediate="true"
+                            <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
                                              icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modalNewProduct').hide();"/>
                         </div>
                     </div>
