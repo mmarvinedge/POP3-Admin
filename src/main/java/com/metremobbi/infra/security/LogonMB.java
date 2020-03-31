@@ -59,6 +59,7 @@ public class LogonMB extends AdminSession implements Serializable {
     public void login() throws IOException, NoSuchAlgorithmException {
         currentUser = new User();
         currentUser = service.login(userLogin);
+        
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", currentUser);
         
         if (currentUser.getUserName() != null) {
