@@ -73,6 +73,7 @@ public class UserService {
     }
     
     public void postUser(User user) throws IOException{
+        user.setCompanyId(Utils.usuarioLogado().getCompanyId());
         RequestBody body = RequestBody.create(new Gson().toJson(user), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()

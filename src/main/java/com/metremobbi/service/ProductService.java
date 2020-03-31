@@ -57,11 +57,12 @@ public class ProductService {
     }
 
     public void postProduct(Product product) throws IOException {
+        System.out.println(Constantes.URL);
+        product.setCompanyId(companyID);
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
-                .url(Constantes.URL + "/product/save")
-                .header("company_id", companyID)
+                .url(Constantes.URL + "/product/")
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();

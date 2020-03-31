@@ -17,9 +17,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Specializes;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
@@ -30,7 +34,7 @@ import org.primefaces.model.LazyDataModel;
  *
  * @author JOAO PAULO
  */
-@ManagedBean
+@ManagedBean(eager = true)
 @ViewScoped
 public class ProductMB implements Serializable {
 
