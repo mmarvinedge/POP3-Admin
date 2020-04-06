@@ -36,6 +36,7 @@ public class Product implements Serializable {
     private String companyId;
     private Category categoryMain;
     private List<Category> categories;
+    @JsonIgnore
     private List<Attribute> attributes;
 
     public String getId() {
