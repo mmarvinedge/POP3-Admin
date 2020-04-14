@@ -152,7 +152,7 @@ public class ProductMB implements Serializable {
         if (product.getAttributes() == null) {
             product.setAttributes(new ArrayList());
         }
-        product.getAttributes().add(new Attribute());
+        
         if (type.equalsIgnoreCase("normal") && product.getAttributes().size() == 0) {
             attribute.setName("Adicionais");
             attribute.setDescription("Complementos adicionais");
@@ -164,6 +164,7 @@ public class ProductMB implements Serializable {
             product.getAttributes().add(a);
             product.getAttributes().get(0).setValues(new ArrayList());
         }
+        product.getAttributes().get(0).getValues().add(new AttributeValue());
     }
 
     public void removeAttribute(AttributeValue att) {
