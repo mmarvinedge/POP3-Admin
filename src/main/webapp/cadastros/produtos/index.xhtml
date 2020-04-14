@@ -170,7 +170,60 @@
                                     </h:panelGroup>
                                 </div>
                             </div>
+                            <div class="ui-sm-12 ui-g-8">
+                                <h:outputLabel value="Tipo do produto"/>
+                                <p:selectOneButton value="#{productMB.type}">
+                                    <f:selectItem itemValue="normal" itemLabel="Normal"/>
+                                    <f:selectItem itemValue="montagem" itemLabel="Montagem"/>
+                                    <f:selectItem itemValue="pizza" itemLabel="Pizza"/>
+                                    <p:ajax update="@this, typeProduct" event="change"/>
+                                </p:selectOneButton>
+                            </div>
                         </div>
+                        <h:panelGroup id="typeProduct">
+                            <h:panelGroup rendered="#{productMB.type == 'normal'}">
+
+                                <p:fieldset legend="Adicionais">
+                                    <div class="ui-g ui-fluid">
+                                        <div class="ui-sm-12 ui-g-8">
+                                            <p:commandButton icon="fa fa-plus" value="Adicionar" styleClass="btn btn-primary" style="position: absolute !important;right: 60px !important;margin-top: -55px !important;width: 7%;" action="#{productMB.addAttribute()}" update="tblAttributes" immediate="true">
+                                            </p:commandButton>
+                                            <p:dataTable value="#{productMB.attribute.values}" var="att" id="tblAttributes" style="background: white !important; color: black !important"
+                                                         rowIndexVar="indiceProduto" emptyMessage="Nenhum produto adicionado!"  >
+                                                <p:column headerText="Produto">
+                                                    <p:inputText id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório"/>
+                                                </p:column>
+                                                <p:column headerText="Descrição">
+                                                    <p:inputText id="addDescription" value="#{att.description}" />
+                                                </p:column>\
+                                                <p:column headerText="Preço">
+                                                    <p:inputNumber id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório">
+                                                        <p:ajax event="blur" listener="#{productMB.setAttributeSku(att)}"/>
+                                                    </p:inputNumber>
+                                                </p:column>
+                                                <p:column width="12%">
+                                                    <center>
+                                                        <p:commandButton icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAttribute(att)}" />
+                                                    </center>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </p:fieldset>
+
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{productMB.type == 'montagem'}">
+                                <p:fieldset legend="Etapas de montagem">
+
+                                </p:fieldset>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{productMB.type == 'pizza'}">
+                                <p:fieldset legend="Sabores e tamanhos">
+
+                                </p:fieldset>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
                         <div id="main-buttons" style="text-align: right;">
                             <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"
                                              icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="PF('modalNewProduct').hide();"/>

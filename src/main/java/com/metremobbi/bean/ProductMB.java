@@ -8,7 +8,9 @@ package com.metremobbi.bean;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import com.metremobbi.model.Product;
 import com.metremobbi.model.Attribute;
+import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
+import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +58,15 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     List<Attribute> atributtes;
+    @Getter
+    @Setter
+    private String type;
+    @Getter
+    @Setter
+    private Attribute attribute;
+    @Getter
+    @Setter
+    private AttributeService attService;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -64,6 +75,8 @@ public class ProductMB implements Serializable {
         service = new ProductService();
         atributtes = new ArrayList<>();
         categoryList = new ArrayList<>();
+        type = "normal";
+        attribute = new Attribute();
     }
 
     public void novo() {
@@ -83,7 +96,7 @@ public class ProductMB implements Serializable {
     public void get() throws IOException {
         products = service.getProducts();
         categoryList = service.getCategoryList();
-        System.out.println("CATEGORIAS: "+Arrays.toString(categoryList.toArray()));
+        System.out.println("CATEGORIAS: " + Arrays.toString(categoryList.toArray()));
     }
 
     public void save() throws IOException {
@@ -130,7 +143,34 @@ public class ProductMB implements Serializable {
         }
     }
 
-    public void debug(){
+    public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
+    }
+
+    public void addAttribute() throws IOException {
+        attService = new AttributeService();
+        if (product.getAttributes() == null) {
+            product.setAttributes(new ArrayList());
+        }
+        product.getAttributes().add(new Attribute());
+        if (type.equalsIgnoreCase("normal") && product.getAttributes().size() == 0) {
+            attribute.setName("Adicionais");
+            attribute.setDescription("Complementos adicionais");
+            attribute.setQuantity(4);
+            attribute.setQuantityType("max");
+            attribute.setType("multiple selection");
+            attribute.setHighestPrice(false);
+            Attribute a = attService.postAttribute(attribute);
+            product.getAttributes().add(a);
+            product.getAttributes().get(0).setValues(new ArrayList());
+        }
+    }
+
+    public void removeAttribute(AttributeValue att) {
+        attribute.getValues().remove(att);
+    }
+
+    public void setAttributeSku(AttributeValue av) {
+        av.setAttribute_sku(product.getAttributes().get(0).getSku());
     }
 }

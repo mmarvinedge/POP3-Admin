@@ -8,6 +8,7 @@ package com.metremobbi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Attribute implements Serializable {
     private BigDecimal price;
     @JsonIgnore
     private String companyId;
+    private List<AttributeValue> values;
 
     public String getSku() {
         return sku;
@@ -90,6 +92,22 @@ public class Attribute implements Serializable {
         this.price = price;
     }
 
+    public List<AttributeValue> getValues() {
+        return values;
+    }
+
+    public void setValues(List<AttributeValue> values) {
+        this.values = values;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+    
     @Override
     public String toString() {
         return "Attribute{" + "sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", price=" + price + '}';
