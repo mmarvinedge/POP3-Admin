@@ -6,7 +6,7 @@
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="title" value="Produtos"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <ui:param name="title" value="Produtos" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
         <style type="text/css">
             .ui-datatable .ui-datatable-header {
@@ -29,7 +29,7 @@
                         <p:commandButton action="#{productMB.novo}" icon="fa fa-plus"
                                          value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Editar" action="#{productMB.setProduct(productMB.selectedProducts.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:commandButton value="Editar" action="#{productMB.setProductEdit(productMB.selectedProducts.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
                                          disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                          oncomplete="PF('modalNewProduct').show()" icon="fa fa-edit"/>
                         <p:spacer width="5"/>
@@ -129,8 +129,10 @@
                                 <p:outputLabel value="Categoria" for="category"/>
                                 <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                  value="#{productMB.product.categoryMain}" id="category" filter="true"
-                                                 filterMatchMode="contains" effect="fade" converter="Converter">
-                                    <f:selectItem itemLabel="Selecione uma categoria..."/>
+                                                 filterMatchMode="contains" effect="fade" converter="Converter"
+                                                 >
+                                    <f:selectItem itemLabel="#{productMB.product.categoryMain == null ? 'Selecione uma categoria...' : productMB.product.categoryMain.name}" 
+                                                  itemValue="#{productMB.product.categoryMain == null ? null : productMB.product.categoryMain}"/>
                                     <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
                                     <p:ajax event="itemSelect" update="@this" listener="#{productMB.debug()}" />
                                 </p:selectOneMenu>
@@ -170,6 +172,52 @@
                                     </h:panelGroup>
                                 </div>
                             </div>
+                        </div>
+                        <div class="ui-sm-12 ui-g-12">
+                            <p:outputLabel value="Tipo do produto"/><br/>
+                            <p:selectOneButton value="#{productMB.typeProduct}">
+                                <f:selectItem itemLabel="Normal" itemValue="normal"/>
+                                <f:selectItem itemLabel="Montagem" itemValue="mounting"/>
+                                <f:selectItem itemLabel="Pizza" itemValue="pizza"/>
+                                <p:ajax event="change" update="@this, attributes"/>
+                            </p:selectOneButton>
+                            <h:panelGroup id="attributes">
+
+                                <h:panelGroup rendered="#{productMB.typeProduct == 'normal'}"></h:panelGroup>
+
+                                <h:panelGroup rendered="#{productMB.typeProduct == 'mounting'}">
+                                    <p:fieldset legend="Etapas de montagem">
+                                        <div class="row">
+                                            <p:commandButton icon="fa fa-plus" value="Adicionar"  styleClass="btn btn-primary btn-ripple ripple" style="position: absolute !important; right: 20px !important; margin-top: -40px !important;" 
+                                                             action="#{productMB.addAttribute()}" update="tblAttributeMounting" immediate="true"
+                                                             onstart="PF('loading').show()" oncomplete="PF('loading').hide()">
+                                                <!--<p:ajax event="click" oncomplete="changeFocus('mdlNovo:frmNovo:tblPessoas:class')" />-->
+                                            </p:commandButton>
+                                        </div>
+                                        <div class="row">
+                                            <p:dataTable value="#{productMB.product.attributes}" emptyMessage="Nenhuma etapa adicionada"
+                                                         id="tblAttributeMounting" var="at">
+                                                <p:column headerText="Nome">
+                                                    <p:inputText value="#{at.name}" id="nameMounting" placeholder="Carne, acompanhamentos" required="true" requiredMessage="Informe o nome">
+                                                        <p:ajax event="blur" update="nameMounting" oncomplete="changeFocus('mdlNovo:frmNovo:tblProdutos:qntPessoas')" />
+                                                    </p:inputText>
+                                                </p:column>
+                                                <p:column headerText="Descição">
+                                                    <p:inputText value="#{at.description}" id="descMounting" required="true" requiredMessage="Informe a descrição" styleClass="text-right">
+                                                        <p:ajax event="blur" update="descMounting"/>
+                                                    </p:inputText>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </p:fieldset>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{productMB.typeProduct == 'pizza'}">
+                                    <p:fieldset legend="Sabores e tamanhos">
+
+                                    </p:fieldset>
+                                </h:panelGroup>
+                            </h:panelGroup>
                         </div>
                         <div id="main-buttons" style="text-align: right;">
                             <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct"

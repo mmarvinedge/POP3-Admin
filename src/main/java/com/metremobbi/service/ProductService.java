@@ -58,6 +58,30 @@ public class ProductService {
         }
         return saida;
     }
+    
+    public Product getProduct(Product product){
+        System.out.println(companyID);
+        Product saida = new Product();
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/product/" + product.getId())
+                .header("company_id", companyID)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            // Get response body
+            String json = response.body().string();
+            System.out.println(json);
+
+            saida = new Gson().fromJson(json, Product.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new Product();
+        }
+        return saida;
+    }
 
     public void postProduct(Product product) throws IOException {
         System.out.println(Constantes.URL);

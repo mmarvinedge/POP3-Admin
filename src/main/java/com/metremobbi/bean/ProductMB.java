@@ -56,6 +56,9 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     List<Attribute> atributtes;
+    @Getter
+    @Setter
+    private String typeProduct;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -64,6 +67,7 @@ public class ProductMB implements Serializable {
         service = new ProductService();
         atributtes = new ArrayList<>();
         categoryList = new ArrayList<>();
+        typeProduct = "normal";
     }
 
     public void novo() {
@@ -133,4 +137,20 @@ public class ProductMB implements Serializable {
     public void debug(){
         System.out.println("value Category: " + product.getCategoryMain().getName());
     }
+    
+    public Product setProductEdit(Product p) {
+        product = service.getProduct(p);
+        System.out.println(product.getCategoryMain().getName());
+        debug();
+        return product;
+    }
+    
+    public void addAttribute() {
+        if (product.getAttributes() == null) {
+            product.setAttributes(new ArrayList());
+        }
+        
+        product.getAttributes().add(new Attribute());
+    }
+    
 }
