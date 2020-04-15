@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class Attribute implements Serializable {
     
+    private String id;
     private String sku;
     private String name;
     private String description;
@@ -23,10 +24,17 @@ public class Attribute implements Serializable {
     private Boolean highestPrice;
     private String quantityType;
     private Integer quantity;
-    private BigDecimal price;
     @JsonIgnore
     private String companyId;
     private List<AttributeValue> values;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getSku() {
         return sku;
@@ -84,14 +92,6 @@ public class Attribute implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public List<AttributeValue> getValues() {
         return values;
     }
@@ -107,10 +107,11 @@ public class Attribute implements Serializable {
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
-    
+
     @Override
     public String toString() {
-        return "Attribute{" + "sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", price=" + price + '}';
+        return "Attribute{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", companyId=" + companyId + ", values=" + values + '}';
     }
+    
 
 }

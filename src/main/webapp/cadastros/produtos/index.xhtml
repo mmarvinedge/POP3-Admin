@@ -29,7 +29,7 @@
                         <p:commandButton action="#{productMB.novo}" icon="fa fa-plus"
                                          value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Editar" action="#{productMB.setProduct(productMB.selectedProducts.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:commandButton value="Editar" action="#{productMB.setProductComplete()}" update="@(.ui-dialog)" styleClass="btn-info"
                                          disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                          oncomplete="PF('modalNewProduct').show()" icon="fa fa-edit"/>
                         <p:spacer width="5"/>
@@ -46,7 +46,7 @@
                                    icon="fa fa-plus"  update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"
                                    styleClass="hidden-md hidden-lg btn-primary">
 
-                        <p:menuitem value="Editar" update="@(.ui-dialog)" action="#{productMB.setProduct(productMB.selectedProducts.get(0))}"
+                        <p:menuitem value="Editar" update="@(.ui-dialog)" action="#{productMB.setProductComplete()}"
                                     oncomplete="PF('modalNewProduct').show()"
                                     disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                     icon="fa fa-edit"
@@ -188,24 +188,23 @@
                                 <p:fieldset legend="Adicionais">
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-sm-12 ui-g-8">
-                                            <p:commandButton icon="fa fa-plus" value="Adicionar" style="position: absolute !important;right: 60px !important;margin-top: -55px !important;width: 7%;" action="#{productMB.addAttribute()}" update="tblAttributes" immediate="true">
+                                            <p:commandButton icon="fa fa-plus" value="Adicionar" class="btn-success" style="position: absolute !important;right: 60px !important;margin-top: -55px !important;width: 7%;" action="#{productMB.addAttribute()}" update="tblAttributes" immediate="true" >
                                             </p:commandButton>
                                             <p:dataTable value="#{productMB.attribute.values}" var="att" id="tblAttributes" style="background: white !important; color: black !important"
-                                                         rowIndexVar="indiceProduto" emptyMessage="Nenhum produto adicionado!"  >
+                                                         rowIndexVar="index" emptyMessage="Nenhum produto adicionado!"  >
                                                 <p:column headerText="Produto">
-                                                    <p:inputText id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório"/>
+                                                    <p:inputText id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório">
+                                                        <p:ajax event="blur" process="@this" />
+                                                    </p:inputText>
                                                 </p:column>
-                                                <p:column headerText="Descrição">
-                                                    <p:inputText id="addDescription" value="#{att.description}" />
-                                                </p:column>\
                                                 <p:column headerText="Preço">
-                                                    <p:inputNumber id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório">
-                                                        <p:ajax event="blur" listener="#{productMB.setAttributeSku(att)}"/>
+                                                    <p:inputNumber id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório" >
+                                                    <p:ajax event="blur" process="@this" />
                                                     </p:inputNumber>
                                                 </p:column>
                                                 <p:column width="12%">
                                                     <center>
-                                                        <p:commandButton icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAttribute(att)}" />
+                                                        <p:commandButton icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAttribute(index,att)}" />
                                                     </center>
                                                 </p:column>
                                             </p:dataTable>
