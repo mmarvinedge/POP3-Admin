@@ -59,22 +59,19 @@ public class AttributeService {
         System.out.println(response.body().string());
     }
 
-    public Attribute postAttributeValues(List<AttributeValue> values) throws IOException {
-        for (AttributeValue av : values) {
-            System.out.println(Constantes.URL);
-//        attribute.setCompanyId(companyID);
-            RequestBody body = RequestBody.create(new Gson().toJson(av), Constantes.JSON); // new
-            // RequestBody body = RequestBody.create(JSON, json); // old
-            Request request = new Request.Builder()
-                    .url(Constantes.URL + "/attribute/value")
-                    .post(body)
-                    .build();
-            Response response = client.newCall(request).execute();
-            String b = response.body().string();
-            Attribute a = new Gson().fromJson(b, Attribute.class);
-            return a;
-        }
-        return null;
+    public Attribute putAttribute(Attribute attribute) throws IOException {
+        System.out.println(Constantes.URL);
+        attribute.setCompanyId(companyID);
+        RequestBody body = RequestBody.create(new Gson().toJson(attribute), Constantes.JSON); // new
+        // RequestBody body = RequestBody.create(JSON, json); // old
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/attribute/")
+                .put(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        String b = response.body().string();
+        Attribute a = new Gson().fromJson(b, Attribute.class);
+        return a;
     }
 
 }

@@ -188,6 +188,13 @@ public class ProductMB implements Serializable {
             product.getAttributes().get(0).setValues(a.getValues());
         } else {
             //editar o attribute
+            Attribute a = attService.putAttribute(attribute);
+            a.getValues().forEach(v -> {
+                v.setAttribute_sku(a.getSku());
+            });
+            product.setAttributes(new ArrayList<>());
+            product.getAttributes().add(a);
+            product.getAttributes().get(0).setValues(a.getValues());
             
         }
 
