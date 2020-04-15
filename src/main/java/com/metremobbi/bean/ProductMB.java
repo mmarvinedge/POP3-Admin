@@ -104,7 +104,7 @@ public class ProductMB implements Serializable {
     public void save() throws IOException {
         System.out.println("id produto " + product.getId());
         System.out.println("produto " + product.getName());
-        if (!attribute.getValues().isEmpty()) {
+        if (attribute != null && attribute.getValues() != null && !attribute.getValues().isEmpty()) {
             addAttributesInProduct();
         }
         if (product.getId() == null) {
@@ -180,7 +180,7 @@ public class ProductMB implements Serializable {
     private void addAttributesInProduct() throws IOException {
         attService = new AttributeService();
         if (attribute.getId() == null) {
-           Attribute a = attService.postAttribute(attribute);
+            Attribute a = attService.postAttribute(attribute);
             a.getValues().forEach(v -> {
                 v.setAttribute_sku(a.getSku());
             });
@@ -209,7 +209,9 @@ public class ProductMB implements Serializable {
 
     public void setProductComplete() {
         product = selectedProducts.get(0);
-        attribute = product.getAttributes().get(0);
+        if (product != null && product.getAttributes() != null && product.getAttributes().get(0) != null) {
+            attribute = product.getAttributes().get(0);
+        }
     }
 
 }

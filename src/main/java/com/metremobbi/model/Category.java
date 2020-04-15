@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author PICHAU
  */
 public class Category implements Serializable {
-    
+
     private String id;
     private String sku;
     private String name;
@@ -21,6 +21,7 @@ public class Category implements Serializable {
     private String order;
     private Boolean enable;
     private String description;
+    private String img;
 
     public String getId() {
         return id;
@@ -61,10 +62,26 @@ public class Category implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-   
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", enable=" + enable + ", description=" + description + '}';
     }
-    
+
 }
