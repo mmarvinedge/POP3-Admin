@@ -8,6 +8,7 @@ package com.metremobbi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
  */
 public class Attribute implements Serializable {
     
+    private String id;
     private String sku;
     private String name;
     private String description;
@@ -22,9 +24,17 @@ public class Attribute implements Serializable {
     private Boolean highestPrice;
     private String quantityType;
     private Integer quantity;
-    private BigDecimal price;
     @JsonIgnore
     private String companyId;
+    private List<AttributeValue> values;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getSku() {
         return sku;
@@ -82,17 +92,26 @@ public class Attribute implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public List<AttributeValue> getValues() {
+        return values;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setValues(List<AttributeValue> values) {
+        this.values = values;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
     @Override
     public String toString() {
-        return "Attribute{" + "sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", price=" + price + '}';
+        return "Attribute{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", companyId=" + companyId + ", values=" + values + '}';
     }
+    
 
 }

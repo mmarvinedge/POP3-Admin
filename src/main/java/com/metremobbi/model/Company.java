@@ -17,7 +17,7 @@ public class Company {
     private String companyName;
     private String phone;
     private String owner;
-    private List<Address> address;
+    private Address address;
 
     public int getId() {
         return id;
@@ -51,11 +51,11 @@ public class Company {
         this.owner = owner;
     }
 
-    public List<Address> getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
     
