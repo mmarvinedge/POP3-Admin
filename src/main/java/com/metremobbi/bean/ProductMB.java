@@ -202,7 +202,7 @@ public class ProductMB implements Serializable {
 
     public void setProductComplete() {
         product = selectedProducts.get(0);
-        if (product != null && product.getAttributes() != null && product.getAttributes().get(0) != null) {
+        if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
     }

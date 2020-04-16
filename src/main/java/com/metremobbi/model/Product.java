@@ -38,6 +38,7 @@ public class Product implements Serializable {
     private List<Category> categories;
     @JsonIgnore
     private List<Attribute> attributes;
+    private String printer;
 
     public String getId() {
         return id;
@@ -153,7 +154,15 @@ public class Product implements Serializable {
     public void setCategoryMain(Category categoryMain) {
         this.categoryMain = categoryMain;
     }
-    
+
+    public String getPrinter() {
+        return printer;
+    }
+
+    public void setPrinter(String printer) {
+        this.printer = printer;
+    }
+
     @Override
     public String toString() {
         return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", attributes=" + attributes + '}';
