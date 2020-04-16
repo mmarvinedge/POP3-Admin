@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
                                 <div class="ui-g ui-fluid">
-                                    <div class="ui-sm-8 ui-g-8 ">     
+                                    <div class="ui-sm-4 ui-g-4 ">
                                         <p:outputLabel value="Categoria" for="category"/>
                                         <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                          value="#{productMB.product.categoryMain}" id="category" filter="true"
@@ -139,6 +139,26 @@
                                         </p:selectOneMenu>
                                         <span class="help-block"> 
                                             <p:message for="category" /> 
+                                        </span>
+                                    </div>
+
+                                    <div class="ui-sm-6 ui-g-3 ">     
+                                        <p:outputLabel value="Impressora" for="inptPrinter"/>
+                                        <p:selectOneMenu id="inptPrinter" value="#{productMB.product.printer}" 
+                                                         filter="true" required="true">
+                                            <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
+                                            <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
+                                            <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
+                                            <f:selectItem itemLabel="REFRIGERANTES" itemValue="REFRIGERANTES"/>
+                                            <f:selectItem itemLabel="COZINHA" itemValue="COZINHA"/>
+                                            <f:selectItem itemLabel="PIZZARIA" itemValue="PIZZARIA"/>
+                                            <f:selectItem itemLabel="SALAO" itemValue="SALAO"/>
+                                            <f:selectItem itemLabel="CHURRASCARIA" itemValue="CHURRASCARIA"/>
+                                            <f:selectItem itemLabel="SALAO 2" itemValue="SALAO2"/>
+                                            <f:selectItem itemLabel="SALAO 3" itemValue="SALAO3"/>
+                                        </p:selectOneMenu>
+                                        <span class="help-block"> 
+                                            <p:message for="inptPrinter" /> 
                                         </span>
                                     </div>
                                     <div class="ui-sm-6 ui-g-3 ">     
