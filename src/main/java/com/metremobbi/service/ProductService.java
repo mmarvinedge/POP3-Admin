@@ -47,7 +47,6 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
 
             saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
             }.getType());
