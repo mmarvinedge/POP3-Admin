@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class UserService {
 
     OkHttpClient client = new OkHttpClient();
-    
+
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public User login(User user) throws IOException, NoSuchAlgorithmException {
@@ -47,7 +47,7 @@ public class UserService {
             return u;
         }
     }
-    
+
     public List<User> getUsers() {
         List<User> saida = new ArrayList();
         Request request = new Request.Builder()
@@ -61,7 +61,6 @@ public class UserService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
             saida = new Gson().fromJson(json, new TypeToken<List<User>>() {
             }.getType());
         } catch (Exception e) {
@@ -70,8 +69,8 @@ public class UserService {
         }
         return saida;
     }
-    
-    public void postUser(User user) throws IOException{
+
+    public void postUser(User user) throws IOException {
         user.setCompanyId(Utils.usuarioLogado().getCompanyId());
         RequestBody body = RequestBody.create(new Gson().toJson(user), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
@@ -80,9 +79,9 @@ public class UserService {
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        String json = response.body().string();
     }
-    
+
     public void deleteUser(List<User> users) throws IOException {
         for (User u : users) {
             RequestBody body = RequestBody.create(new Gson().toJson(u), Constantes.JSON); // new
@@ -90,12 +89,11 @@ public class UserService {
                     .url(Constantes.URL + "/user/")
                     .delete(body)
                     .build();
-            System.out.println("vou deletar o usuário "+ u.getName());
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+            String json = response.body().string();
         }
     }
-    
+
     public void putUser(User user) throws IOException {
         RequestBody body = RequestBody.create(new Gson().toJson(user), Constantes.JSON); // new
         Request request = new Request.Builder()
@@ -103,6 +101,6 @@ public class UserService {
                 .put(body)
                 .build();
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        String json = response.body().string();
     }
 }

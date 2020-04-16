@@ -98,12 +98,13 @@ public class ProductMB implements Serializable {
     public void get() throws IOException {
         products = service.getProducts();
         categoryList = service.getCategoryList();
-        System.out.println("CATEGORIAS: " + Arrays.toString(categoryList.toArray()));
+    }
+
+    public void update(Product p) throws IOException {
+        service.putProduct(p);
     }
 
     public void save() throws IOException {
-        System.out.println("id produto " + product.getId());
-        System.out.println("produto " + product.getName());
         if (attribute != null && attribute.getValues() != null && !attribute.getValues().isEmpty()) {
             addAttributesInProduct();
         }
@@ -111,7 +112,6 @@ public class ProductMB implements Serializable {
             try {
                 service.postProduct(product);
                 //products.add(product);
-                System.out.println("Produto: " + product.toString() + " salvo com sucesso");
                 addDetailMessage("Produto Salvo com sucesso!");
                 products.add(product);
                 novo();
@@ -121,7 +121,6 @@ public class ProductMB implements Serializable {
             }
         } else {
             service.putProduct(product);
-            System.out.println("Produto: " + product.toString() + " atualizado com sucesso");
             addDetailMessage("Produto atualizado com sucesso!");
             novo();
         }
@@ -130,7 +129,6 @@ public class ProductMB implements Serializable {
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
-        System.out.println(selectedProducts.size() + " deletados com sucesso!");
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
@@ -159,7 +157,6 @@ public class ProductMB implements Serializable {
 
 //        if (type.equalsIgnoreCase("normal") && attribute.getValues().size() == 0) {
         if (type.equalsIgnoreCase("normal") && attribute.getValues() == null) {
-            System.out.println("criou atributo");
             createAttributes();
         }
         AttributeValue av = new AttributeValue();
@@ -195,7 +192,7 @@ public class ProductMB implements Serializable {
             product.setAttributes(new ArrayList<>());
             product.getAttributes().add(a);
             product.getAttributes().get(0).setValues(a.getValues());
-            
+
         }
 
     }

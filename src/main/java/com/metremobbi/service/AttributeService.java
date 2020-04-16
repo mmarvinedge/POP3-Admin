@@ -34,7 +34,6 @@ public class AttributeService {
     OkHttpClient client = new OkHttpClient();
 
     public Attribute postAttribute(Attribute attribute) throws IOException {
-        System.out.println(Constantes.URL);
         attribute.setCompanyId(companyID);
         RequestBody body = RequestBody.create(new Gson().toJson(attribute), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
@@ -54,13 +53,11 @@ public class AttributeService {
                 .url(Constantes.URL + "/attribute/")
                 .delete(body)
                 .build();
-        System.out.println("vou deletar o atributo " + attribute.getName());
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        String json = response.body().string();
     }
 
     public Attribute putAttribute(Attribute attribute) throws IOException {
-        System.out.println(Constantes.URL);
         attribute.setCompanyId(companyID);
         RequestBody body = RequestBody.create(new Gson().toJson(attribute), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old

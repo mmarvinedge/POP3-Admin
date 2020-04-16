@@ -60,12 +60,12 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="5"
+                    <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.products}" rows="10"
                                  rowKey="#{p.sku}" paginator="true" emptyMessage="Nenhum Produto encontrado"
                                  paginatorPosition="bottom" selection="#{productMB.selectedProducts}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
-                                 rowsPerPageTemplate="5,10,15,20,30" >
+                                 rowsPerPageTemplate="10,20,30,40,50" >
 
                         <p:ajax event="rowSelectCheckbox" update="@(.ui-button)"/>
                         <p:ajax event="rowUnselectCheckbox" update="@(.ui-button)"/>
@@ -88,6 +88,21 @@
                         </p:column>
                         <p:column headerText="Categoria" sortBy="#{p.categoryMain.name}" filterBy="#{p.categoryMain.name}" filterMatchMode="contains">
                             <h:outputText value="#{p.categoryMain.name}" />
+                        </p:column>
+                        <p:column headerText="Impressora" >
+                            <p:selectOneMenu  value="#{p.printer}" filter="true" >
+                                <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
+                                <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
+                                <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
+                                <f:selectItem itemLabel="REFRIGERANTES" itemValue="REFRIGERANTES"/>
+                                <f:selectItem itemLabel="COZINHA" itemValue="COZINHA"/>
+                                <f:selectItem itemLabel="PIZZARIA" itemValue="PIZZARIA"/>
+                                <f:selectItem itemLabel="SALAO" itemValue="SALAO"/>
+                                <f:selectItem itemLabel="CHURRASCARIA" itemValue="CHURRASCARIA"/>
+                                <f:selectItem itemLabel="SALAO 2" itemValue="SALAO2"/>
+                                <f:selectItem itemLabel="SALAO 3" itemValue="SALAO3"/>
+                                <p:ajax event="itemSelect" update="@this"  listener="#{productMB.update(p)}"/>
+                            </p:selectOneMenu>
                         </p:column>
 
                     </p:dataTable>
@@ -126,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="ui-g ui-fluid">
-                                    <div class="ui-sm-8 ui-g-8 ">     
+                                    <div class="ui-sm-4 ui-g-4 ">
                                         <p:outputLabel value="Categoria" for="category"/>
                                         <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                          value="#{productMB.product.categoryMain}" id="category" filter="true"
@@ -139,6 +154,26 @@
                                         </p:selectOneMenu>
                                         <span class="help-block"> 
                                             <p:message for="category" /> 
+                                        </span>
+                                    </div>
+
+                                    <div class="ui-sm-6 ui-g-3 ">     
+                                        <p:outputLabel value="Impressora" for="inptPrinter"/>
+                                        <p:selectOneMenu id="inptPrinter" value="#{productMB.product.printer}" 
+                                                         filter="true" required="true">
+                                            <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
+                                            <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
+                                            <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
+                                            <f:selectItem itemLabel="REFRIGERANTES" itemValue="REFRIGERANTES"/>
+                                            <f:selectItem itemLabel="COZINHA" itemValue="COZINHA"/>
+                                            <f:selectItem itemLabel="PIZZARIA" itemValue="PIZZARIA"/>
+                                            <f:selectItem itemLabel="SALAO" itemValue="SALAO"/>
+                                            <f:selectItem itemLabel="CHURRASCARIA" itemValue="CHURRASCARIA"/>
+                                            <f:selectItem itemLabel="SALAO 2" itemValue="SALAO2"/>
+                                            <f:selectItem itemLabel="SALAO 3" itemValue="SALAO3"/>
+                                        </p:selectOneMenu>
+                                        <span class="help-block"> 
+                                            <p:message for="inptPrinter" /> 
                                         </span>
                                     </div>
                                     <div class="ui-sm-6 ui-g-3 ">     
