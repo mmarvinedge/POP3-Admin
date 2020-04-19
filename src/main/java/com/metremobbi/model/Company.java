@@ -5,19 +5,20 @@
  */
 package com.metremobbi.model;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  *
  * @author JOAO PAULO
  */
 public class Company {
-    
+
     private int id;
     private String companyName;
     private String phone;
     private String owner;
     private Address address;
+    private BigDecimal delivertCost;
 
     public int getId() {
         return id;
@@ -58,6 +59,13 @@ public class Company {
     public void setAddress(Address address) {
         this.address = address;
     }
-    
-    
+
+    public BigDecimal getDelivertCost() {
+        return delivertCost;
+    }
+
+    public void setDelivertCost(BigDecimal delivertCost) {
+        this.delivertCost = delivertCost;
+    }
+
 }
