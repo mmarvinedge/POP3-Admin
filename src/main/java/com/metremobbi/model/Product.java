@@ -39,6 +39,7 @@ public class Product implements Serializable {
     @JsonIgnore
     private List<Attribute> attributes;
     private String printer;
+    private Boolean promo;
 
     public String getId() {
         return id;
@@ -162,6 +163,16 @@ public class Product implements Serializable {
     public void setPrinter(String printer) {
         this.printer = printer;
     }
+
+    public Boolean getPromo() {
+        return promo;
+    }
+
+    public void setPromo(Boolean promo) {
+        this.promo = promo;
+    }
+    
+    
 
     @Override
     public String toString() {
