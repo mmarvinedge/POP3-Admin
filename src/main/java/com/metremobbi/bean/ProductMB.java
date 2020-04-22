@@ -180,7 +180,7 @@ public class ProductMB implements Serializable {
     private void addAttributesInProduct() throws IOException {
         attService = new AttributeService();
         if (attribute.getId() == null) {
-           Attribute a = attService.postAttribute(attribute);
+            Attribute a = attService.postAttribute(attribute);
             a.getValues().forEach(v -> {
                 v.setAttribute_sku(a.getSku());
             });
@@ -188,7 +188,7 @@ public class ProductMB implements Serializable {
             product.getAttributes().get(0).setValues(a.getValues());
         } else {
             //editar o attribute
-            
+
         }
 
     }
@@ -202,7 +202,9 @@ public class ProductMB implements Serializable {
 
     public void setProductComplete() {
         product = selectedProducts.get(0);
-        attribute = product.getAttributes().get(0);
+        if (product.getAttributes() != null && product.getAttributes().size() > 0) {
+            attribute = product.getAttributes().get(0);
+        }
     }
 
 }
