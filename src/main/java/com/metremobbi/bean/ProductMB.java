@@ -115,7 +115,11 @@ public class ProductMB implements Serializable {
                 service.postProduct(product);
                 //products.add(product);
                 addDetailMessage("Produto Salvo com sucesso!");
-                products.add(product);
+                if (products.indexOf(product) >= -1) {
+                    products.set(products.indexOf(product), product);
+                } else {
+                    products.add(product);
+                }
                 novo();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -248,7 +252,7 @@ public class ProductMB implements Serializable {
 
     public void removeFlavor(FlavorPizza fla) {
         product.getFlavorsPizza().remove(fla);
-        System.out.println("SIZE: "+product.getFlavorsPizza());
+        System.out.println("SIZE: " + product.getFlavorsPizza());
     }
 
 }
