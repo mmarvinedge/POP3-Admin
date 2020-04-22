@@ -10,6 +10,7 @@ import com.metremobbi.model.Product;
 import com.metremobbi.model.Attribute;
 import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
+import com.metremobbi.model.FlavorPizza;
 import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
@@ -69,6 +70,9 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private AttributeService attService;
+    @Getter
+    @Setter
+    private FlavorPizza flavorPizza = new FlavorPizza();
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -98,20 +102,18 @@ public class ProductMB implements Serializable {
     public void get() throws IOException {
         products = service.getProducts();
         categoryList = service.getCategoryList();
-        System.out.println("CATEGORIAS: " + Arrays.toString(categoryList.toArray()));
+    }
+
+    public void update(Product p) throws IOException {
+        service.putProduct(p);
     }
 
     public void save() throws IOException {
-        System.out.println("id produto " + product.getId());
-        System.out.println("produto " + product.getName());
-        if (!attribute.getValues().isEmpty()) {
-            addAttributesInProduct();
-        }
+
         if (product.getId() == null) {
             try {
                 service.postProduct(product);
                 //products.add(product);
-                System.out.println("Produto: " + product.toString() + " salvo com sucesso");
                 addDetailMessage("Produto Salvo com sucesso!");
                 products.add(product);
                 novo();
@@ -121,7 +123,6 @@ public class ProductMB implements Serializable {
             }
         } else {
             service.putProduct(product);
-            System.out.println("Produto: " + product.toString() + " atualizado com sucesso");
             addDetailMessage("Produto atualizado com sucesso!");
             novo();
         }
@@ -130,7 +131,6 @@ public class ProductMB implements Serializable {
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
-        System.out.println(selectedProducts.size() + " deletados com sucesso!");
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
@@ -152,6 +152,31 @@ public class ProductMB implements Serializable {
         System.out.println("value Category: " + product.getCategoryMain().getName());
     }
 
+    public void addAttributeCorrect() throws IOException {
+        if (product.getAttributes() == null) {
+            product.setAttributes(new ArrayList());
+        }
+        Attribute atr = new Attribute();
+        atr.setQuantity(1);
+        product.getAttributes().add(atr);
+    }
+
+    public void addAttributeValue(Attribute at) throws IOException {
+        if (at.getValues() == null) {
+            at.setValues(new ArrayList());
+        }
+        AttributeValue atr = new AttributeValue();
+        at.getValues().add(atr);
+    }
+
+    public void removeAtribute(Attribute atr) {
+        product.getAttributes().remove(atr);
+    }
+
+    public void removeAtributeValue(Attribute at, AttributeValue atv) {
+        at.getValues().remove(atv);
+    }
+
     public void addAttribute() throws IOException {
         if (product.getAttributes() == null) {
             product.setAttributes(new ArrayList());
@@ -159,7 +184,6 @@ public class ProductMB implements Serializable {
 
 //        if (type.equalsIgnoreCase("normal") && attribute.getValues().size() == 0) {
         if (type.equalsIgnoreCase("normal") && attribute.getValues() == null) {
-            System.out.println("criou atributo");
             createAttributes();
         }
         AttributeValue av = new AttributeValue();
@@ -188,6 +212,13 @@ public class ProductMB implements Serializable {
             product.getAttributes().get(0).setValues(a.getValues());
         } else {
             //editar o attribute
+            Attribute a = attService.putAttribute(attribute);
+            a.getValues().forEach(v -> {
+                v.setAttribute_sku(a.getSku());
+            });
+            product.setAttributes(new ArrayList<>());
+            product.getAttributes().add(a);
+            product.getAttributes().get(0).setValues(a.getValues());
 
         }
 
@@ -202,9 +233,22 @@ public class ProductMB implements Serializable {
 
     public void setProductComplete() {
         product = selectedProducts.get(0);
-        if (product.getAttributes() != null && product.getAttributes().size() > 0) {
+        if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
+    }
+
+    public void addFlavor() {
+        if (product.getFlavorsPizza() == null) {
+            product.setFlavorsPizza(new ArrayList());
+        }
+        product.getFlavorsPizza().add(flavorPizza);
+        flavorPizza = new FlavorPizza();
+    }
+
+    public void removeFlavor(FlavorPizza fla) {
+        product.getFlavorsPizza().remove(fla);
+        System.out.println("SIZE: "+product.getFlavorsPizza());
     }
 
 }

@@ -78,7 +78,6 @@ public class UserMB implements Serializable {
             try {
                 user.setCompanyId(logonMB.getCurrentUser().getCompanyId());
                 service.postUser(user);
-                System.out.println("Usuário " + user.getName() + " inserido com sucesso!");
                 addDetailMessage("Usuário inserido com sucesso.");
                 users.add(user);
                 novo();

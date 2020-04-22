@@ -38,6 +38,13 @@ public class Product implements Serializable {
     private List<Category> categories;
     @JsonIgnore
     private List<Attribute> attributes;
+    private String printer;
+    private Boolean promo;
+
+    private String sizePizza;
+    private Integer maxPizza;
+    private List<FlavorPizza> flavorsPizza;
+    private String rulePricePizza;
 
     public String getId() {
         return id;
@@ -153,7 +160,55 @@ public class Product implements Serializable {
     public void setCategoryMain(Category categoryMain) {
         this.categoryMain = categoryMain;
     }
-    
+
+    public String getPrinter() {
+        return printer;
+    }
+
+    public void setPrinter(String printer) {
+        this.printer = printer;
+    }
+
+    public Boolean getPromo() {
+        return promo;
+    }
+
+    public void setPromo(Boolean promo) {
+        this.promo = promo;
+    }
+
+    public String getSizePizza() {
+        return sizePizza;
+    }
+
+    public void setSizePizza(String sizePizza) {
+        this.sizePizza = sizePizza;
+    }
+
+    public Integer getMaxPizza() {
+        return maxPizza;
+    }
+
+    public void setMaxPizza(Integer maxPizza) {
+        this.maxPizza = maxPizza;
+    }
+
+    public List<FlavorPizza> getFlavorsPizza() {
+        return flavorsPizza;
+    }
+
+    public void setFlavorsPizza(List<FlavorPizza> flavorsPizza) {
+        this.flavorsPizza = flavorsPizza;
+    }
+
+    public String getRulePricePizza() {
+        return rulePricePizza;
+    }
+
+    public void setRulePricePizza(String rulePricePizza) {
+        this.rulePricePizza = rulePricePizza;
+    }
+
     @Override
     public String toString() {
         return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", attributes=" + attributes + '}';

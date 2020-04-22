@@ -35,7 +35,6 @@ public class ProductService {
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public List<Product> getProducts() throws IOException {
-        System.out.println(companyID);
         List<Product> saida = new ArrayList();
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/")
@@ -48,7 +47,6 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
 
             saida = new Gson().fromJson(json, new TypeToken<List<Product>>() {
             }.getType());
@@ -58,9 +56,8 @@ public class ProductService {
         }
         return saida;
     }
-    
-    public Product getProduct(Product product){
-        System.out.println(companyID);
+
+    public Product getProduct(Product product) {
         Product saida = new Product();
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/" + product.getId())
@@ -73,7 +70,6 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
 
             saida = new Gson().fromJson(json, Product.class);
         } catch (Exception e) {
@@ -84,10 +80,10 @@ public class ProductService {
     }
 
     public void postProduct(Product product) throws IOException {
-        System.out.println(Constantes.URL);
         product.setCompanyId(companyID);
         product.setCategories(new ArrayList());
         product.getCategories().add(product.getCategoryMain());
+        System.out.println("JSON: "+new Gson().toJson(product));
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
@@ -96,7 +92,7 @@ public class ProductService {
                 .build();
         Response response = client.newCall(request).execute();
         ResponseBody b = response.body();
-        System.out.println(response.body().string());
+        String json = response.body().string();
     }
 
     public void deleteProduct(List<Product> products) throws IOException {
@@ -106,13 +102,13 @@ public class ProductService {
                     .url(Constantes.URL + "/product/")
                     .delete(body)
                     .build();
-            System.out.println("vou deletar o produto " + p.getName());
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+            String json = response.body().string();
         }
     }
 
     public void putProduct(Product product) throws IOException {
+        System.out.println("GSON: "+new Gson().toJson(product));
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/")
@@ -120,7 +116,7 @@ public class ProductService {
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        String json = response.body().string();
     }
 
     //find the category in api
@@ -136,7 +132,6 @@ public class ProductService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println("Categorias: " + json);
             saida = new Gson().fromJson(json, new TypeToken<List<Category>>() {
             }.getType());
         } catch (Exception e) {

@@ -35,3 +35,17 @@ a#logout {
         padding-top:100px;
     }
 }
+
+body fieldset.ui-fieldset legend.ui-fieldset-legend {
+    background: #3c8dbc !important;
+    border-color: #3c8dbc !important;
+    color: white !important;
+    width: auto !important;
+    text-shadow: none !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    border-width: 0;
+    padding: 0.1em 0em !important;
+    background: #fff;
+}
