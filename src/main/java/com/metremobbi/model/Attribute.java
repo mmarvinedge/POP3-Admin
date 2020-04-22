@@ -15,7 +15,7 @@ import java.util.List;
  * @author PICHAU
  */
 public class Attribute implements Serializable {
-    
+
     private String id;
     private String sku;
     private String name;
@@ -24,6 +24,7 @@ public class Attribute implements Serializable {
     private Boolean highestPrice;
     private String quantityType;
     private Integer quantity;
+    private String rule;
     @JsonIgnore
     private String companyId;
     private List<AttributeValue> values;
@@ -108,10 +109,17 @@ public class Attribute implements Serializable {
         this.companyId = companyId;
     }
 
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
     @Override
     public String toString() {
         return "Attribute{" + "id=" + id + ", sku=" + sku + ", name=" + name + ", description=" + description + ", type=" + type + ", highestPrice=" + highestPrice + ", quantityType=" + quantityType + ", quantity=" + quantity + ", companyId=" + companyId + ", values=" + values + '}';
     }
-    
 
 }

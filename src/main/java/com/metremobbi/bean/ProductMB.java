@@ -10,6 +10,7 @@ import com.metremobbi.model.Product;
 import com.metremobbi.model.Attribute;
 import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
+import com.metremobbi.model.FlavorPizza;
 import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
@@ -69,6 +70,9 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private AttributeService attService;
+    @Getter
+    @Setter
+    private FlavorPizza flavorPizza = new FlavorPizza();
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -105,9 +109,7 @@ public class ProductMB implements Serializable {
     }
 
     public void save() throws IOException {
-        if (attribute != null && attribute.getValues() != null && !attribute.getValues().isEmpty()) {
-            addAttributesInProduct();
-        }
+
         if (product.getId() == null) {
             try {
                 service.postProduct(product);
@@ -148,6 +150,31 @@ public class ProductMB implements Serializable {
 
     public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
+    }
+
+    public void addAttributeCorrect() throws IOException {
+        if (product.getAttributes() == null) {
+            product.setAttributes(new ArrayList());
+        }
+        Attribute atr = new Attribute();
+        atr.setQuantity(1);
+        product.getAttributes().add(atr);
+    }
+
+    public void addAttributeValue(Attribute at) throws IOException {
+        if (at.getValues() == null) {
+            at.setValues(new ArrayList());
+        }
+        AttributeValue atr = new AttributeValue();
+        at.getValues().add(atr);
+    }
+
+    public void removeAtribute(Attribute atr) {
+        product.getAttributes().remove(atr);
+    }
+
+    public void removeAtributeValue(Attribute at, AttributeValue atv) {
+        at.getValues().remove(atv);
     }
 
     public void addAttribute() throws IOException {
@@ -209,6 +236,19 @@ public class ProductMB implements Serializable {
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
+    }
+
+    public void addFlavor() {
+        if (product.getFlavorsPizza() == null) {
+            product.setFlavorsPizza(new ArrayList());
+        }
+        product.getFlavorsPizza().add(flavorPizza);
+        flavorPizza = new FlavorPizza();
+    }
+
+    public void removeFlavor(FlavorPizza fla) {
+        product.getFlavorsPizza().remove(fla);
+        System.out.println("SIZE: "+product.getFlavorsPizza());
     }
 
 }
