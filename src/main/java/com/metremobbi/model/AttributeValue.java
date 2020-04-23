@@ -13,13 +13,15 @@ import java.math.BigDecimal;
  * @author Márvin Edge
  */
 public class AttributeValue implements Serializable {
-    
+
     private String id;
     private String sku;
     private String attribute_sku;
     private String name;
     private String description;
     private BigDecimal price;
+    private BigDecimal quantity;
+    private BigDecimal total;
 
     public String getId() {
         return id;
@@ -68,5 +70,21 @@ public class AttributeValue implements Serializable {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
 }
