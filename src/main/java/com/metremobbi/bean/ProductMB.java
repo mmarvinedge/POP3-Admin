@@ -242,6 +242,15 @@ public class ProductMB implements Serializable {
             attribute = product.getAttributes().get(0);
         }
     }
+    
+    public void copyProduct(){
+        product = new Product();
+        setProductComplete();
+        product.setId(null);
+        product.setSku(null);
+        attribute.setId(null);
+        attribute.setSku(null);
+    }
 
     public void addFlavor() {
         if (product.getFlavorsPizza() == null) {
