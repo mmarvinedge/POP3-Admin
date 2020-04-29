@@ -28,6 +28,7 @@ import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 
@@ -115,7 +116,7 @@ public class ProductMB implements Serializable {
                 service.postProduct(product);
                 //products.add(product);
                 addDetailMessage("Produto Salvo com sucesso!");
-                System.out.println("INDEX:> "+products.indexOf(product));
+                System.out.println("INDEX:> " + products.indexOf(product));
                 if (products.indexOf(product) > -1) {
                     products.set(products.indexOf(product), product);
                 } else {
@@ -236,16 +237,16 @@ public class ProductMB implements Serializable {
         }
     }
 
-    public void setProductComplete() {
-        product = selectedProducts.get(0);
+    public void setProductComplete(Product p) {
+        product = p;
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
     }
-    
-    public void copyProduct(){
+
+    public void copyProduct(Product p) {
         product = new Product();
-        setProductComplete();
+        setProductComplete(p);
         product.setId(null);
         product.setSku(null);
         attribute.setId(null);
