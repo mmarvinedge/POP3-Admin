@@ -115,7 +115,8 @@ public class ProductMB implements Serializable {
                 service.postProduct(product);
                 //products.add(product);
                 addDetailMessage("Produto Salvo com sucesso!");
-                if (products.indexOf(product) >= -1) {
+                System.out.println("INDEX:> "+products.indexOf(product));
+                if (products.indexOf(product) > -1) {
                     products.set(products.indexOf(product), product);
                 } else {
                     products.add(product);

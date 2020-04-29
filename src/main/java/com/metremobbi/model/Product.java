@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.Attribute;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -25,7 +27,7 @@ public class Product implements Serializable {
     private String name;
     @JsonIgnore
     private String order;
-    private Boolean enable;
+    private Boolean enabled;
     private String description;
     private Boolean availability;
     @JsonIgnore
@@ -33,6 +35,7 @@ public class Product implements Serializable {
     @JsonIgnore
     private String imageBase64;
     private Double price;
+    private BigDecimal priceOriginal;
     private String companyId;
     private Category categoryMain;
     private List<Category> categories;
@@ -86,12 +89,12 @@ public class Product implements Serializable {
         this.companyId = companyId;
     }
 
-    public Boolean getEnable() {
-        return enable;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getOrder() {
@@ -209,9 +212,49 @@ public class Product implements Serializable {
         this.rulePricePizza = rulePricePizza;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + " sku=" + sku + ", name=" + name + ", order=" + order + ", enable=" + enable + ", description=" + description + ", availability=" + availability + ", imageType=" + imageType + ", imageBase64=" + imageBase64 + ", price=" + price + ", companyId=" + companyId + ", attributes=" + attributes + '}';
+    public BigDecimal getPriceOriginal() {
+        return priceOriginal;
     }
 
+    public void setPriceOriginal(BigDecimal priceOriginal) {
+        this.priceOriginal = priceOriginal;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.sku);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Product other = (Product) obj;
+        if (!Objects.equals(this.sku, other.sku)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + '}';
+    }
+
+    
+
+  
 }
