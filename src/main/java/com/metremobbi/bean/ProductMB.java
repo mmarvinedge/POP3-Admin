@@ -5,6 +5,7 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.infra.model.ProductDataModel;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import com.metremobbi.model.Product;
 import com.metremobbi.model.Attribute;
@@ -74,6 +75,9 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private FlavorPizza flavorPizza = new FlavorPizza();
+    @Getter
+    @Setter
+    private ProductDataModel productModel;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -102,6 +106,7 @@ public class ProductMB implements Serializable {
 
     public void get() throws IOException {
         products = service.getProducts();
+        productModel = new ProductDataModel(products);
         categoryList = service.getCategoryList();
     }
 
@@ -122,7 +127,7 @@ public class ProductMB implements Serializable {
                 } else {
                     products.add(product);
                 }
-                novo();
+                get();
             } catch (Exception e) {
                 e.printStackTrace();
                 addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
@@ -130,7 +135,7 @@ public class ProductMB implements Serializable {
         } else {
             service.putProduct(product);
             addDetailMessage("Produto atualizado com sucesso!");
-            novo();
+            get();
         }
     }
 
@@ -244,18 +249,20 @@ public class ProductMB implements Serializable {
         }
     }
 
-    public void setProductComplete(Product p) {
-        product = p;
+    //se nao for na linha nao precisa desse
+    public void setProductComplete() {
+        product = selectedProducts.get(0);
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
     }
-
-    public void copyProduct(Product p) {
+    
+    public void copyProduct() {
         product = new Product();
-        setProductComplete(p);
+        setProductComplete();
         product.setId(null);
         product.setSku(null);
+        product.setOrder(null);
         attribute.setId(null);
         attribute.setSku(null);
     }
