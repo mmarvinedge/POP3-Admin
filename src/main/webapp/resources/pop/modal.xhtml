@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="idd" />
+        <cc:attribute name="title" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <!-- [1] -->
+        <div id="#{cc.attrs.idd}" aria-hidden="true">
+
+            <!-- [2] -->
+            <div tabindex="-1" >
+
+                <!-- [3] -->
+                <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+
+
+                    <header>
+                        <h2 id="modal-1-title">
+                           #{cc.attrs.title}
+                        </h2>
+
+                        <!-- [4] -->
+                        <button aria-label="Close modal" onclick="MicroModal.close('#{cc.attrs.idd}');"></button>
+                    </header>
+
+                    <div id="modal-1-content">
+                        <cc:insertChildren />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</html>

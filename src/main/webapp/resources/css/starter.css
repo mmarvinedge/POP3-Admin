@@ -49,3 +49,7 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend {
     padding: 0.1em 0em !important;
     background: #fff;
 }
+
+.ui-accordion .ui-accordion-content{
+    padding: 0px !important;
+}

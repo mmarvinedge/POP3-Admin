@@ -23,6 +23,7 @@ public class Company {
     private Address address;
     private BigDecimal deliveryCost;
     private TimeOpen time;
+    private String funcionamento;
 
     public String getId() {
         return id;
@@ -102,6 +103,14 @@ public class Company {
 
     public void setTime(TimeOpen time) {
         this.time = time;
+    }
+
+    public String getFuncionamento() {
+        return funcionamento;
+    }
+
+    public void setFuncionamento(String funcionamento) {
+        this.funcionamento = funcionamento;
     }
 
 }
