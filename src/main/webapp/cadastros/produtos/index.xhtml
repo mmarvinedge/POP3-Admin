@@ -30,7 +30,7 @@
                         <p:commandButton action="#{productMB.novo}" icon="fa fa-plus"
                                          value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"/>
                         <p:spacer width="5"/>
-                        <p:splitButton value="Editar" action="#{productMB.setProductComplete(productMB.selectedProducts.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:splitButton value="Editar" action="#{productMB.setProductComplete()}" update="@(.ui-dialog)" styleClass="btn-info"
                                        disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                        oncomplete="PF('modalNewProduct').show()" icon="fa fa-edit">
                             <p:menuitem styleClass="btn-primary" icon="fa fa-copy" value="Copiar"  action="#{productMB.copyProduct()}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()"  />
@@ -113,9 +113,9 @@
                                 <p:ajax event="itemSelect" update="@this"  listener="#{productMB.update(p)}"/>
                             </p:selectOneMenu>
                         </p:column>
-<!--                        <p:column headerText="*" width="50" >
-                            <p:commandButton   styleClass="btn-primary" icon="fa fa-copy"  action="#{productMB.copyProduct(p)}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()" />
-                        </p:column>-->
+                        <!--                        <p:column headerText="*" width="50" >
+                                                    <p:commandButton   styleClass="btn-primary" icon="fa fa-copy"  action="#{productMB.copyProduct(p)}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()" />
+                                                </p:column>-->
 
                     </p:dataTable>
                 </div>
