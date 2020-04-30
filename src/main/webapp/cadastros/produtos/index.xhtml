@@ -131,8 +131,8 @@
 
 
         <p:dialog widgetVar="modalNewProduct" id="modalNewProduct"  header="Cadastro de Produtos" draggable="false"
-                  modal="true" position="center" responsive="false" resizable="false" positionType="absolute"
-                  width="850" height="655">
+                  modal="true" position="top" responsive="false" resizable="false" positionType="absolute"
+                  width="850" height="695">
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
@@ -263,7 +263,7 @@
                                     <h:panelGroup id="typeProduct">
                                         <h:panelGroup rendered="#{productMB.type == 'normal'}">
 
-                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="    width: 800px;">
+                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="    width: 790px;">
                                                 <p:commandButton icon="fa fa-plus"  class="btn-success" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: auto;;" action="#{productMB.addAttributeCorrect()}" update="blockAtributes" immediate="true"  />
 
                                                 <div class="ui-g ui-fluid" style="width: 780px !important;">
@@ -334,7 +334,7 @@
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{productMB.type == 'pizza' and productMB.product.categoryMain.name == 'Pizzas'}">
-                                            <p:fieldset legend="Configuracoes de Pizza" style="width: 800px;">
+                                            <p:fieldset legend="Configuracoes de Pizza" style="width: 770px;">
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-4 ui-g-4">
                                                         <p:outputLabel value="Tamanho"  for="tam"/>
@@ -370,7 +370,7 @@
                                                         <p:outputLabel value="Sabores / Preço" /><br/>
                                                         <p:inputText value="#{productMB.flavorPizza.sku}" style="width: 15% !important;" placeholder="SKU" />
                                                         <p:inputText value="#{productMB.flavorPizza.flavor}" style="width: 45% !important;" id="flava"  placeholder="Sabor"/>
-                                                        <p:inputNumber value="#{productMB.flavorPizza.price}" symbol="R$ " decimalSeparator="," thousandSeparator="."  style="width: 20% !important;" id="flavaPri" />
+                                                        <p:inputNumber value="#{productMB.flavorPizza.price}" symbol="R$ " decimalSeparator="," thousandSeparator="." id="flavaPri" placeholder="Valor" size="15"  />
                                                         <p:commandButton icon="fa fa-plus" styleClass="btn-primary"   style="width: 10% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri"/>
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" >
