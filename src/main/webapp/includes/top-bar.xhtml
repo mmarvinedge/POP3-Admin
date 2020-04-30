@@ -32,21 +32,14 @@
             <ul class="dropdown-menu">
                 <li class="user-header">
                     <div class="hidden-xs">
-                        <pe:gravatar style="border-radius: 50%"
-                                     value="rmpestano@gmail.com"/>
+                        <img style="border-radius: 50%" width="80" src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png"/>
                     </div>
-                    <p>
-                        <small>Subtitle</small>
-                    </p>
                 </li>
                 <li class="user-footer">
                     <h:form prependId="false">
-                        <div class="pull-left">
-                            <p:commandLink styleClass="btn btn-danger" value="Change password"/>
-                        </div>
-                        <div class="pull-right">
-                            <p:commandLink id="logout" action="#{logoutMB.doLogout}" title="Logoff">
-                                <i class="fa fa-sign-out fa-2x"></i>
+                        <div class="pull-right text-center">
+                            <p:commandLink id="logout" value="Sair" action="#{logoutMB.doLogout}" title="Logoff">
+                                <p:spacer width="10"/> <i class="fa fa-sign-out fa-2x"></i>
                             </p:commandLink>
                         </div>
                     </h:form>
