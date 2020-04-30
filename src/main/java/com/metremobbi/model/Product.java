@@ -28,9 +28,7 @@ public class Product implements Serializable {
     private Boolean enable;
     private String description;
     private Boolean availability;
-    @JsonIgnore
     private String imageType;
-    @JsonIgnore
     private String imageBase64;
     private Double price;
     private String companyId;

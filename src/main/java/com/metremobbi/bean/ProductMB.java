@@ -147,6 +147,13 @@ public class ProductMB implements Serializable {
             finput.read(imageBytes, 0, imageBytes.length);
             finput.close();
             String imageStr = Base64.encodeBase64String(imageBytes);
+            if(event.getFile().getFileName().contains(".jpeg")) {
+                product.setImageType("JPEG");
+            } else if (event.getFile().getFileName().contains(".jpg")) {
+                product.setImageType("JPG");
+            } else if (event.getFile().getFileName().contains(".png")) {
+                product.setImageType("PNG");
+            } 
             product.setImageBase64(imageStr);
         } catch (Exception e) {
         }

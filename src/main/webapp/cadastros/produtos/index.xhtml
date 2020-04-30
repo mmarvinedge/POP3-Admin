@@ -118,7 +118,7 @@
 
 
         <p:dialog widgetVar="modalNewProduct" id="modalNewProduct"  header="Cadastro de Produtos"
-                  modal="true" position="top" responsive="true" resizable="false">
+                  modal="true" position="center" responsive="true" width="850" height="650">
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
@@ -202,19 +202,19 @@
                                             <small>Somente PNG (Ideal 256x256) fundo transparente</small>
                                             <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
                                                           uploadLabel="Enviar" cancelLabel="Cancelar" label="Escolher" auto="false"
-                                                          update="photo" sizeLimit="500000" fileLimit="3" allowTypes="/(\.|\/)(png)$/" />
+                                                          update="photo" sizeLimit="500000" fileLimit="3"  />
                                             <hr/>
                                             <h:panelGroup id="photo">
                                                 <h:panelGroup rendered="#{productMB.product.imageBase64 != null}">
-                                                    <img src="data:#{productMB.product.imageType};base64, #{productMB.product.imageBase64}" width="200" height="200" />
+                                                    <img src="#{productMB.product.imageBase64}" />
                                                 </h:panelGroup>
                                             </h:panelGroup>
                                         </div>
                                     </div>
-                                    <div class="ui-sm-12 ui-g-8 ">
+                                    <!--<div class="ui-sm-12 ui-g-8 ">
                                         <p:outputLabel value="URL Foto" />
-                                        <p:inputText value="#{productMB.product.imageBase64}" />
-                                    </div>
+                                        <p:inputText value="{productMB.product.imageBase64}" />
+                                    </div>-->
                                 </div>
                             </div>
                         </p:panel>
@@ -222,7 +222,7 @@
                     <p:tab title="Regras" >
                         <p:panel id="pnl2" styleClass="box-primary card">
 
-                            <div class="box-primary">
+                            <div class="box-primary" style="width: 850px !important;">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-12 ui-g-8">
                                         <h:outputLabel value="Tipo do produto" /><br/>
@@ -237,10 +237,10 @@
                                     <h:panelGroup id="typeProduct">
                                         <h:panelGroup rendered="#{productMB.type == 'normal'}">
 
-                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="    width: 600px;">
+                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="    width: 800px;">
                                                 <p:commandButton icon="fa fa-plus"  class="btn-success" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: auto;;" action="#{productMB.addAttributeCorrect()}" update="blockAtributes" immediate="true"  />
 
-                                                <div class="ui-g ui-fluid">
+                                                <div class="ui-g ui-fluid" style="width: 780px !important;">
                                                     <h:panelGroup  layout="block" id="blockAtributes">
                                                         <div class="ui-sm-12 ui-g-12">
 
@@ -297,7 +297,7 @@
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{productMB.type == 'pizza' and productMB.product.categoryMain.name == 'Pizzas'}">
-                                            <p:fieldset legend="Configuracoes de Pizza">
+                                            <p:fieldset legend="Configuracoes de Pizza" style="width: 800px;">
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-8 ui-g-6">
                                                         <p:outputLabel value="Tamanho"  for="tam"/>
@@ -321,18 +321,18 @@
                                                 </div>
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-4 ui-g-4">
-                                                            <p:outputLabel value="Regra de Preço"  for="reg"/>
-                                                            <p:selectOneMenu id="reg"  value="#{productMB.product.rulePricePizza}">
-                                                                <f:selectItem itemLabel="Média" itemValue="Média" />
-                                                                <f:selectItem itemLabel="Preço da Maior" itemValue="Maior" />
-                                                            </p:selectOneMenu>
+                                                        <p:outputLabel value="Regra de Preço"  for="reg"/>
+                                                        <p:selectOneMenu id="reg"  value="#{productMB.product.rulePricePizza}">
+                                                            <f:selectItem itemLabel="Média" itemValue="Média" />
+                                                            <f:selectItem itemLabel="Preço da Maior" itemValue="Maior" />
+                                                        </p:selectOneMenu>
                                                     </div>
                                                 </div>
                                                 <div class="ui-g ui-fluid">
-                                                    <div class="ui-sm-4 ui-g-4">
+                                                    <div class="ui-sm-6 ui-g-6">
                                                         <p:outputLabel value="Sabores / Preço" /><br/>
                                                         <p:inputText value="#{productMB.flavorPizza.flavor}" style="width: 50% !important;" id="flava" />
-                                                        <p:inputText value="#{productMB.flavorPizza.price}" style="width: 30% !important;" id="flavaPri"  />
+                                                        <p:inputNumber symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.flavorPizza.price}" style="width: 25% !important; margin-left: 5px;margin-right: 5px;" id="flavaPri"  />
                                                         <p:commandButton icon="fa fa-plus" styleClass="btn-primary"   style="width: 19% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri"/>
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" >
@@ -340,7 +340,12 @@
                                                                 #{flav.flavor}
                                                             </p:column>
                                                             <p:column headerText="Preço">
-                                                                #{flav.price}
+                                                                <h:outputText value="#{flav.price}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                                <span class="help-block"> 
+                                                                    <p:message for="inptPrice" /> 
+                                                                </span>
                                                             </p:column>
                                                             <p:column headerText="*">
                                                                 <p:commandButton styleClass="btn-danger" action="#{productMB.removeFlavor(flav)}" icon="fa fa-trash" update="tblFlavors" immediate="true"/>
