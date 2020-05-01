@@ -32,7 +32,6 @@ public class Product implements Serializable {
     private Boolean availability;
     @JsonIgnore
     private String imageType;
-    @JsonIgnore
     private String imageBase64;
     private Double price;
     private BigDecimal priceOriginal;
