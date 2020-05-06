@@ -53,5 +53,13 @@ public class CompanyMB {
             e.printStackTrace();
         }
     }
+    public void save2() {
+        try {
+            company = service.saveCompany(company);
+            addDetailMessage("Dados atualizados!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

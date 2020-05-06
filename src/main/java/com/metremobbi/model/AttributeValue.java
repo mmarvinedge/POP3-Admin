@@ -22,6 +22,7 @@ public class AttributeValue implements Serializable {
     private BigDecimal price;
     private BigDecimal quantity;
     private BigDecimal total;
+    private Boolean disabled;
 
     public String getId() {
         return id;
@@ -85,6 +86,14 @@ public class AttributeValue implements Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
 }

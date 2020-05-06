@@ -281,19 +281,16 @@
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>
-                                                                            <div class="ui-sm-2 ui-g-2">
-                                                                                Regra
-                                                                                <p:selectOneMenu value="#{atr.rule}" converter="Converter">
-                                                                                    <f:selectItem itemLabel="Multiple" itemValue="Multiple" />
-                                                                                    <f:selectItem itemLabel="Single" itemValue="Single" />
-                                                                                    <p:ajax event="itemSelect" update="@this" />
-                                                                                </p:selectOneMenu>
-                                                                            </div>
+
                                                                             <div class="ui-sm-2 ui-g-2">
                                                                                 Max
                                                                                 <p:inputText value="#{atr.quantity}" >
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
+                                                                            </div>
+                                                                            <div class="ui-sm-2 ui-g-2">
+                                                                                Parar a venda?
+                                                                                <p:toggleSwitch value="#{atr.disabled}"  />
                                                                             </div>
                                                                             <div class="ui-sm-12 ui-g-12">
                                                                                 <p:commandButton icon="fa fa-plus" update=":frmNewProduct:tabs:rpt:#{vari.index}:acord:tblAttributes" class="btn-success" style="position: absolute !important;right: 60px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.addAttributeValue(atr)}"  immediate="true"  />
@@ -305,6 +302,10 @@
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputText>
                                                                                     </p:column>
+                                                                                    <p:column headerText="Parar a venda" width="150" style="text-align: left">
+                                                                                        <p:toggleSwitch value="#{att.disabled}"  />
+                                                                                    </p:column>
+
                                                                                     <p:column headerText="Produto" style="text-align: left">
                                                                                         <p:inputText id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório">
                                                                                             <p:ajax event="blur" process="@this" />

@@ -22,6 +22,7 @@ public class Attribute implements Serializable {
     private String description;
     private String type;
     private Boolean highestPrice;
+    private Boolean disabled;
     private String quantityType;
     private Integer quantity;
     private String rule;
@@ -116,6 +117,16 @@ public class Attribute implements Serializable {
     public void setRule(String rule) {
         this.rule = rule;
     }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+    
+    
 
     @Override
     public String toString() {
