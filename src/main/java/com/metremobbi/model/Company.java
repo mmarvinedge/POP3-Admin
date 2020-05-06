@@ -24,6 +24,7 @@ public class Company {
     private BigDecimal deliveryCost;
     private TimeOpen time;
     private String funcionamento;
+    private String messageWelcome;
 
     public String getId() {
         return id;
@@ -112,5 +113,18 @@ public class Company {
     public void setFuncionamento(String funcionamento) {
         this.funcionamento = funcionamento;
     }
+
+    public String getMessageWelcome() {
+        if(messageWelcome == null){
+            messageWelcome = "Para iniciar seu pedido";
+        }
+        return messageWelcome;
+    }
+
+    public void setMessageWelcome(String messageWelcome) {
+        this.messageWelcome = messageWelcome;
+    }
+    
+    
 
 }
