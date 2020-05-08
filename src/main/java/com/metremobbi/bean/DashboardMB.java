@@ -73,7 +73,6 @@ public class DashboardMB implements Serializable {
             orders = listOrder.size();
             totalDelivery = listOrder.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
                     .map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
-            products = listOrder.stream().forEach(cnsmr)
         } catch (IOException ex) {
             listOrder = new ArrayList();
             totalSold = 0.0;
