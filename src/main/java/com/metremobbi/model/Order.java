@@ -14,16 +14,127 @@ import java.util.List;
  */
 public class Order {
     
+    private String id;
+
+    private String num_order;
+    private ClientInfo clientInfo;
+    private Boolean delivery;
+    private String forma;
+    private Boolean troco;
+    private Double trocoPara;
+    private Address address;
+    private Payment payment;
+    private DeliverTime deliverTime;
+    private String status;
     private Integer itemNumber;
-    private String coupon; // cupom de desconto
-    private Double discountValue; // desconto do cupom
-    private Double deliveryCost; // taxa de entrega
+    private String deliveryDateTime;
+    private String deliveryDate;
+    private String deliveryTime;
+    private Merchant merchant;
+    private List<Item> products = null;
+    private List<StatusHistory> statusHistory = null;
+    private String coupon;
+    private Double discountValue;
+    private Double deliveryCost;
     private Double subtotal;
     private Double total;
-    private List<Product> products;
-    private STATUS status;
-    private StatusHistory statusHistory;
-     
+    private String updatedAt;
+    private String createdAt;
+    private String store;
+    private String origin;
+    private String restaurant;
+    private String observations;
+    private Integer deliveryLimit;
+    private String discount;
+    private String dtRegister;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNum_order() {
+        return num_order;
+    }
+
+    public void setNum_order(String num_order) {
+        this.num_order = num_order;
+    }
+
+    public ClientInfo getClientInfo() {
+        return clientInfo;
+    }
+
+    public void setClientInfo(ClientInfo clientInfo) {
+        this.clientInfo = clientInfo;
+    }
+
+    public Boolean getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Boolean delivery) {
+        this.delivery = delivery;
+    }
+
+    public String getForma() {
+        return forma;
+    }
+
+    public void setForma(String forma) {
+        this.forma = forma;
+    }
+
+    public Boolean getTroco() {
+        return troco;
+    }
+
+    public void setTroco(Boolean troco) {
+        this.troco = troco;
+    }
+
+    public Double getTrocoPara() {
+        return trocoPara;
+    }
+
+    public void setTrocoPara(Double trocoPara) {
+        this.trocoPara = trocoPara;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public DeliverTime getDeliverTime() {
+        return deliverTime;
+    }
+
+    public void setDeliverTime(DeliverTime deliverTime) {
+        this.deliverTime = deliverTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getItemNumber() {
         return itemNumber;
@@ -31,6 +142,54 @@ public class Order {
 
     public void setItemNumber(Integer itemNumber) {
         this.itemNumber = itemNumber;
+    }
+
+    public String getDeliveryDateTime() {
+        return deliveryDateTime;
+    }
+
+    public void setDeliveryDateTime(String deliveryDateTime) {
+        this.deliveryDateTime = deliveryDateTime;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
+
+    public List<Item> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Item> products) {
+        this.products = products;
+    }
+
+    public List<StatusHistory> getStatusHistory() {
+        return statusHistory;
+    }
+
+    public void setStatusHistory(List<StatusHistory> statusHistory) {
+        this.statusHistory = statusHistory;
     }
 
     public String getCoupon() {
@@ -73,28 +232,76 @@ public class Order {
         this.total = total;
     }
 
-    public STATUS getStatus() {
-        return status;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setStatus(STATUS status) {
-        this.status = status;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public StatusHistory getStatusHistory() {
-        return statusHistory;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setStatusHistory(StatusHistory statusHistory) {
-        this.statusHistory = statusHistory;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public String getStore() {
+        return store;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setStore(String store) {
+        this.store = store;
     }
-    
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public Integer getDeliveryLimit() {
+        return deliveryLimit;
+    }
+
+    public void setDeliveryLimit(Integer deliveryLimit) {
+        this.deliveryLimit = deliveryLimit;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getDtRegister() {
+        return dtRegister;
+    }
+
+    public void setDtRegister(String dtRegister) {
+        this.dtRegister = dtRegister;
+    }
+
 }

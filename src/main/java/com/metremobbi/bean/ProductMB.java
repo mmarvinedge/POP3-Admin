@@ -12,14 +12,15 @@ import com.metremobbi.model.Attribute;
 import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.FlavorPizza;
+import com.metremobbi.model.Order;
 import com.metremobbi.service.AttributeService;
+import com.metremobbi.service.OrderService;
 import com.metremobbi.service.ProductService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -29,7 +30,6 @@ import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 
@@ -47,6 +47,9 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private ProductService service;
+    @Getter
+    @Setter
+    private OrderService orderService;
     @Getter
     @Setter
     private List<Product> products;
@@ -78,6 +81,15 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private ProductDataModel productModel;
+    @Getter
+    @Setter
+    private Double totalSold, totalDelivery;
+    @Getter
+    @Setter
+    private Integer orders;
+    @Getter
+    @Setter
+    private List<Order> listOrder;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -88,6 +100,8 @@ public class ProductMB implements Serializable {
         categoryList = new ArrayList<>();
         type = "normal";
         attribute = new Attribute();
+        listOrder = new ArrayList();
+        orderService = new OrderService();
     }
 
     public void novo() {
@@ -98,6 +112,11 @@ public class ProductMB implements Serializable {
     public void init() {
         try {
             get();
+            listOrder = orderService.getOrdersWeek();
+            System.out.println(listOrder.size());
+            totalSold = listOrder.stream().map(o -> o.getTotal().doubleValue()).mapToDouble(Double::doubleValue).sum();
+            orders = listOrder.size();
+            totalDelivery = listOrder.stream().map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
         } catch (IOException ex) {
             products = new ArrayList();
             categoryList = new ArrayList();
