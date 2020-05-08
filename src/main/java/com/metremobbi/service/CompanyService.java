@@ -6,9 +6,15 @@
 package com.metremobbi.service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.metremobbi.model.Company;
+import com.metremobbi.model.dto.Bairro;
 import com.metremobbi.util.Constantes;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.faces.bean.ViewScoped;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -61,5 +67,57 @@ public class CompanyService {
         String b = response.body().string();
         Company a = new Gson().fromJson(b, Company.class);
         return a;
+    }
+
+    public List<String> getBairros(String city) throws IOException {
+        List<String> saida = new ArrayList();
+        Request request = new Request.Builder()
+                .url("http://metre.ddns.net:88/bairro.php?cidade=" + city)
+                .get()
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.code() == 202) {
+            throw new IOException("Nenhum dado retornado!");
+        } else {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+        }
+
+        // Get response body
+        String json = response.body().string();
+        List<Bairro> bairs = new Gson().fromJson(json, new TypeToken<List<Bairro>>() {
+        }.getType());
+        for (Bairro bair : bairs) {
+            saida.add(bair.getBairro());
+        }
+        Collections.sort(saida, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        return saida;
+    }
+
+    public Bairro cadastrarBairro(String bairro, String cidade) throws IOException {
+        Request request = new Request.Builder()
+                .url("http://metre.ddns.net:88/cadastrar-bairro.php?bairro=" + bairro + "&cidade=" + cidade)
+                .get()
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.code() == 202) {
+            throw new IOException("Nenhum dado retornado!");
+        } else {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+        }
+
+        // Get response body
+        String json = response.body().string();
+        Bairro b = new Gson().fromJson(json, Bairro.class);
+
+        return b;
     }
 }

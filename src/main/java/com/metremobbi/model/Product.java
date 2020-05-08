@@ -8,8 +8,6 @@ package com.metremobbi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.metremobbi.model.Category;
-import com.metremobbi.model.Attribute;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -47,6 +45,11 @@ public class Product implements Serializable {
     private Integer maxPizza;
     private List<FlavorPizza> flavorsPizza;
     private String rulePricePizza;
+    private ProductDay productDay;
+
+    public Product() {
+        
+    }
 
     public String getId() {
         return id;
@@ -227,6 +230,17 @@ public class Product implements Serializable {
         return hash;
     }
 
+    public ProductDay getProductDay() {
+        if(productDay == null){
+            productDay = new ProductDay();
+        }
+        return productDay;
+    }
+
+    public void setProductDay(ProductDay productDay) {
+        this.productDay = productDay;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -253,7 +267,4 @@ public class Product implements Serializable {
         return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + '}';
     }
 
-    
-
-  
 }

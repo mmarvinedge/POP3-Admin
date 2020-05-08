@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        <ui:param name="title" value="Horarios" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Configuração de Horários
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="frmProduct" >
+            <p:panel>
+                <div class="ui-g" >
+                    <div class="ui-g-2">
+                        <div class="ui-g" >
+                            <div class="ui-g-12">
+                                <p:outputLabel value="Taxa de Entrega Única" /><br/>
+                                <small style="    background: #e75f6d;
+                                       padding: 5px;
+                                       line-height: 3rem;
+                                       border-radius: 5px;
+                                       color: white;"> 
+                                    <i class="fa fa-warning"></i>
+                                    Caso taxa única informar o valor!</small>
+                                <br/>
+                                <p:inputNumber value="#{companyMB.company.deliveryCost}" decimalPlaces="2"  placeholder="Taxa Global"/>
+                            </div>
+
+                            <div class="ui-g-12">
+                                <p:outputLabel value="Cidade" /><br/>
+                                <p:inputText readonly="true" value="#{companyMB.company.address.city}" />
+                            </div>
+                            <div class="ui-g-12">
+                                <strong>Caso o bairro não esteja disponível</strong><br/>
+                                <p:commandButton value="Clique Aqui" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ui-g-10">
+                        <p:pickList id="PojoPickList" value="#{companyMB.dualBairros}" var="baic" effect="bounce" 
+                                    addAllLabel="Adicionar Todos"  
+                                    itemValue="#{baic}" itemLabel="#{baic.bairro}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                    converter="Converter" responsive="true">
+
+                            <f:facet name="sourceCaption">
+                                <center>
+                                    Informe a taxa
+                                    <div  style="width: 150px !important;" >
+                                        <p:inputNumber value="#{companyMB.taxa}" placeholder="Taxa Entrega" decimalPlaces="2" symbol="R$ 0,00" minValue="0,00" />
+                                    </div>
+                                </center>
+                            </f:facet>
+                            <p:ajax event="transfer" listener="#{companyMB.onTransfer}" update="@form" />
+                            <f:facet name="targetCaption">Bairros de Entregas</f:facet>
+
+                            <p:column style="width:85%;">
+                                <h:outputText value="#{baic.bairro}" />
+                            </p:column>
+                            <p:column style="width:15%;">
+                                Taxa <h:outputText value="#{baic.taxa}" >
+                                    <f:convertNumber type="currency" />
+                                </h:outputText>
+                            </p:column>
+                        </p:pickList>
+
+                    </div>
+                </div>
+
+
+                <div class="ui-g" style="border-bottom: 1px solid #ccc;">
+                    <div class="ui-g-12">
+                        <hr/>
+                        <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
+                    </div>
+                </div>
+            </p:panel>
+        </h:form>
+        <script>
+            $(document).ready(function () {
+
+            });
+        </script>
+
+        <p:dialog widgetVar="dlgBairro" header="Novo Bairro" modal="true">
+            <h:form>
+
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <p:messages closable="true" />
+                    </div>
+                    <div class="ui-g-12">
+                        <p:outputLabel value="Nome do Bairro" for="bai" />
+                        <p:inputText id="bai" value="#{companyMB.bairroCadastro}" required="true" requiredMessage="Informe o nome do bairro!" />
+                        <hr/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:commandButton value="Adicionar Bairro"  styleClass="btn-primary" action="#{companyMB.cadastrarBairro()}" update="@form,:frmProduct"/> 
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

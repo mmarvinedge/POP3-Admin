@@ -405,6 +405,42 @@
                             </div>
                         </p:panel>
                     </p:tab>
+                    <p:tab title="Dias" >
+                        <p:panel  styleClass="box-primary card">
+                            <div class="box-primary" style="width: 850px !important;">
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Domingo" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderDom}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Segunda" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSeg}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Terça" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderTer}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Quarta" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderQua}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Quinta" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderQui}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Sexta" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSex}" />
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8">
+                                        <p:outputLabel value="Não Será Vendido no Sábado" /><br/>
+                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSab}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </p:tab>
                 </p:tabView>
                 <div id="main-buttons" style="text-align: right;">
                     <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct" icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="if (!args.validationFailed)  {PF('modalNewProduct').hide();}"/>
