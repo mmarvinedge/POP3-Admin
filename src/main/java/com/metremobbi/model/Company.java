@@ -28,6 +28,7 @@ public class Company {
     private String funcionamento;
     private String messageWelcome;
     private List<Bairro> bairros;
+    private String nameUrl;
 
     public String getId() {
         return id;
@@ -134,6 +135,14 @@ public class Company {
 
     public void setBairros(List<Bairro> bairros) {
         this.bairros = bairros;
+    }
+
+    public String getNameUrl() {
+        return nameUrl;
+    }
+
+    public void setNameUrl(String nameUrl) {
+        this.nameUrl = nameUrl;
     }
 
 }
