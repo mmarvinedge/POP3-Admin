@@ -186,7 +186,28 @@
                         <h3 class="box-title">Ranking de produtos</h3>
                     </div>
                     <div class="box-body" style="display: block;">
-
+                        <p:dataTable value="#{dashboardMB.ranking}" rowIndexVar="var" var="ran" emptyMessage="Não foram vendidos produtos hoje">
+                            <p:column width="35">
+                                <div class="widget-img rounded-lg  m-r-10 p-3 " style="width: 10px; font-size: small">
+                                    <div class="h-100 w-100" >
+                                        <center>
+                                            <i class="fa fa-trophy  #{var > 2 ? 'hidden' : ''}" style="color: #{var == 0 ? '#fdba04' : var == 1 ? '#cccccc' : var == 2 ? '#ffcc99' : ''}" ></i> #{var+1}º 
+                                        </center>
+                                    </div>
+                                </div>
+                            </p:column>
+                            <p:column headerText="Produto" style="font-size: initial">
+                                <h:outputText value="#{ran.product}" style="font-size: initial"/>
+                            </p:column>
+                            <p:column headerText="Quantidade vendida" styleClass="text-right" style="font-size: initial">
+                                <h:outputText value="#{ran.qnt}" style="font-size: initial"/>
+                            </p:column>
+                            <p:column headerText="Total vendido" styleClass="text-right" style="font-size: initial">
+                                <h:outputText value="#{ran.total}" style="font-size: initial">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
                     </div>
                 </div>
             </div>
