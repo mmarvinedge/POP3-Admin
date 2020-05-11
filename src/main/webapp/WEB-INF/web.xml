@@ -70,10 +70,10 @@
     </servlet-mapping>
     
     <!-- Don't need to declare error pages if you keep the default sufix (.xhtml)-->
-    <error-page>
+<!--    <error-page>
         <error-code>403</error-code>
         <location>/403.jsf</location>
-    </error-page>
+    </error-page>-->
     <error-page>
         <exception-type>com.github.adminfaces.template.exception.AccessDeniedException</exception-type>
         <location>/403.jsf</location>
@@ -100,7 +100,7 @@
     </error-page>
     <context-param>
         <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-        <param-value>-1</param-value>
+        <param-value>0</param-value>
         <!-- (-1) habilita o cache indefinidamente e (0) Desabilita-->
     </context-param>
 </web-app>
