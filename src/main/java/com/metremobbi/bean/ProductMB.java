@@ -173,13 +173,13 @@ public class ProductMB implements Serializable {
             finput.read(imageBytes, 0, imageBytes.length);
             finput.close();
             String imageStr = Base64.encodeBase64String(imageBytes);
-            if(event.getFile().getFileName().contains(".jpeg")) {
+            if (event.getFile().getFileName().contains(".jpeg")) {
                 product.setImageType("JPEG");
             } else if (event.getFile().getFileName().contains(".jpg")) {
                 product.setImageType("JPG");
             } else if (event.getFile().getFileName().contains(".png")) {
                 product.setImageType("PNG");
-            } 
+            }
             product.setImageBase64(imageStr);
         } catch (Exception e) {
         }
@@ -275,7 +275,7 @@ public class ProductMB implements Serializable {
             attribute = product.getAttributes().get(0);
         }
     }
-    
+
     public void copyProduct() {
         product = new Product();
         setProductComplete();
@@ -297,6 +297,16 @@ public class ProductMB implements Serializable {
     public void removeFlavor(FlavorPizza fla) {
         product.getFlavorsPizza().remove(fla);
         System.out.println("SIZE: " + product.getFlavorsPizza());
+    }
+
+    public void updateCategorys() {
+        try {
+            service.updatecategorys();
+            addDetailMessage("Categorias Atualizadas!", FacesMessage.SEVERITY_INFO);
+        } catch (Exception e) {
+            addDetailMessage("Não foi possível Atualizar", FacesMessage.SEVERITY_ERROR);
+        }
+
     }
 
 }
