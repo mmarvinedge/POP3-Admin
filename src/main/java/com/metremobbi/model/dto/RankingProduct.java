@@ -5,6 +5,7 @@
  */
 package com.metremobbi.model.dto;
 
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,12 @@ public class RankingProduct {
         this.product = o[0].toString();
         this.qnt = (Double) o[1];
         this.total = (Double) o[2];
+    }
+    
+    public RankingProduct(String name, BigDecimal qnt, BigDecimal total) {
+        this.product = name;
+        this.qnt = qnt.doubleValue();
+        this.total = total.doubleValue();
     }
     
 }

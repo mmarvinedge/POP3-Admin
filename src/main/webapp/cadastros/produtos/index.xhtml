@@ -142,7 +142,7 @@
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-3 ui-g-3 ">
                                         <p:outputLabel value="SKU" for="inptSku"/>
-                                        <p:inputText id="inptSku" value="#{productMB.product.sku}"/>
+                                        <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Campo preenchido automáticamente"/>
                                         <span class="help-block"> 
                                             <p:message for="inptSku" /> 
                                         </span>
@@ -233,7 +233,7 @@
                                             <hr/>
                                             <h:panelGroup id="photo">
                                                 <h:panelGroup rendered="#{productMB.product.imageBase64 != null}">
-                                                    <img src="#{productMB.product.imageBase64}" />
+                                                    <img src="#{productMB.product.imageBase64}"/>
                                                 </h:panelGroup>
                                             </h:panelGroup>
                                         </div>
@@ -273,7 +273,7 @@
 
                                                             <ui:repeat id="rpt" value="#{productMB.product.attributes}" var="atr" varStatus="vari">
                                                                 <p:accordionPanel id="acord">
-                                                                    <p:tab title="Grupo">
+                                                                    <p:tab title="#{atr.description == null ? 'Grupo' : atr.description}">
                                                                         <div class="ui-g ui-fluid">
                                                                             <div class="ui-sm-6 ui-g-6">
                                                                                 Grupo

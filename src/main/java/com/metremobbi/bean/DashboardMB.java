@@ -5,6 +5,7 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.model.Item;
 import com.metremobbi.model.Order;
 import com.metremobbi.model.dto.RankingProduct;
 import com.metremobbi.service.OrderService;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -65,14 +67,8 @@ public class DashboardMB implements Serializable {
 
     public void get() {
         try {
-            List<Order> products = new ArrayList();
             listOrder = orderService.getOrdersMonth();
-            System.out.println(listOrder.size());
-            totalSold = listOrder.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
-                    .map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
-            orders = listOrder.size();
-            totalDelivery = listOrder.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
-                    .map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
+            setTypeDashboard("day");
         } catch (IOException ex) {
             listOrder = new ArrayList();
             totalSold = 0.0;
@@ -94,17 +90,29 @@ public class DashboardMB implements Serializable {
     }
 
     public void loadDashboardDay(List<Order> orderss) {
+        List<Item> itens = new ArrayList();
         List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
                 .collect(Collectors.toList());
         totalSold = listDay.stream().map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
-        System.out.println(totalSold);
         orders = listDay.size();
-        System.out.println(orders);
         totalDelivery = listDay.stream().map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
-        System.out.println(totalDelivery);
+        for (Order o : listDay) {
+            for (Item i : o.getProducts()) {
+                itens.add(i);
+            }
+        }
+        ranking = new ArrayList();
+        Collection<List<Item>> saida = itens.stream().collect(Collectors.groupingBy(Item::getName)).values();
+        for (List<Item> itemAgrupado : saida) {
+            BigDecimal qnt = itemAgrupado.stream().map(p-> p.getQuantity()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            BigDecimal total = itemAgrupado.stream().map(p-> p.getTotal()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            RankingProduct rp = new RankingProduct(itemAgrupado.get(0).getName(), qnt, total);
+            ranking.add(rp);
+        }
     }
 
     public void loadDashboardWeek(List<Order> orderss) {
+        List<Item> itens = new ArrayList();
         List<Order> listWeek = new ArrayList();
         for (Order o : orderss) {
             if (o.getDtRegister().contains(OUtils.formataData(OUtils.primeiroDiaDaSemana(), "yyyy-MM-dd"))) {
@@ -126,12 +134,39 @@ public class DashboardMB implements Serializable {
         totalSold = listWeek.stream().map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
         orders = listWeek.size();
         totalDelivery = listWeek.stream().map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
+        for (Order o : listWeek) {
+            for (Item i : o.getProducts()) {
+                itens.add(i);
+            }
+        }
+        ranking = new ArrayList();
+        Collection<List<Item>> saida = itens.stream().collect(Collectors.groupingBy(Item::getName)).values();
+        for (List<Item> itemAgrupado : saida) {
+            BigDecimal qnt = itemAgrupado.stream().map(p-> p.getQuantity()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            BigDecimal total = itemAgrupado.stream().map(p-> p.getTotal()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            RankingProduct rp = new RankingProduct(itemAgrupado.get(0).getName(), qnt, total);
+            ranking.add(rp);
+        }
     }
 
     public void loadDashboardMonth(List<Order> orderss) {
+        List<Item> itens = new ArrayList();
         totalSold = orderss.stream().map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
         orders = orderss.size();
         totalDelivery = orderss.stream().map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
+        for (Order o : orderss) {
+            for (Item i : o.getProducts()) {
+                itens.add(i);
+            }
+        }
+        ranking = new ArrayList();
+        Collection<List<Item>> saida = itens.stream().collect(Collectors.groupingBy(Item::getName)).values();
+        for (List<Item> itemAgrupado : saida) {
+            BigDecimal qnt = itemAgrupado.stream().map(p-> p.getQuantity()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            BigDecimal total = itemAgrupado.stream().map(p-> p.getTotal()).reduce(BigDecimal.ZERO,BigDecimal::add);
+            RankingProduct rp = new RankingProduct(itemAgrupado.get(0).getName(), qnt, total);
+            ranking.add(rp);
+        }
     }
 
 }
