@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}"
+                xmlns:pop="http://xmlns.jcp.org/jsf/composite/pop"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="metadata">
+        <ui:param name="title" value="Pedidos" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Meus Pedidos
+    </ui:define>
+
+    <ui:define name="body">
+        <style>
+            .ui-fieldset, .ui-fieldset .ui-fieldset-legend{
+                font-size: 12px  !important;
+                padding: 5px  !important;
+                margin-bottom: 0  !important;
+            }
+        </style>
+        <h:form id="frmProduct" >
+
+            <div class="box box-primary">
+                <div class="ui-g">
+                    <div class="ui-g-4" style="">
+                        <p:outputLabel value="Período" />
+                        <p:datePicker value="#{orderMB.filtro.datas}" selectionMode="range" pattern="dd/MM/yyyy" showButtonBar="true"  showOtherMonths="true" />
+                    </div>
+                    <div class="ui-g-6" style="">
+                        <p:outputLabel value="Pedido" />
+                        <p:inputText value="#{orderMB.filtro.pedido}"  />
+                        <p:outputLabel value="Telefone" />
+                        <p:inputText value="#{orderMB.filtro.phone}"  />
+                    </div>
+                    <div class="ui-g-12" style="">
+                        <p:commandButton styleClass="btn-primary" icon="fa fa-search" value="Pesquisar" action="#{orderMB.pesquisar()}" update="@form" />
+                    </div>
+
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12" style="" >
+
+                        <p:dataTable  value="#{orderMB.orders}" var="order" paginator="true" emptyMessage="Nenhum Produto encontrado" 
+                                      paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                      currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
+                                      rowsPerPageTemplate="10,20,30,40,50">
+                            <p:column headerText="*" width="50" >
+                                <p:rowToggler />
+                            </p:column>
+                            <p:column headerText="Pedido" style="text-align: left;">
+                                <div class="ui-g">
+                                    <div class="ui-g-12">
+                                        <strong>#{order.num_order}</strong><br/>
+                                        <span>
+                                            #{order.clientInfo.name}<br/>
+                                            <small>#{order.clientInfo.phone}</small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </p:column>
+                            <p:column headerText="Endereço" style="text-align: left;">
+                                <h:panelGroup rendered="#{order.delivery}">
+                                    <div class="ui-g">
+                                        <div class="ui-g-12">
+                                            <span>#{order.address.street}, #{order.address.streetNumber}</span><br/>
+                                            <h:panelGroup rendered="#{order.address.suburb != ''}">
+                                                <small>Compl: #{order.address.suburb}</small><br/>
+                                            </h:panelGroup>
+                                            <span>#{order.address.city}</span>
+                                        </div>
+
+                                    </div>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{!order.delivery}">
+                                    <strong>Retirada Local</strong>
+                                </h:panelGroup>
+
+                            </p:column>
+                            <p:column headerText="Situação" width="150" style="text-align: center;">
+                                <span class="#{order.status =='Cancelado' ? 'lbl-danger' : 'lbl-success'  }">
+                                    #{order.status}
+                                </span>
+                            </p:column>
+                            <p:column headerText="Data" width="150" style="text-align: center;">
+                                <strong>
+                                    <h:outputText value="#{order.dtRegister}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                    </h:outputText>
+                                </strong>
+                            </p:column>
+                            <p:column headerText="Tx. Entrega" width="150" style="text-align: right;">
+                                <strong>
+                                    <h:outputText value="#{order.deliveryCost}">
+                                        <f:convertNumber type="currency" />
+                                    </h:outputText>
+                                </strong>
+                            </p:column>
+                            <p:column headerText="Total" width="150" style="text-align: right;">
+                                <strong>
+                                    <h:outputText value="#{order.total}">
+                                        <f:convertNumber type="currency" />
+                                    </h:outputText>
+                                </strong>
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:dataTable value="#{order.products}" var="item">
+                                    <p:column headerText="Item" style="text-align: left;">
+                                        <strong>
+                                            #{item.name}<br/> 
+                                        </strong>
+                                        <span>
+                                            #{item.quantity}
+                                            x
+                                            <h:outputText value="#{item.price}">
+                                                <f:convertNumber type="currency" />
+                                            </h:outputText>
+                                        </span>  
+                                        <h:panelGroup rendered="#{item.attributes.size() > 0}" style="margin-left: 15px; font-size: 12px;">
+                                            <br/>
+                                            <ui:repeat value="#{item.attributes}" var="at">
+                                                <p:fieldset legend="#{at.description}">
+                                                    <ui:repeat value="#{at.values}" var="va">
+                                                        <span >
+                                                            #{va.name}<br/>
+                                                            <small>
+                                                                #{va.quantity} x <h:outputText value="#{va.price}">
+                                                                    <f:convertNumber type="currency" />
+                                                                </h:outputText>
+                                                            </small>
+                                                        </span>
+                                                    </ui:repeat>
+                                                </p:fieldset>
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    <p:column headerText="Obs:" style="text-align: left;">
+                                        #{item.obs}
+                                    </p:column> 
+                                    <p:column  headerText="Total" style="text-align: right">
+                                        <h3>
+                                            <h:outputText value="#{item.total}">
+                                                <f:convertNumber type="currency" />
+                                            </h:outputText>
+                                        </h3>
+                                    </p:column>
+                                </p:dataTable> 
+                            </p:rowExpansion>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

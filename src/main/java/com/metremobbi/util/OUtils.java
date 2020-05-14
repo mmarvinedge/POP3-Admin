@@ -8,6 +8,9 @@ package com.metremobbi.util;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
@@ -28,24 +31,24 @@ public class OUtils {
             return "";
         }
     }
-    
-    public static String formataNinePhone(String tel){
-          String fone = tel;
+
+    public static String formataNinePhone(String tel) {
+        String fone = tel;
         //String fone = "553438233745";
         String whitou55 = fone.subSequence(2, fone.length()).toString();
         String ddd = whitou55.subSequence(0, 2).toString();
         String whitoudd = whitou55.substring(2, whitou55.length()).toString();
-        
+
         Boolean isCelular = whitoudd.startsWith("9") || whitoudd.startsWith("8");
-        if(isCelular){
-            return "("+ddd+")9"+whitoudd.substring(0, 4)+"-"+whitoudd.substring(4, 8);
-        }else{
-            return "("+ddd+")"+whitoudd.substring(0, 4)+"-"+whitoudd.substring(4, 8);
-            
+        if (isCelular) {
+            return "(" + ddd + ")9" + whitoudd.substring(0, 4) + "-" + whitoudd.substring(4, 8);
+        } else {
+            return "(" + ddd + ")" + whitoudd.substring(0, 4) + "-" + whitoudd.substring(4, 8);
+
         }
-        
+
     }
-    
+
     public static String formatarMoeda(Double val) {
         if (val == null) {
             return "R$ 0,00";
@@ -60,7 +63,7 @@ public class OUtils {
             return "R$ " + val;
         }
     }
-    
+
     public static Date getDataByTexto(String data, String formato) {
         try {
             Date date = null;
@@ -71,18 +74,25 @@ public class OUtils {
             return null;
         }
     }
-    
+
     public static Date primeiroDiaDaSemana() {
         Calendar data = new GregorianCalendar();
         int ultimo_dia_mes = data.getActualMinimum(Calendar.DAY_OF_WEEK);
         data.set(Calendar.DAY_OF_WEEK, ultimo_dia_mes);
         return data.getTime();
     }
-    
+
     public static Date addDia(Date data, int qtd) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
         cal.add(Calendar.DAY_OF_MONTH, qtd);
         return cal.getTime();
+    }
+
+    public static LocalDateTime dateToLocal(Date data) {
+        LocalDateTime ldt = Instant.ofEpochMilli(data.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        return ldt;
     }
 }

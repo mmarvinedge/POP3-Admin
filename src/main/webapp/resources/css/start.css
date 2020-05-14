@@ -110,7 +110,7 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend {
     padding: 5px !important;
     background: #0d7cee !important ;
     color: white !important;
-    border-radius: 5px 
+    border-radius: 5px !important;
 }
 
 body fieldset.ui-fieldset legend.ui-fieldset-legend{

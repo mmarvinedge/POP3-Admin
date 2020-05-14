@@ -91,7 +91,7 @@ public class DashboardMB implements Serializable {
 
     public void loadDashboardDay(List<Order> orderss) {
         List<Item> itens = new ArrayList();
-        List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
+        List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().equals(OUtils.formataData(new Date(), "yyyy-MM-dd")))
                 .collect(Collectors.toList());
         totalSold = listDay.stream().map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
         orders = listDay.size();
@@ -115,19 +115,19 @@ public class DashboardMB implements Serializable {
         List<Item> itens = new ArrayList();
         List<Order> listWeek = new ArrayList();
         for (Order o : orderss) {
-            if (o.getDtRegister().contains(OUtils.formataData(OUtils.primeiroDiaDaSemana(), "yyyy-MM-dd"))) {
+            if (o.getDtRegister().equals(OUtils.formataData(OUtils.primeiroDiaDaSemana(), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 1), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 1), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 2), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 2), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 3), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 3), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 4), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 4), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 5), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 5), "yyyy-MM-dd"))) {
                 listWeek.add(o);
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 6), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().equals(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 6), "yyyy-MM-dd"))) {
                 listWeek.add(o);
             }
         }
