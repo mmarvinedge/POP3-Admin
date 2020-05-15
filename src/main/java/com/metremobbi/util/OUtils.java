@@ -8,10 +8,12 @@ package com.metremobbi.util;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -84,5 +86,87 @@ public class OUtils {
         cal.setTime(data);
         cal.add(Calendar.DAY_OF_MONTH, qtd);
         return cal.getTime();
+    }
+    
+    public static Date primeiroDiaDoAno() {
+        Calendar data = new GregorianCalendar();
+        int primeiro_dia_ano = data.getActualMinimum(Calendar.DAY_OF_YEAR);
+        data.set(Calendar.DAY_OF_YEAR, primeiro_dia_ano);
+        return data.getTime();
+    }
+    
+    public static Date addMes(Date data, int qtd) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        cal.add(Calendar.MONTH, qtd);
+        return cal.getTime();
+    }
+    
+    public static Date primeiroDiaDoMes() {
+        Calendar data = new GregorianCalendar();
+        int ultimo_dia_mes = data.getActualMinimum(Calendar.DAY_OF_MONTH);
+        int primeira_hora_mes = data.getActualMinimum(Calendar.HOUR_OF_DAY);
+        int primeiro_minuto_mes = data.getActualMinimum(Calendar.MINUTE);
+        int primeiro_segundo_mes = data.getActualMinimum(Calendar.SECOND);
+        data.set(Calendar.DAY_OF_MONTH, ultimo_dia_mes);
+        data.set(Calendar.HOUR_OF_DAY, primeira_hora_mes);
+        data.set(Calendar.MINUTE, primeiro_minuto_mes);
+        data.set(Calendar.SECOND, primeiro_segundo_mes);
+        return data.getTime();
+    }
+    
+    public static Date ultimoDiaDoMes() {
+        Calendar data = new GregorianCalendar();
+        int ultimo_dia_mes = data.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int ultimo_hora_mes = data.getActualMaximum(Calendar.HOUR_OF_DAY);
+        int ultimo_minuto_mes = data.getActualMaximum(Calendar.MINUTE);
+        int ultimo_segundo_mes = data.getActualMaximum(Calendar.SECOND);
+        data.set(Calendar.DAY_OF_MONTH, ultimo_dia_mes);
+        data.set(Calendar.HOUR_OF_DAY, ultimo_hora_mes);
+        data.set(Calendar.MINUTE, ultimo_minuto_mes);
+        data.set(Calendar.SECOND, ultimo_segundo_mes);
+
+        return data.getTime();
+    }
+    
+    public static String DiaDaSemana(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int day = cal.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case 1:
+                return "Domingo";
+            case 2:
+                return "Segunda";
+            case 3:
+                return "Terça";
+            case 4:
+                return "Quarta";
+            case 5:
+                return "Quinta";
+            case 6:
+                return "Sexta";
+            case 7:
+                return "Sabado";
+            default:
+                return "";
+        }
+    }
+    
+    public static List<Date> getDatesBetween(
+            Date startDate, Date endDate) {
+        List<Date> datesInRange = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+
+        Calendar endCalendar = new GregorianCalendar();
+        endCalendar.setTime(endDate);
+
+        while (calendar.before(endCalendar)) {
+            Date result = calendar.getTime();
+            datesInRange.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return datesInRange;
     }
 }

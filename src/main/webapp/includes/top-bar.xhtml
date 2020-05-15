@@ -15,7 +15,8 @@
 
     </style>
     <ul class="nav navbar-nav">
-       <li class="hidden-xs">
+        <li class="hidden-xs">
+            <p:commandLink value="Clique aqui para ver seu cardápio" target="_blank" oncomplete="window.open('http://popsales.ddns.net/popsales/?id=#{companyMB.companyID}#')" />
             <!-- <h:form prependId="false">
                 <p:menuButton value="Layout" style="margin:10px 10px 0 0 " id="layout-menu">
                     <p:menuitem value="Left menu (default)" disabled="{layoutMB.leftMenuTemplate}" onclick="toggleTemplate();return false" ajax="false" icon="fa fa-list-ul"/>
@@ -33,6 +34,8 @@
                 <li class="user-header">
                     <div class="hidden-xs">
                         <img style="border-radius: 50%" width="80" src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png"/>
+                        <br/>
+                        <h:outputText value="#{logonMB.currentUser.name}" style="text-transform: uppercase"/>
                     </div>
                 </li>
                 <li class="user-footer">

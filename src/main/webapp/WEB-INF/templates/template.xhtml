@@ -7,7 +7,7 @@
                 xmlns:pop="http://xmlns.jcp.org/jsf/composite/pop">
 
     <ui:define name="head">
-        <title>Pop Sales</title>
+        <title>Pop3</title>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-16x16.png']}" sizes="16x16"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32"/>
@@ -17,6 +17,9 @@
         <meta name="mobile-web-app-capable" content="yes"/>
         <f:loadBundle var="msg" basename="starter"/>
         <h:outputStylesheet library="css" name="starter.css"/>
+        <h:outputScript library="js" name="Chart.min.js"/>
+        <h:outputScript library="js" name="utils.js"/>
+        <h:outputScript library="js" name="Dashboard.js"/>
     </ui:define>
 
     <ui:define name="logo">
