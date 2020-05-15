@@ -140,5 +140,18 @@ public class ProductService {
         }
         return saida;
     }
+    public void  updatecategorys() throws IOException {
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/product/updateCategory/")
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -105,7 +105,7 @@ public class DashboardMB implements Serializable {
 
     public void loadDashboardDay(List<Order> orderss) {
         List<Item> itens = new ArrayList();
-        List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().contains(OUtils.formataData(new Date(), "yyyy-MM-dd")))
+        List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().equals(OUtils.formataData(new Date(), "yyyy-MM-dd")))
                 .collect(Collectors.toList());
         totalSold = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
         orders = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).count();
@@ -135,7 +135,7 @@ public class DashboardMB implements Serializable {
         clean();
         System.out.println(OUtils.primeiroDiaDaSemana());
         for (Order o : orderss) {
-            if (o.getDtRegister().contains(OUtils.formataData(OUtils.primeiroDiaDaSemana(), "yyyy-MM-dd"))) {
+            if (o.getDtRegister().equals(OUtils.formataData(OUtils.primeiroDiaDaSemana(), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     sunday = sunday + o.getTotal();

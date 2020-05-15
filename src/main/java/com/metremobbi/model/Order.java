@@ -6,6 +6,7 @@
 package com.metremobbi.model;
 
 import com.metremobbi.enums.STATUS;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public class Order {
     private String observations;
     private Integer deliveryLimit;
     private String discount;
-    private String dtRegister;
+    
+    private Date dtRegister;
 
     public String getId() {
         return id;
@@ -296,11 +298,11 @@ public class Order {
         this.discount = discount;
     }
 
-    public String getDtRegister() {
+    public Date getDtRegister() {
         return dtRegister;
     }
 
-    public void setDtRegister(String dtRegister) {
+    public void setDtRegister(Date dtRegister) {
         this.dtRegister = dtRegister;
     }
 
