@@ -140,32 +140,32 @@ public class DashboardMB implements Serializable {
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     sunday = sunday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 1), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 1), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     monday = monday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 2), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 2), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     tuesday = tuesday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 3), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 3), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     wednesday = wednesday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 4), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 4), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     thursday = thursday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 5), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 5), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     friday = friday + o.getTotal();
                 }
-            } else if (o.getDtRegister().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 6), "yyyy-MM-dd"))) {
+            } else if (o.getDtRegister().toString().contains(OUtils.formataData(OUtils.addDia(OUtils.primeiroDiaDaSemana(), 6), "yyyy-MM-dd"))) {
                 listWeek.add(o);
                 if (o.getStatus().equals("Finalizado") && o.getTotal() != null) {
                     saturday = saturday + o.getTotal();
@@ -205,25 +205,25 @@ public class DashboardMB implements Serializable {
             for (Item i : o.getProducts()) {
                 itens.add(i);
             }
-            if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Domingo")
+            if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Domingo")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 sunday = sunday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Segunda")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Segunda")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 monday = monday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Terça")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Terça")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 tuesday = tuesday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Quarta")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Quarta")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 wednesday = wednesday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Quinta")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Quinta")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 thursday = thursday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Sexta")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Sexta")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 friday = friday + o.getTotal();
-            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister(), "yyyy-MM-dd")).equals("Sabado")
+            } else if (OUtils.DiaDaSemana(OUtils.getDataByTexto(o.getDtRegister().toString(), "yyyy-MM-dd")).equals("Sabado")
                     && o.getStatus().equalsIgnoreCase("Finalizado")) {
                 saturday = saturday + o.getTotal();
             }

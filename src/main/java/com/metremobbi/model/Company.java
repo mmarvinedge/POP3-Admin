@@ -29,6 +29,7 @@ public class Company {
     private String messageWelcome;
     private List<Bairro> bairros;
     private String nameUrl;
+    private Boolean integration;
 
     private String aproxTime;
 
@@ -155,4 +156,11 @@ public class Company {
         this.aproxTime = aproxTime;
     }
 
+    public Boolean getIntegration() {
+        return integration;
+    }
+
+    public void setIntegration(Boolean integration) {
+        this.integration = integration;
+    }
 }

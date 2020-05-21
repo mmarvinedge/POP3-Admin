@@ -27,13 +27,14 @@
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
 
-                        <p:commandButton action="#{productMB.novo}" icon="fa fa-plus"
+                        <p:commandButton action="#{productMB.novo}" icon="fa fa-plus" disabled="#{companyMB.company.integration}"
                                          value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"/>
                         <p:spacer width="5"/>
                         <p:splitButton value="Editar" action="#{productMB.setProductComplete()}" update="@(.ui-dialog)" styleClass="btn-info"
                                        disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                        oncomplete="PF('modalNewProduct').show()" icon="fa fa-edit">
                             <p:menuitem styleClass="btn-primary" icon="fa fa-copy" value="Copiar"  action="#{productMB.copyProduct()}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()"  />
+                            <f:param name="acao" value="#{companyMB.company.integration}"/>
                         </p:splitButton>
                         <p:spacer width="5"/>
                         <p:commandButton value="Deletar" icon="fa fa-trash" styleClass="btn-danger"
@@ -61,7 +62,12 @@
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
                         </p:menuitem>
                     </p:splitButton>
-
+                    <p:spacer height="20"/>
+                    <h:panelGroup rendered="#{companyMB.company.integration}">
+                        <div style="border: 1px; background-color: #ff8080; padding: 1%; border-radius: 17px;">
+                            <strong>ATENÇÃO!</strong> <small>Você possui integração, portanto só são permitidas edições de regras exclusivas do cardápio, as demais alterações devem ser feitas em seu sistema, esta regra também se aplica à novos produtos.</small>
+                        </div>
+                    </h:panelGroup>
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.productModel}" rows="10"
                                  rowKey="#{p.id}" paginator="true" emptyMessage="Nenhum Produto encontrado"
@@ -99,7 +105,7 @@
                         </p:column>
 
                         <p:column headerText="Impressora" >
-                            <p:selectOneMenu  value="#{p.printer}" filter="true" >
+                            <p:selectOneMenu disabled="#{param['acao']}" value="#{p.printer}" filter="true" >
                                 <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
                                 <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
                                 <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
@@ -142,14 +148,15 @@
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-3 ui-g-3 ">
                                         <p:outputLabel value="SKU" for="inptSku"/>
-                                        <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Campo preenchido automáticamente"/>
-                                        <span class="help-block"> 
+                                        <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Campo preenchido automáticamente"
+                                                     disabled="#{param['acao']}" />
+                                        <span class="help-block">
                                             <p:message for="inptSku" /> 
                                         </span>
                                     </div>
                                     <div class="ui-sm-6 ui-g-6 ">     
                                         <p:outputLabel value="Nome" for="inptName"/>
-                                        <p:inputText id="inptName" value="#{productMB.product.name}" required="true"/>
+                                        <p:inputText id="inptName" value="#{productMB.product.name}" required="true" disabled="#{param['acao']}"/>
                                         <span class="help-block"> 
                                             <p:message for="inptName" /> 
                                         </span>
@@ -158,7 +165,7 @@
                                         <p:outputLabel value="Categoria" for="category"/>
                                         <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                          value="#{productMB.product.categoryMain}" id="category" filter="true"
-                                                         filterMatchMode="contains" effect="fade" converter="Converter"
+                                                         filterMatchMode="contains" effect="fade" converter="Converter" disabled="#{param['acao']}"
                                                          >
                                             <f:selectItem itemLabel="Selecione uma categoria..." itemValue=""/>
                                             <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
@@ -174,7 +181,7 @@
                                     <div class="ui-sm-6 ui-g-3 ">     
                                         <p:outputLabel value="Impressora" for="inptPrinter"/>
                                         <p:selectOneMenu id="inptPrinter" value="#{productMB.product.printer}" 
-                                                         filter="true" required="true">
+                                                         filter="true" required="true" disabled="#{param['acao']}">
                                             <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
                                             <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
                                             <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
@@ -192,14 +199,14 @@
                                     </div>
                                     <div class="ui-sm-6 ui-g-3 ">     
                                         <p:outputLabel value="Preço" for="inptPrice"/>
-                                        <p:inputNumber id="inptPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
+                                        <p:inputNumber id="inptPrice" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
                                         <span class="help-block"> 
                                             <p:message for="inptPrice" /> 
                                         </span>
                                     </div>
                                     <div class="ui-sm-6 ui-g-2 ">
                                         <p:outputLabel value="Promocional" for="promo"/><br/>
-                                        <p:selectBooleanCheckbox id="promo"  value="#{productMB.product.promo}" >
+                                        <p:selectBooleanCheckbox id="promo" disabled="#{param['acao']}"  value="#{productMB.product.promo}" >
                                             <p:ajax event="change" update="ogirinalPrice" />
                                         </p:selectBooleanCheckbox>
                                     </div>    
@@ -207,7 +214,7 @@
                                         <h:panelGroup id="ogirinalPrice" >
                                             <h:panelGroup rendered="#{productMB.product.promo}">
                                                 <p:outputLabel value="Preço Original" for="inptPriceOriginal"/>
-                                                <p:inputNumber id="inptPriceOriginal" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
+                                                <p:inputNumber id="inptPriceOriginal" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
                                                 <span class="help-block"> 
                                                     <p:message for="inptPriceOriginal" /> 
                                                 </span>
@@ -219,7 +226,7 @@
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-12 ui-g-12 ">     
                                         <p:outputLabel value="Descrição" for="inptObs"/>
-                                        <p:inputTextarea id="inptObs" value="#{productMB.product.description}" />
+                                        <p:inputTextarea id="inptObs" disabled="#{param['acao']}" value="#{productMB.product.description}" />
                                         <span class="help-block"> 
                                             <p:message for="inptObs" /> 
                                         </span>
@@ -228,7 +235,7 @@
                                         <div class="img-wrap">
                                             <p:outputLabel value="Foto (100KB max)" />
                                             <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                          uploadLabel="Enviar" cancelLabel="Cancelar" label="Escolher" auto="false"
+                                                          uploadLabel="Enviar" disabled="#{param['acao']}" cancelLabel="Cancelar" label="Escolher" auto="false"
                                                           update="photo" sizeLimit="500000" fileLimit="3"  />
                                             <hr/>
                                             <h:panelGroup id="photo">
@@ -253,7 +260,7 @@
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-12 ui-g-8">
                                         <h:outputLabel value="Tipo do produto" /><br/>
-                                        <p:selectOneButton id="buttonTipoProduto" value="#{productMB.type}">
+                                        <p:selectOneButton id="buttonTipoProduto" disabled="#{param['acao']}" value="#{productMB.type}">
                                             <f:selectItem itemValue="normal" itemLabel="Normal"/>
                                             <f:selectItem itemValue="pizza" itemLabel="Pizza" itemDisabled="#{productMB.product.categoryMain.name != 'Pizzas'}"/>
                                             <p:ajax update="@this, typeProduct" event="change"/>
@@ -264,10 +271,10 @@
                                     <h:panelGroup id="typeProduct">
                                         <h:panelGroup rendered="#{productMB.type == 'normal'}">
 
-                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="    width: 790px;">
-                                                <p:commandButton icon="fa fa-plus"  class="btn-success" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: auto;;" action="#{productMB.addAttributeCorrect()}" update="blockAtributes" immediate="true"  />
+                                            <p:fieldset id="fdlAdicionais" legend="Adicionais" style="width: 770px;">
+                                                <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus"  class="btn-success" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: auto;;" action="#{productMB.addAttributeCorrect()}" update="blockAtributes" immediate="true"  />
 
-                                                <div class="ui-g ui-fluid" style="width: 780px !important;">
+                                                <div class="ui-g ui-fluid" style="width: 745px !important;">
                                                     <h:panelGroup  layout="block" id="blockAtributes">
                                                         <div class="ui-sm-12 ui-g-12">
 
@@ -277,14 +284,14 @@
                                                                         <div class="ui-g ui-fluid">
                                                                             <div class="ui-sm-6 ui-g-6">
                                                                                 Grupo
-                                                                                <p:inputText value="#{atr.description}"  >
+                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.description}"  >
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>
 
                                                                             <div class="ui-sm-2 ui-g-2">
                                                                                 Max
-                                                                                <p:inputText value="#{atr.quantity}" >
+                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.quantity}" >
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>
@@ -293,32 +300,32 @@
                                                                                 <p:toggleSwitch value="#{atr.disabled}"  />
                                                                             </div>
                                                                             <div class="ui-sm-12 ui-g-12">
-                                                                                <p:commandButton icon="fa fa-plus" update=":frmNewProduct:tabs:rpt:#{vari.index}:acord:tblAttributes" class="btn-success" style="position: absolute !important;right: 60px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.addAttributeValue(atr)}"  immediate="true"  />
-                                                                                <p:commandButton icon="fa fa-trash"  class="btn-danger" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.removeAtribute(atr)}"  immediate="true" update="@form"  />
+                                                                                <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" update=":frmNewProduct:tabs:rpt:#{vari.index}:acord:tblAttributes" class="btn-success" style="position: absolute !important;right: 60px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.addAttributeValue(atr)}"  immediate="true"  />
+                                                                                <p:commandButton disabled="#{param['acao']}" icon="fa fa-trash"  class="btn-danger" style="position: absolute !important;right: 5px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.removeAtribute(atr)}"  immediate="true" update="@form"  />
                                                                                 <p:dataTable value="#{atr.values}" var="att" id="tblAttributes" style="width: 100% !important;"
                                                                                              rowIndexVar="index" emptyMessage="Nenhum produto adicionado!"  >
                                                                                     <p:column headerText="SKU" width="100" style="text-align: left">
-                                                                                        <p:inputText   value="#{att.sku}"  placeholder="Opcional" >
+                                                                                        <p:inputText disabled="#{param['acao']}" value="#{att.sku}"  placeholder="Opcional" >
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputText>
                                                                                     </p:column>
-                                                                                    <p:column headerText="Parar a venda" width="150" style="text-align: left">
+                                                                                    <p:column  headerText="Parar a venda" width="150" style="text-align: left">
                                                                                         <p:toggleSwitch value="#{att.disabled}"  />
                                                                                     </p:column>
 
                                                                                     <p:column headerText="Produto" style="text-align: left">
-                                                                                        <p:inputText id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório">
+                                                                                        <p:inputText disabled="#{param['acao']}" id="addProduct" value="#{att.name}" required="true" requiredMessage="Produto é obrigatório">
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputText>
                                                                                     </p:column>
                                                                                     <p:column headerText="Preço" width="100" style="text-align: right">
-                                                                                        <p:inputNumber id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório" >
+                                                                                        <p:inputNumber disabled="#{param['acao']}" id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório" >
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputNumber>
                                                                                     </p:column>
                                                                                     <p:column width="50" style="text-align: center">
                                                                                         <center>
-                                                                                            <p:commandButton icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAtributeValue(atr, att)}" />
+                                                                                            <p:commandButton disabled="#{param['acao']}" icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAtributeValue(atr, att)}" />
                                                                                         </center>
                                                                                     </p:column>
                                                                                 </p:dataTable>
@@ -340,7 +347,7 @@
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-4 ui-g-4">
                                                         <p:outputLabel value="Tamanho"  for="tam"/>
-                                                        <p:selectOneMenu id="tam"  value="#{productMB.product.sizePizza}">
+                                                        <p:selectOneMenu disabled="#{param['acao']}" id="tam"  value="#{productMB.product.sizePizza}">
                                                             <f:selectItem itemLabel="Selecione" itemValue="" />
                                                             <f:selectItem itemLabel="Fatia" itemValue="Fatia" />
                                                             <f:selectItem itemLabel="Brotinho" itemValue="Brotinho" />
@@ -355,13 +362,13 @@
                                                     </div>
                                                     <div class="ui-sm-4 ui-g-3">
                                                         <p:outputLabel value="Máx Sabores Selecionaveis"  for="max"/>
-                                                        <p:inputNumber id="max"  value="#{productMB.product.maxPizza}"  decimalPlaces="0"/>
+                                                        <p:inputNumber disabled="#{param['acao']}" id="max"  value="#{productMB.product.maxPizza}"  decimalPlaces="0"/>
                                                     </div>
                                                 </div>
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-4 ui-g-4">
                                                         <p:outputLabel value="Regra de Preço"  for="reg"/>
-                                                        <p:selectOneRadio id="reg"  value="#{productMB.product.rulePricePizza}">
+                                                        <p:selectOneRadio disabled="#{param['acao']}" id="reg"  value="#{productMB.product.rulePricePizza}">
                                                             <f:selectItem itemLabel="Média" itemValue="Média" />
                                                             <f:selectItem itemLabel="Preço da Maior" itemValue="Maior" />
                                                         </p:selectOneRadio>
@@ -370,10 +377,10 @@
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-12 ui-g-8">
                                                         <p:outputLabel value="Sabores / Preço" /><br/>
-                                                        <p:inputText value="#{productMB.flavorPizza.sku}" style="width: 15% !important;" placeholder="SKU" />
-                                                        <p:inputText value="#{productMB.flavorPizza.flavor}" style="width: 45% !important;" id="flava"  placeholder="Sabor"/>
-                                                        <p:inputNumber value="#{productMB.flavorPizza.price}" symbol="R$ " decimalSeparator="," thousandSeparator="." id="flavaPri" placeholder="Valor" size="15"  />
-                                                        <p:commandButton icon="fa fa-plus" styleClass="btn-primary"   style="width: 10% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri"/>
+                                                        <p:inputText disabled="#{param['acao']}" value="#{productMB.flavorPizza.sku}" style="width: 15% !important;" placeholder="SKU" />
+                                                        <p:inputText disabled="#{param['acao']}" value="#{productMB.flavorPizza.flavor}" style="width: 45% !important;" id="flava"  placeholder="Sabor"/>
+                                                        <p:inputNumber disabled="#{param['acao']}" value="#{productMB.flavorPizza.price}" symbol="R$ " decimalSeparator="," thousandSeparator="." id="flavaPri" placeholder="Valor" size="15"  />
+                                                        <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" styleClass="btn-primary"   style="width: 10% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri"/>
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" >
                                                             <p:column headerText="SKU" width="100" style="text-align: left">
@@ -388,7 +395,7 @@
                                                                 </h:outputText>
                                                             </p:column>
                                                             <p:column headerText="*" width="50">
-                                                                <p:commandButton styleClass="btn-danger" action="#{productMB.removeFlavor(flav)}" icon="fa fa-trash" update="tblFlavors" immediate="true"/>
+                                                                <p:commandButton disabled="#{param['acao']}" styleClass="btn-danger" action="#{productMB.removeFlavor(flav)}" icon="fa fa-trash" update="tblFlavors" immediate="true"/>
                                                             </p:column>
                                                         </p:dataTable>
                                                     </div>
