@@ -94,6 +94,9 @@ public class DashboardMB implements Serializable {
 
     public void setTypeDashboard(String type) {
         typeDashboard = type;
+        if(listOrder == null){
+            return;
+        }
         if (typeDashboard.equals("day")) {
             loadDashboardDay(listOrder);
         } else if (typeDashboard.equals("week")) {
