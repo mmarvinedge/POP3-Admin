@@ -14,18 +14,14 @@ import static com.metremobbi.util.Utils.addDetailMessage;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.print.attribute.standard.Severity;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DualListModel;
 
 /**
