@@ -224,14 +224,14 @@
 
                                 </div>
                                 <div class="ui-g ui-fluid">
-                                    <div class="ui-sm-12 ui-g-12 ">     
+                                    <div class="ui-sm-6 ui-g-6 ">
                                         <p:outputLabel value="Descrição" for="inptObs"/>
                                         <p:inputTextarea id="inptObs" disabled="#{param['acao']}" value="#{productMB.product.description}" />
                                         <span class="help-block"> 
                                             <p:message for="inptObs" /> 
                                         </span>
                                     </div>
-                                    <div class="ui-sm-12 ui-g-8 ">
+                                    <div class="ui-sm-6 ui-g-6 ">
                                         <div class="img-wrap">
                                             <p:outputLabel value="Foto (100KB max)" />
                                             <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
@@ -239,8 +239,11 @@
                                                           update="photo" sizeLimit="500000" fileLimit="3"  />
                                             <hr/>
                                             <h:panelGroup id="photo">
-                                                <h:panelGroup rendered="#{productMB.product.imageBase64 != null}">
-                                                    <img src="#{productMB.product.imageBase64}"/>
+                                                <h:panelGroup rendered="#{productMB.product.imageBase64 != null and productMB.product.imageBase64.startsWith('http')}">
+                                                    <img src="#{productMB.product.imageBase64}" style="width: 50%"/>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{productMB.product.imageBase64 != null and !productMB.product.imageBase64.startsWith('http')}">
+                                                    <img src="data:image/png;base64, #{productMB.product.imageBase64}" style="width: 25%"/>
                                                 </h:panelGroup>
                                             </h:panelGroup>
                                         </div>

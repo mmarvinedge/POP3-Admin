@@ -114,7 +114,6 @@ public class ProductService {
                 .url(Constantes.URL + "/product/")
                 .put(body)
                 .build();
-
         Response response = client.newCall(request).execute();
         String json = response.body().string();
     }
