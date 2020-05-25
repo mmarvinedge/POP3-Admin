@@ -7,6 +7,7 @@ package com.metremobbi.model;
 
 import com.metremobbi.model.dto.Bairro;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +31,8 @@ public class Company {
     private List<Bairro> bairros;
     private String nameUrl;
     private Boolean integration;
+    private Boolean trial;
+    private Date trialDate;
 
     private String aproxTime;
 
@@ -163,4 +166,21 @@ public class Company {
     public void setIntegration(Boolean integration) {
         this.integration = integration;
     }
+
+    public Boolean getTrial() {
+        return trial;
+    }
+
+    public void setTrial(Boolean trial) {
+        this.trial = trial;
+    }
+
+    public Date getTrialDate() {
+        return trialDate;
+    }
+
+    public void setTrialDate(Date trialDate) {
+        this.trialDate = trialDate;
+    }
+    
 }
