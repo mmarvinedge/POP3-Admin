@@ -16,6 +16,7 @@ public class FlavorPizza {
 
     private String sku;
     private String flavor;
+    private String description;
     private BigDecimal price;
 
     public FlavorPizza() {
@@ -27,6 +28,14 @@ public class FlavorPizza {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFlavor() {
