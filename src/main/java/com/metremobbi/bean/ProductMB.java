@@ -16,20 +16,22 @@ import com.metremobbi.model.Order;
 import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.OrderService;
 import com.metremobbi.service.ProductService;
+import com.metremobbi.util.ImageFile;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 
@@ -166,22 +168,21 @@ public class ProductMB implements Serializable {
     }
 
     public void uploadPhoto(FileUploadEvent event) {
-        InputStream finput;
+        File tempFile = null;
         try {
-            finput = event.getFile().getInputstream();
-            byte[] imageBytes = new byte[(int) event.getFile().getSize()];
-            finput.read(imageBytes, 0, imageBytes.length);
-            finput.close();
-            String imageStr = Base64.encodeBase64String(imageBytes);
-            if (event.getFile().getFileName().contains(".jpeg")) {
-                product.setImageType("JPEG");
-            } else if (event.getFile().getFileName().contains(".jpg")) {
-                product.setImageType("JPG");
-            } else if (event.getFile().getFileName().contains(".png")) {
-                product.setImageType("PNG");
-            }
-            product.setImageBase64(imageStr);
-        } catch (Exception e) {
+            tempFile = File.createTempFile("foto2", "png");
+            InputStream is = event.getFile().getInputstream();
+            FileOutputStream out = new FileOutputStream(tempFile);
+            IOUtils.copy(is, out);
+
+            String imageBase64 = ImageFile.encoder(tempFile.getAbsolutePath());
+            System.out.println(imageBase64.length());
+            product.setImageBase64(imageBase64);
+        } catch (IOException e) {
+            System.out.println("Erro ao converter a imagem em base64");
+            e.printStackTrace();
+        } finally {
+            tempFile.deleteOnExit();
         }
     }
 

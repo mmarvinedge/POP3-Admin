@@ -42,15 +42,14 @@ public class OrderService {
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
+            if (response.code() == 200) {
+                // Get response body
+                String json = response.body().string();
+                if (!json.trim().isEmpty()) {
+                    saida = gson.fromJson(json, new TypeToken<List<Order>>() {
+                    }.getType());
+                }
             }
-            // Get response body
-            String json = response.body().string();
-            System.out.println(json);
-
-            saida = gson.fromJson(json, new TypeToken<List<Order>>() {
-            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             saida = new ArrayList();
@@ -66,14 +65,14 @@ public class OrderService {
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
+            if (response.code() == 200) {
+                // Get response body
+                String json = response.body().string();
+                if (!json.trim().isEmpty()) {
+                    saida = gson.fromJson(json, new TypeToken<List<Order>>() {
+                    }.getType());
+                }
             }
-            // Get response body
-            String json = response.body().string();
-
-            saida = gson.fromJson(json, new TypeToken<List<Order>>() {
-            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             saida = new ArrayList();
@@ -93,14 +92,14 @@ public class OrderService {
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
+            if (response.code() == 200) {
+                // Get response body
+                String json = response.body().string();
+                if (!json.trim().isEmpty()) {
+                    saida = gson.fromJson(json, new TypeToken<List<Order>>() {
+                    }.getType());
+                }
             }
-            // Get response body
-            String json = response.body().string();
-
-            saida = gson.fromJson(json, new TypeToken<List<Order>>() {
-            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             saida = new ArrayList();
@@ -116,13 +115,14 @@ public class OrderService {
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
+            if (response.code() == 200) {
+                // Get response body
+                String json = response.body().string();
+                if (!json.trim().isEmpty()) {
+                    saida = gson.fromJson(json, new TypeToken<List<Order>>() {
+                    }.getType());
+                }
             }
-            // Get response body
-            String json = response.body().string();
-            saida = gson.fromJson(json, new TypeToken<List<Order>>() {
-            }.getType());
         } catch (Exception e) {
             e.printStackTrace();
             saida = new ArrayList();
