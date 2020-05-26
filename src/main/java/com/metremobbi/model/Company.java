@@ -32,7 +32,7 @@ public class Company {
     private String nameUrl;
     private Boolean integration;
     private Boolean trial;
-    private Date trialDate;
+    private String trialDate;
 
     private String aproxTime;
 
@@ -175,11 +175,11 @@ public class Company {
         this.trial = trial;
     }
 
-    public Date getTrialDate() {
+    public String getTrialDate() {
         return trialDate;
     }
 
-    public void setTrialDate(Date trialDate) {
+    public void setTrialDate(String trialDate) {
         this.trialDate = trialDate;
     }
     

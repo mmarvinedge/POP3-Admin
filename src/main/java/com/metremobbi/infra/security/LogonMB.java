@@ -11,9 +11,14 @@ import java.io.Serializable;
 
 import static com.metremobbi.util.Utils.addDetailMessage;
 import com.github.adminfaces.template.config.AdminConfig;
+import com.metremobbi.model.Company;
 import com.metremobbi.model.User;
+import com.metremobbi.service.CompanyService;
 import com.metremobbi.service.UserService;
+import com.metremobbi.util.DateUtil;
+import com.metremobbi.util.OUtils;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -43,41 +48,60 @@ public class LogonMB extends AdminSession implements Serializable {
     @Getter
     @Setter
     private User currentUser;
+    @Getter
+    @Setter
+    private Company company;
     private boolean remember;
     @Inject
     private AdminConfig adminConfig;
     @Getter
     @Setter
     private UserService service;
-    
+    @Getter
+    @Setter
+    private CompanyService companyService;
+
     public LogonMB() {
         service = new UserService();
         userLogin = new User();
         currentUser = null;
+        company = new Company();
+        companyService = new CompanyService();
     }
 
-    public void login() throws IOException, NoSuchAlgorithmException {
+    public void login() throws IOException, NoSuchAlgorithmException, Exception {
         currentUser = new User();
         currentUser = service.login(userLogin);
-        
+        company = companyService.loadCompany(currentUser.getCompanyId());
+        Date trial = null, today = null;
+        if (company.getTrial()) {
+            trial = OUtils.getDataByTexto(company.getTrialDate(), "yyyy-MM-dd");
+            String temp = OUtils.formataData(new Date(), "yyyy-MM-dd");
+            today = OUtils.getDataByTexto(temp, "yyyy-MM-dd");
+        }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", currentUser);
-        
         if (currentUser.getUserName() != null) {
-            addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
-            Faces.getExternalContext().getFlash().setKeepMessages(true);
-            Faces.redirect(adminConfig.getIndexPage());
+            if (company.getTrial() && DateUtil.diferencaEntreDatas("yyyy-MM-dd", trial, today) > -7) {
+                addMessage("Seu período teste de 7 dias encerrou, para continuar utilizando entre em contato com seu agente de vendas!");
+                Faces.validationFailed();
+                currentUser = null;
+            } else {
+                addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
+                Faces.getExternalContext().getFlash().setKeepMessages(true);
+                Faces.redirect(adminConfig.getIndexPage());
+            }
         } else {
             addMessage("Login ou senha inválidos, tente novamente!");
             Faces.validationFailed();
             currentUser = null;
         }
     }
-    
+
     public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-       
+
     @Override
     public boolean isLoggedIn() {
         return currentUser != null;
