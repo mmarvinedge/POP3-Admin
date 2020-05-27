@@ -5,7 +5,8 @@
                 xmlns:adm="http://github.com/adminfaces"
                 template="#{layoutMB.template}"
                 xmlns:pop="http://xmlns.jcp.org/jsf/composite/pop"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:x="http://xpert.com/faces">
 
     <ui:define name="metadata">
         <ui:param name="title" value="Pedidos" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
@@ -33,13 +34,14 @@
 
             <div class="box box-primary">
                 <div class="ui-g">
-                    <div class="ui-g-4" style="">
+                    <div class="ui-g-3" style="">
                         <p:outputLabel value="Período" />
                         <p:datePicker value="#{orderMB.filtro.datas}" selectionMode="range" pattern="dd/MM/yyyy" showButtonBar="true"  showOtherMonths="true" />
                     </div>
                     <div class="ui-g-6" style="">
                         <p:outputLabel value="Pedido" />
                         <p:inputText value="#{orderMB.filtro.pedido}"  />
+                        <p:spacer width="30"/>
                         <p:outputLabel value="Telefone" />
                         <p:inputText value="#{orderMB.filtro.phone}"  />
                     </div>

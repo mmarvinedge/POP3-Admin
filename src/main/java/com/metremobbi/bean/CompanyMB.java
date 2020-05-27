@@ -67,7 +67,6 @@ public class CompanyMB {
 
     public void save() {
         try {
-
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -142,5 +141,5 @@ public class CompanyMB {
             addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
         }
     }
-
+    
 }

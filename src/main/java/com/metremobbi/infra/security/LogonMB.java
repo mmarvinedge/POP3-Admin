@@ -72,20 +72,15 @@ public class LogonMB extends AdminSession implements Serializable {
     public void login() throws IOException, NoSuchAlgorithmException, Exception {
         currentUser = new User();
         currentUser = service.login(userLogin);
-        company = companyService.loadCompany(currentUser.getCompanyId());
-        Date trial = null, today = null;
-        if (company.getTrial()) {
-            trial = OUtils.getDataByTexto(company.getTrialDate(), "yyyy-MM-dd");
-            String temp = OUtils.formataData(new Date(), "yyyy-MM-dd");
-            today = OUtils.getDataByTexto(temp, "yyyy-MM-dd");
-        }
+        System.out.println(currentUser);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", currentUser);
-        if (currentUser.getUserName() != null) {
-            if (company.getTrial() && DateUtil.diferencaEntreDatas("yyyy-MM-dd", trial, today) > -7) {
-                addMessage("Seu período teste de 7 dias encerrou, para continuar utilizando entre em contato com seu agente de vendas!");
+        if (currentUser.getName() != null) {
+            if (currentUser.getName().equalsIgnoreCase("trialexpired")) {
+                addMessage("Seu período teste de 15 dias encerrou, para continuar utilizando entre em contato com seu agente de vendas!");
                 Faces.validationFailed();
                 currentUser = null;
             } else {
+                company = companyService.loadCompany(currentUser.getCompanyId());
                 addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
                 Faces.getExternalContext().getFlash().setKeepMessages(true);
                 Faces.redirect(adminConfig.getIndexPage());

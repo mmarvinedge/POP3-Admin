@@ -168,7 +168,11 @@ public class Company {
     }
 
     public Boolean getTrial() {
-        return trial;
+        if (trial == null) {
+            return Boolean.FALSE;
+        } else {
+            return trial;
+        }
     }
 
     public void setTrial(Boolean trial) {
@@ -182,5 +186,5 @@ public class Company {
     public void setTrialDate(String trialDate) {
         this.trialDate = trialDate;
     }
-    
+
 }
