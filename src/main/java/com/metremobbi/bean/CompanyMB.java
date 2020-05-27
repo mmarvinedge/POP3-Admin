@@ -9,8 +9,13 @@ import com.metremobbi.model.Company;
 import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
 import com.metremobbi.service.CompanyService;
+import com.metremobbi.util.ImageFile;
 import com.metremobbi.util.Utils;
 import static com.metremobbi.util.Utils.addDetailMessage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +25,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
@@ -137,10 +144,29 @@ public class CompanyMB {
             } else {
                 addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
         }
     }
 
+    public void uploadPhoto(FileUploadEvent event){
+        File tempFile = null;
+        try {
+            tempFile = File.createTempFile("foto2", "png");
+            InputStream is = event.getFile().getInputstream();
+            FileOutputStream out = new FileOutputStream(tempFile);
+            IOUtils.copy(is, out);
+
+            String imageBase64 = ImageFile.encoder(tempFile.getAbsolutePath());
+            System.out.println(imageBase64.length());
+            company.setLogo(imageBase64);
+        } catch (IOException e) {
+            String msg = "Erro ao converter a imagem em base64";
+            addDetailMessage(msg, FacesMessage.SEVERITY_ERROR);
+            e.printStackTrace();
+        } finally {
+            tempFile.deleteOnExit();
+        }
+    }
 }
