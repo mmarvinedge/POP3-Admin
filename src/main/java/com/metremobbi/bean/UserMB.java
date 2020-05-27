@@ -37,6 +37,9 @@ public class UserMB implements Serializable {
     private User user;
     @Getter
     @Setter
+    private CompanyMB companyMB;
+    @Getter
+    @Setter
     private List<User> users;
     @Getter
     @Setter
@@ -53,6 +56,7 @@ public class UserMB implements Serializable {
         user = new User();
         users = new ArrayList();
         usersSelected = new ArrayList();
+        companyMB = new CompanyMB();
     }
 
     @PostConstruct
@@ -76,11 +80,16 @@ public class UserMB implements Serializable {
     public void save() {
         if (user.getId() == null) {
             try {
-                user.setCompanyId(logonMB.getCurrentUser().getCompanyId());
-                service.postUser(user);
-                addDetailMessage("Usuário inserido com sucesso.");
-                users.add(user);
-                novo();
+                System.out.println(companyMB.getCompany().getId());
+                user.setCompanyId(companyMB.getCompany().getId());
+                if (findByUsername(user.getUserName())) {
+                    service.postUser(user);
+                    addDetailMessage("Usuário inserido com sucesso.");
+                    users.add(user);
+                    novo();
+                } else {
+                    addDetailMessage("Erro ao cadastrar, usuário já está em uso, escolha outro.", FacesMessage.SEVERITY_ERROR);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 addDetailMessage("Erro ao inserir usuário!", FacesMessage.SEVERITY_ERROR);
@@ -106,6 +115,16 @@ public class UserMB implements Serializable {
             addDetailMessage("Usuários deletados com sucesso.");
         } else {
             addDetailMessage("Usuário deletado com sucesso.");
+        }
+    }
+
+    public Boolean findByUsername(String username) {
+        User u = service.findUser(username);
+        if (u != null) {
+            return false;
+        } else {
+            System.out.println("sem usuário com esse username");
+            return true;
         }
     }
 

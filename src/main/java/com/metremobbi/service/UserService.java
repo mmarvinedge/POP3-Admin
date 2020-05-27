@@ -11,6 +11,7 @@ import com.metremobbi.model.User;
 import com.metremobbi.util.Constantes;
 import com.metremobbi.util.Utils;
 import java.io.IOException;
+import java.net.ProtocolException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +38,22 @@ public class UserService {
                 .post(body)
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
+            System.out.println("codeeeeeeeeeeee " + response.code());
+            System.out.println("codeeeeeeeeeeee " + response.message());
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            u = new Gson().fromJson(response.body().string(), User.class);
+            String retorno = response.body().string();
+            u = new Gson().fromJson(retorno, User.class);
+            System.out.println(retorno);
             return u;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ProtocolException e) {
+            User uu = new User();
+            uu.setName("trialexpired");
+            uu.setCompanyId("0");
+            System.out.println("entrei no 407");
+            return uu;
+        } catch (IOException e) {
             return u;
         }
     }
@@ -102,5 +112,26 @@ public class UserService {
                 .build();
         Response response = client.newCall(request).execute();
         String json = response.body().string();
+    }
+
+    public User findUser(String username) {
+        User saida = new User();
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/user/finduser/" + username)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            // Get response body
+            String json = response.body().string();
+            saida = new Gson().fromJson(json, new TypeToken<User>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            saida = new User();
+        }
+        return saida;
     }
 }

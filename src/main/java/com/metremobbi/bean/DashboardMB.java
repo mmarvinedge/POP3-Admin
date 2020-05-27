@@ -107,28 +107,32 @@ public class DashboardMB implements Serializable {
     }
 
     public void loadDashboardDay(List<Order> orderss) {
-        List<Item> itens = new ArrayList();
-        List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().equals(OUtils.formataData(new Date(), "yyyy-MM-dd")))
-                .collect(Collectors.toList());
-        totalSold = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
-        orders = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).count();
-        ordersWait = listDay.stream().filter(p -> !p.getStatus().equals("Finalizado") && !p.getStatus().equals("Cancelado")).count();
-        ordersCancel = listDay.stream().filter(p -> p.getStatus().equals("Cancelado")).count();
-        totalDelivery = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
-        for (Order o : listDay) {
-            for (Item i : o.getProducts()) {
-                itens.add(i);
+        try {
+            List<Item> itens = new ArrayList();
+            List<Order> listDay = orderss.stream().filter(s -> s.getDtRegister().equals(OUtils.formataData(new Date(), "yyyy-MM-dd")))
+                    .collect(Collectors.toList());
+            totalSold = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).map(o -> o.getTotal()).mapToDouble(Double::doubleValue).sum();
+            orders = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).count();
+            ordersWait = listDay.stream().filter(p -> !p.getStatus().equals("Finalizado") && !p.getStatus().equals("Cancelado")).count();
+            ordersCancel = listDay.stream().filter(p -> p.getStatus().equals("Cancelado")).count();
+            totalDelivery = listDay.stream().filter(p -> p.getStatus().equals("Finalizado")).map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
+            for (Order o : listDay) {
+                for (Item i : o.getProducts()) {
+                    itens.add(i);
+                }
             }
+            ranking = new ArrayList();
+            Collection<List<Item>> saida = itens.stream().collect(Collectors.groupingBy(Item::getName)).values();
+            for (List<Item> itemAgrupado : saida) {
+                BigDecimal qnt = itemAgrupado.stream().map(p -> p.getQuantity()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal total = itemAgrupado.stream().map(p -> p.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                RankingProduct rp = new RankingProduct(itemAgrupado.get(0).getName(), qnt, total);
+                ranking.add(rp);
+            }
+            ranking.sort(Comparator.comparingDouble(RankingProduct::getQnt).reversed());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        ranking = new ArrayList();
-        Collection<List<Item>> saida = itens.stream().collect(Collectors.groupingBy(Item::getName)).values();
-        for (List<Item> itemAgrupado : saida) {
-            BigDecimal qnt = itemAgrupado.stream().map(p -> p.getQuantity()).reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal total = itemAgrupado.stream().map(p -> p.getTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
-            RankingProduct rp = new RankingProduct(itemAgrupado.get(0).getName(), qnt, total);
-            ranking.add(rp);
-        }
-        ranking.sort(Comparator.comparingDouble(RankingProduct::getQnt).reversed());
     }
 
     public void loadDashboardWeek(List<Order> orderss) {

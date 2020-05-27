@@ -22,39 +22,48 @@
     <ui:define name="body">
         <h:form id="frmProduct" >
             <p:panel>
-                <p:messages closable="true" />
                 <div class="ui-g ui-fluid" >
-                    <div class="ui-g-6">
-                        <p:outputLabel value="Company ID" /><br/>
-                        <p:inputText value="#{companyMB.company.id}" readonly="true" />
+                    <div class="ui-sm-12 ui-g-6 ">
+                        <div class="ui-sm-12 ui-g-12 ">
+                            <p:outputLabel value="Company ID" /><br/>
+                            <p:inputText value="#{companyMB.company.id}" readonly="true" />
+                        </div>
+                        <div class="ui-sm-12 ui-g-12 ">
+                            <p:outputLabel value="Nome Empresa" /><br/>
+                            <p:inputText value="#{companyMB.company.name}" />
+                        </div>
+                        <div class="ui-sm-6 ui-g-6 ">
+                            <p:outputLabel value="Telefone Whatsapp" /><br/>
+                            <p:inputMask value="#{companyMB.company.phone}" mask="(99)9999-9999" />
+                        </div>
+                        <div class="ui-sm-6 ui-g-6 ">
+                            <p:outputLabel value="Tempo Médio de Entrega" /><br/>
+                            <p:inputText value="#{companyMB.company.aproxTime}"  />
+                        </div>
+                        <div class="ui-sm-6 ui-g-6 ">
+                            <p:outputLabel value="Mensagem de Boas Vindas" /><br/>
+                            <small>Máximo 30 car.</small><br/>
+                            <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
+                        </div>
+                    </div>
+                    <div class="ui-sm-12 ui-g-6 ">
+                        <div class="img-wrap">
+                            <p:outputLabel value="Logo da Empresa (até 100KB)" />
+                            <p:fileUpload fileUploadListener="#{companyMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                          uploadLabel="Enviar" cancelLabel="Cancelar" label="Escolher" auto="false"
+                                          update="photo" sizeLimit="500000" fileLimit="3"  />
+                            <hr/>
+                            <h:panelGroup id="photo">
+                                <h:panelGroup rendered="#{companyMB.company.logo != null and companyMB.company.logo.startsWith('http')}">
+                                    <img src="#{companyMB.company.logo}" style="width: 50%"/>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{companyMB.company.logo != null and !companyMB.company.logo.startsWith('http')}">
+                                    <img src="data:logo/png;base64, #{companyMB.company.logo}" style="width: 25%"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
                     </div>
                 </div>
-                <div class="ui-g ui-fluid" >
-
-                    <div class="ui-g-6">
-                        <p:outputLabel value="Nome Empresa" /><br/>
-                        <p:inputText value="#{companyMB.company.name}" />
-                    </div>
-                </div>
-                <div class="ui-g" >
-                    <div class="ui-g-2">
-                        <p:outputLabel value="Telefone Whatsapp" /><br/>
-                        <p:inputMask value="#{companyMB.company.phone}" mask="(99)9999-9999" />
-                    </div>
-                    <div class="ui-g-6">
-                        <p:outputLabel value="Tempo Médio de Entrega" /><br/>
-                        <p:inputText value="#{companyMB.company.aproxTime}"  />
-                    </div>
-                </div>
-               
-                <div class="ui-g ui-fluid" >
-                    <div class="ui-g-3">
-                        <p:outputLabel value="Mensagem de Boas Vindas" /><br/>
-                        <small>Máximo 30 car.</small><br/>
-                        <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
-                    </div>
-                </div>
-
 
                 <div class="ui-g" style="border-bottom: 1px solid #ccc;">
                     <div class="ui-g-12">
