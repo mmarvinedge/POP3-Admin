@@ -34,7 +34,7 @@ public class Company {
     private String nameUrl;
     private Boolean integration;
     private Boolean trial;
-    private Date trialDate;
+    private String trialDate;
     private String aproxTime;
 
     public String getMessageWelcome() {
