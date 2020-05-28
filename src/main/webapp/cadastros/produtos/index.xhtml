@@ -206,15 +206,15 @@
                                     </div>
                                     <div class="ui-sm-6 ui-g-2 ">
                                         <p:outputLabel value="Promocional" for="promo"/><br/>
-                                        <p:selectBooleanCheckbox id="promo" disabled="#{param['acao']}"  value="#{productMB.product.promo}" >
+                                        <p:selectBooleanCheckbox id="promo" value="#{productMB.product.promo}" >
                                             <p:ajax event="change" update="ogirinalPrice" />
                                         </p:selectBooleanCheckbox>
                                     </div>    
                                     <div class="ui-sm-6 ui-g-3 ">
                                         <h:panelGroup id="ogirinalPrice" >
                                             <h:panelGroup rendered="#{productMB.product.promo}">
-                                                <p:outputLabel value="Preço Original" for="inptPriceOriginal"/>
-                                                <p:inputNumber id="inptPriceOriginal" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
+                                                <p:outputLabel value="Preço promocional" for="inptPriceOriginal"/>
+                                                <p:inputNumber id="inptPriceOriginal" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
                                                 <span class="help-block"> 
                                                     <p:message for="inptPriceOriginal" /> 
                                                 </span>
@@ -321,7 +321,7 @@
                                                                                         </p:inputText>
                                                                                     </p:column>
                                                                                     <p:column headerText="Sinopse" style="text-align: left">
-                                                                                        <p:inputText disabled="#{param['acao']}" id="addSinopse" value="#{att.description}" required="true" requiredMessage="Sinopse do produto é obrigatória">
+                                                                                        <p:inputText id="addSinopse" value="#{att.description}" required="false" requiredMessage="Sinopse do produto é obrigatória">
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputText>
                                                                                     </p:column>
