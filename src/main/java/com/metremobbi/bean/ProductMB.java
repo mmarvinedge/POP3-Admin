@@ -114,13 +114,6 @@ public class ProductMB implements Serializable {
     public void init() {
         try {
             get();
-            listOrder = orderService.getOrdersWeek();
-            if (listOrder != null) {
-                System.out.println(listOrder.size());
-                totalSold = listOrder.stream().map(o -> o.getTotal().doubleValue()).mapToDouble(Double::doubleValue).sum();
-                orders = listOrder.size();
-                totalDelivery = listOrder.stream().map(o -> o.getDeliveryCost()).mapToDouble(Double::doubleValue).sum();
-            }
         } catch (IOException ex) {
             products = new ArrayList();
             categoryList = new ArrayList();

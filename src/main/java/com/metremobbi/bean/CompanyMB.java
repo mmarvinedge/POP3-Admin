@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -58,12 +59,16 @@ public class CompanyMB {
     private BigDecimal taxa;
     @Getter
     @Setter
+    private Boolean taxaUnicaEntrega;
+    @Getter
+    @Setter
     private String bairroCadastro = "";
 
     public CompanyMB() {
         try {
             System.out.println("ID DA COMPANY: "+companyID);
             company = service.loadCompany(companyID);
+            taxaUnicaEntrega = company.getDeliveryCost().doubleValue() != 0;
             if (company.getTime() == null) {
                 company.setTime(new TimeOpen());
             }
@@ -75,6 +80,9 @@ public class CompanyMB {
 
     public void save() {
         try {
+            if (!taxaUnicaEntrega) {
+                company.setDeliveryCost(BigDecimal.ZERO);
+            }
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -84,6 +92,9 @@ public class CompanyMB {
 
     public void save2() {
         try {
+            if (!taxaUnicaEntrega) {
+                company.setDeliveryCost(BigDecimal.ZERO);
+            }
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -125,13 +136,23 @@ public class CompanyMB {
     }
 
     public void confirmarRegioes() {
+        if (taxaUnicaEntrega) {
+            for (Bairro bairroSelecionado : dualBairros.getTarget()) {
+                bairroSelecionado.setTaxa(company.getDeliveryCost());
+            }
+        }else{
+            company.setDeliveryCost(BigDecimal.ZERO);
+        }
         company.setBairros(dualBairros.getTarget());
         save2();
     }
 
     public void cadastrarBairro() {
         try {
-
+            if(!dualBairros.getSource().stream().filter(f->f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()){
+                addDetailMessage("Bairro já cadastrado!", FacesMessage.SEVERITY_ERROR);
+                return;
+            }
             Bairro b = service.cadastrarBairro(bairroCadastro, company.getAddress().getCity());
             b.setTaxa(BigDecimal.ZERO);
             if (b != null) {
@@ -141,6 +162,7 @@ public class CompanyMB {
                 System.out.println("dualBairros.getSource(); " + dualBairros.getSource().size());
                 addDetailMessage("Bairro adicionado!");
                 PrimeFaces.current().executeScript("PF('dlgBairro').hide()");
+                bairroCadastro = null;
             } else {
                 addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
             }
@@ -150,7 +172,7 @@ public class CompanyMB {
         }
     }
 
-    public void uploadPhoto(FileUploadEvent event){
+    public void uploadPhoto(FileUploadEvent event) {
         File tempFile = null;
         try {
             tempFile = File.createTempFile("foto2", "png");
