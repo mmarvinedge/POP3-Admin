@@ -62,6 +62,7 @@ public class CompanyMB {
 
     public CompanyMB() {
         try {
+            System.out.println("ID DA COMPANY: "+companyID);
             company = service.loadCompany(companyID);
             if (company.getTime() == null) {
                 company.setTime(new TimeOpen());
