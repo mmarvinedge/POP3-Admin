@@ -7,7 +7,6 @@ package com.metremobbi.model;
 
 import com.metremobbi.model.dto.Bairro;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import lombok.Data;
 
@@ -25,6 +24,7 @@ public class Company {
     private String color;
     private String logo;
     private String owner;
+    private String cgccpf;
     private Address address;
     private BigDecimal deliveryCost;
     private TimeOpen time;
