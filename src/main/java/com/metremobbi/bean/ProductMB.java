@@ -124,6 +124,7 @@ public class ProductMB implements Serializable {
         products = service.getProducts();
         productModel = new ProductDataModel(products);
         categoryList = service.getCategoryList();
+        selectedProducts = new ArrayList();
     }
 
     public void update(Product p) throws IOException {
@@ -278,6 +279,8 @@ public class ProductMB implements Serializable {
         product.setId(null);
         product.setSku(null);
         product.setOrder(null);
+        product.setImageBase64(null);
+        product.setImageType(null);
         attribute.setId(null);
         attribute.setSku(null);
     }

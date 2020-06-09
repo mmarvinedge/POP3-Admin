@@ -6,7 +6,7 @@
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="title" value="Usuários"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <ui:param name="title" value="Cupom de Desconto"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
         <style type="text/css">
             .ui-datatable .ui-datatable-header {
                 text-align: right !important;
@@ -15,48 +15,41 @@
     </ui:define>
 
     <ui:define name="description">
-        Controle seus usuários
+        Controle seus cupons de desconto
     </ui:define>
 
     <ui:define name="body">
-        <h:form id="frmUser" >
+        <h:form id="frmCoupon" >
             <p:focus context="@form"/>
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
-
-                        <p:commandButton action="#{userMB.novo}" icon="fa fa-plus"
-                                         value="Novo" styleClass="btn-primary" update="modalNewUser" oncomplete="PF('modalNewUser').show()">
+                        <div style="float: right !important">
+                            <p:outputLabel value="Trabalha com cupom?"/><br/>
+                            <p:toggleSwitch value="#{companyMB.company.worksCoupon}" >
+                                <p:ajax event="change"/>
+                            </p:toggleSwitch>
+                        </div>
+                        <p:commandButton action="#{couponMB.novo()}" icon="fa fa-plus"
+                                         value="Novo" styleClass="btn-primary" update="modalNewCoupon" oncomplete="PF('modalNewCoupon').show()">
                             <f:param name="edit" value="false"/>
                         </p:commandButton>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Editar" action="#{userMB.setUserAlter(userMB.usersSelected.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
-                                         disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
-                                         oncomplete="PF('modalNewUser').show()" icon="fa fa-edit">
-                            <f:param name="edit" value="true"/>
-                        </p:commandButton>
-                        <p:spacer width="5"/>
                         <p:commandButton value="Deletar" icon="fa fa-trash" styleClass="btn-danger"
-                                         action="#{userMB.delete}"
-                                         disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                         action="#{couponMB.delete()}"
+                                         disabled="#{empty couponMB.couponsSelected or couponMB.couponsSelected.size() == 0}"
                                          process="@this" update="@form"
                                          >
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
                         </p:commandButton>
                     </div>
 
-                    <p:splitButton value="Novo" action="#{userMB.novo}"
-                                   icon="fa fa-plus" update="modalNewUser, frmNewUser" oncomplete="PF('modalNewUser').show()"
+                    <p:splitButton value="Novo" action="#{couponMB.novo()}"
+                                   icon="fa fa-plus" update="modalNewCoupon, frmNewCoupon" oncomplete="PF('modalNewCoupon').show()"
                                    styleClass="hidden-md hidden-lg btn-primary" immediate="true">
-                        <p:menuitem value="Editar" update="@(.ui-dialog), frmNewUser" action="#{userMB.setUserAlter(userMB.usersSelected.get(0))}"
-                                    oncomplete="PF('modalNewUser').show()"
-                                    disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
-                                    icon="fa fa-edit" immediate="true">
-                            <f:param name="edit" value="false"/>
-                        </p:menuitem>
-                        <p:menuitem value="Deletar" action="#{userMB.delete}"
+                        <p:menuitem value="Deletar" action="#{couponMB.delete()}"
                                     process="@this" update="@form"
-                                    disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                    disabled="#{empty couponMB.couponsSelected or couponMB.couponsSelected.size() == 0}"
                                     icon="fa fa-trash">
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
                         </p:menuitem>
@@ -64,9 +57,9 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <p:dataTable id="tblUser" widgetVar="usersTable" var="u" value="#{userMB.users}" rows="5"
-                                 rowKey="#{u.userName}" paginator="true" emptyMessage="Nenhum usuário encontrado"
-                                 paginatorPosition="bottom" selection="#{userMB.usersSelected}"
+                    <p:dataTable id="tblCoupon" widgetVar="couponsTable" var="c" value="#{couponMB.coupons}" rows="5"
+                                 rowKey="#{c.slug}" paginator="true" emptyMessage="Nenhum cupom cadastrado"
+                                 paginatorPosition="bottom" selection="#{couponMB.couponsSelected}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
                                  rowsPerPageTemplate="5,10,15,20,30" >
@@ -79,11 +72,19 @@
 
                         <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
 
-                        <p:column headerText="Nome" sortBy="#{u.name}" filterBy="#{u.name}" filterMatchMode="contains">
-                            <h:outputText value="#{u.name}"/>
+                        <p:column headerText="Nome" sortBy="#{c.slug}" filterBy="#{c.slug}" filterMatchMode="contains">
+                            <h:outputText value="#{c.slug}"/>
                         </p:column>
-                        <p:column headerText="Login" sortBy="#{u.userName}" filterBy="#{u.userName}" filterMatchMode="contains">
-                            <h:outputText value="#{u.userName}"/>
+                        <p:column headerText="Limite de uso" sortBy="#{c.quantity}" filterBy="#{c.quantity}" filterMatchMode="contains">
+                            <h:outputText value="#{c.quantity}"/>
+                        </p:column>
+                        <p:column headerText="Desconto" sortBy="#{c.discount}" filterBy="#{c.discount}" filterMatchMode="contains">
+                            <h:outputText value="#{c.discount}%"/>
+                        </p:column>
+                        <p:column headerText="Ativado" filterMatchMode="contains">
+                            <p:toggleSwitch value="#{c.enable}" >
+                                <p:ajax event="change" update="@this"  listener="#{couponMB.update(c)}"/>
+                            </p:toggleSwitch>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -96,9 +97,9 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog widgetVar="modalNewUser" id="modalNewUser" header="Cadastro de usuário"
+        <p:dialog widgetVar="modalNewCoupon" id="modalNewCoupon" header="Cadastro de cupom de desconto"
                   modal="true" position="top" responsive="true" resizable="false">
-            <h:form id="frmNewUser">
+            <h:form id="frmNewCoupon">
                 <p:panel styleClass="box-primary card">
 
                     <div class="box-primary">
@@ -106,42 +107,42 @@
                             <p:messages closable="true" />
                             <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Nome" for="inptName"/>
+                                    <p:outputLabel value="Nome" for="inptSlug"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptName" value="#{userMB.user.name}" required="true"/>
+                                    <p:inputText id="inptSlug" value="#{couponMB.coupon.slug}" required="true"/>
                                     <span class="help-block"> 
-                                        <p:message for="inptName" /> 
+                                        <p:message for="inptSlug" /> 
                                     </span>
                                 </div>
                             </div>
                             <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Usuário" for="inptUsername"/>
+                                    <p:outputLabel value="Limite de uso" for="inptQnt"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText disabled="#{param['edit']}" id="inptUsername" value="#{userMB.user.userName}" required="true"/>
+                                    <p:inputText id="inptQnt" value="#{couponMB.coupon.quantity}" type="number" required="true"/>
                                     <span class="help-block">
-                                        <p:message for="inptUsername" /> 
+                                        <p:message for="inptQnt" /> 
                                     </span>
                                 </div>
                             </div>
                             <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Senha" for="inptPassword"/>
+                                    <p:outputLabel value="Desconto" for="inptDsc"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptPassword" value="#{userMB.user.password}" type="password" required="true"/>
-                                    <span class="help-block"> 
-                                        <p:message for="inptPassword" /> 
+                                    <p:inputText id="inptDsc" value="#{couponMB.coupon.discount}" type="number" required="true"/>
+                                    <span class="help-block">
+                                        <p:message for="inptDsc" /> 
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div id="main-buttons" style="text-align: right;">
-                            <p:commandButton value="Salvar" action="#{userMB.save}" update="@form, :frmUser"
+                            <p:commandButton value="Salvar" action="#{couponMB.save()}" update="@form, frmCoupon"
                                              icon="fa fa-check" type="submit" styleClass="btn-primary"
-                                             onerror="PF('msgs').show();" onsuccess="PF('modalNewUser').hide();" />
+                                             onerror="PF('msgs').show();" onsuccess="PF('modalNewCoupon').hide();" />
                         </div>
                     </div>
                 </p:panel>

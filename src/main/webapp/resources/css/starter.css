@@ -117,3 +117,19 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend{
     font-size: 12px  !important;
     padding: 5px  !important;
 }
+
+/*table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}*/
+
+.labelFlavors label {
+    max-width: 82% !important;
+    width: auto !important;
+}
+

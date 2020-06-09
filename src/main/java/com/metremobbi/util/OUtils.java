@@ -179,5 +179,26 @@ public class OUtils {
                 .toLocalDateTime();
         return ldt;
     }
+    
+    public static Date addSegundo(Date data, int qtd) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        cal.add(Calendar.SECOND, qtd);
+        return cal.getTime();
+    }
+
+    public static Date addMinuto(Date data, int qtd) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        cal.add(Calendar.MINUTE, qtd);
+        return cal.getTime();
+    }
+
+    public static Date addHour(Date data, int qtd) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        cal.add(Calendar.HOUR, qtd);
+        return cal.getTime();
+    }
 
 }

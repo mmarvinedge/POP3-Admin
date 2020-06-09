@@ -46,9 +46,10 @@ public class Product implements Serializable {
     private List<FlavorPizza> flavorsPizza;
     private String rulePricePizza;
     private ProductDay productDay;
+    private Shift shift;
 
     public Product() {
-        
+
     }
 
     public String getId() {
@@ -222,6 +223,18 @@ public class Product implements Serializable {
         this.priceOriginal = priceOriginal;
     }
 
+    public Shift getShift() {
+        if (shift == null) {
+            return shift = new Shift();
+        } else {
+            return shift;
+        }
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -231,7 +244,7 @@ public class Product implements Serializable {
     }
 
     public ProductDay getProductDay() {
-        if(productDay == null){
+        if (productDay == null) {
             productDay = new ProductDay();
         }
         return productDay;

@@ -54,7 +54,7 @@
                                     oncomplete="PF('modalNewProduct').show()"
                                     disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                     icon="fa fa-edit"/>
-                        
+
                         <p:menuitem value="Deletar" action="#{productMB.delete}"
                                     process="@this" update="@form"
                                     disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() == 0}"
@@ -139,7 +139,7 @@
 
         <p:dialog widgetVar="modalNewProduct" id="modalNewProduct"  header="Cadastro de Produtos" draggable="false"
                   modal="true" position="top" responsive="false" resizable="false" positionType="absolute"
-                  width="850" height="695">
+                  width="850" height="620" showEffect="clip" hideEffect="fold" closeOnEscape="true" >
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
@@ -259,7 +259,7 @@
                     <p:tab title="Regras" >
                         <p:panel id="pnl2" styleClass="box-primary card">
 
-                            <div class="box-primary" style="width: 850px !important;">
+                            <div class="box-primary" style="width: 770px !important;">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-12 ui-g-8">
                                         <h:outputLabel value="Tipo do produto" /><br/>
@@ -386,7 +386,7 @@
                                                         <p:inputText disabled="#{param['acao']}" value="#{productMB.flavorPizza.flavor}" style="width: 35% !important;" id="flava"  placeholder="Sabor"/>
                                                         <p:inputText disabled="#{param['acao']}" value="#{productMB.flavorPizza.description}" style="width: 40% !important;" id="description"  placeholder="Sinopse"/>
                                                         <p:inputNumber disabled="#{param['acao']}" value="#{productMB.flavorPizza.price}" size="6" symbol="R$ " decimalSeparator="," thousandSeparator="." id="flavaPri" placeholder="Valor"  />
-                                                        <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" styleClass="btn-primary"   style="width: 5% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri"/>
+                                                        <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" styleClass="btn-primary"   style="width: 5% !important;" action="#{productMB.addFlavor()}" update="tblFlavors, flava,flavaPri,description"/>
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" >
                                                             <p:column headerText="SKU" width="100" style="text-align: left">
@@ -421,43 +421,65 @@
                             </div>
                         </p:panel>
                     </p:tab>
-                    <p:tab title="Dias" >
+                    <p:tab title="Disponibilidade" >
                         <p:panel  styleClass="box-primary card">
-                            <div class="box-primary" style="width: 850px !important;">
-                                <div class="ui-g ui-fluid">
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Domingo" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderDom}" />
+                            <div class="box-primary" style="width: 770px !important;">
+                                <p:fieldset legend="Dias não vendidos">
+                                    <div class="ui-g ui-fluid">
+                                        <div class="ui-sm-12 ui-g-12">
+                                            <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
+                                                <tr>
+                                                    <th colspan="7" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><center>Habilite os dias que este produto não é vendido</center></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Domingo</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Segunda</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Terça</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quarta</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quinta</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sexta</th>
+                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sabado</th>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderDom}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSeg}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderTer}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderQua}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderQui}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSex}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSab}" /></td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Segunda" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSeg}" />
-                                    </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Terça" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderTer}" />
-                                    </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Quarta" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderQua}" />
-                                    </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Quinta" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderQui}" />
-                                    </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Sexta" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSex}" />
-                                    </div>
-                                    <div class="ui-sm-12 ui-g-8">
-                                        <p:outputLabel value="Não Será Vendido no Sábado" /><br/>
-                                        <p:toggleSwitch value="#{productMB.product.productDay.naoVenderSab}" />
-                                    </div>
-                                </div>
+                                </p:fieldset><br/><br/>
+                                <!--                                <p:fieldset legend="Turnos">
+                                                                    <div class="ui-g ui-fluid">
+                                                                        <div class="ui-sm-12 ui-g-12">
+                                                                            <small>Defina aqui os turnos que você vende este produto</small>
+                                                                        </div>
+                                                                        <div class="ui-sm-4 ui-g-4">
+                                                                            <h:outputLabel value="Manhã"/><br/>
+                                                                            <p:selectBooleanButton value="{productMB.product.shift.morning}" onLabel="Sim" offLabel="Não"/>
+                                                                            <small>Abertura até 12:00</small>
+                                                                        </div>
+                                                                        <div class="ui-sm-4 ui-g-4">
+                                                                            <h:outputLabel value="Tarde"/><br/>
+                                                                            <p:selectBooleanButton value="{productMB.product.shift.afternoon}" onLabel="Sim" offLabel="Não"/>
+                                                                            <small>12:00 até 18:00</small>
+                                                                        </div>
+                                                                        <div class="ui-sm-4 ui-g-4">
+                                                                            <h:outputLabel value="Noite"/><br/>
+                                                                            <p:selectBooleanButton value="{productMB.product.shift.night}" onLabel="Sim" offLabel="Não"/>
+                                                                            <small>18:00 até fechamento</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </p:fieldset>-->
                             </div>
                         </p:panel>
                     </p:tab>
                 </p:tabView>
+                <p:spacer height="30"/>
                 <div id="main-buttons" style="text-align: right;">
                     <p:commandButton value="Salvar" action="#{productMB.save}" update="@form, :frmProduct" icon="fa fa-check" type="submit" styleClass="btn-primary" oncomplete="if (!args.validationFailed)  {PF('modalNewProduct').hide();}"/>
                 </div>
