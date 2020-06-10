@@ -5,7 +5,6 @@
  */
 package com.metremobbi.model;
 
-import com.metremobbi.enums.STATUS;
 import java.util.Date;
 import java.util.List;
 

@@ -2,11 +2,354 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html">
+    <h:form>
+        <section class="content-header" style="padding-left: 0px;">
+            <div class="ui-g">
+                <div class="ui-g-4 ui-md-4 ui-lg-4">
+                    <h1 >Dashboard</h1>
+                </div>
+                <div class="ui-g-8 ui-md-8 ui-lg-8" style="text-align: right !important;">
+                    <p:inputText />
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-8 ui-lg-9" >
+                    <div class="card" style="height: 100% ; padding: 15px;">
+                        <div class="card-body">
+                            <p:lineChart model="#{novaDashMB.vendasDiarias}" style="width: 100%; height: 400px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-4 ui-lg-3" >
 
-<section class="content-header" style="padding-left: 0px">
-    <h1 >Dashboard</h1>
-</section>
-<p:spacer height="15px"/>
+                    <div class="card">
+                        <div class="card-head">
+                            PEDIDOS RECEBIDOS<br/>
+                            <small>R$ 58.000,00</small>
+                        </div>
+                        <div class="card-body">
 
-<center><h1>Dashboard em desenvolvimento!</h1></center>
+                            <div class="body-knob" >
+                                <input type="text" value="75" class="dial" readonly="true"   data-bgColor="#ccc"   data-thickness=".1"  data-linecap="round"   data-angleArc="250" data-angleOffset="-125" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-head">
+                            PEDIDOS CANCELADOS<br/>
+                            <small>R$ 58.000,00</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="body-icon" >
+                            </div>
+                            <div class="body-knob" >
+                                <input type="text" value="75" class="dial1"  readonly="true"   data-bgColor="#ccc"   data-thickness=".1"  data-linecap="round"   data-angleArc="250" data-angleOffset="-125"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h2>Produtos mais vendidos</h2>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:scrollPanel mode="native" style="width: 100%;     display: inline-flex;">
+
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                        <div class="c1">
+                            <div class="cp">
+                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                            </div>
+                            <div class="cd">
+                                <h3>Coca Cola</h3>
+                            </div>
+                            <div class="cds">
+                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
+                            </div>
+                        </div>
+                    </p:scrollPanel>
+                </div>
+
+
+
+
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-3" style="    border: 1px solid #ccc;border-radius: 5px;padding-top: 0;">
+                    <h3>Ultimos Pedidos</h3>
+                    <table style="width: 100%;">
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;" >
+                                Coca Cola <br/>
+                                2 x 4,90
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                                <small>Nº 18900</small><br/>
+                                <small >03/06/2020 23:16</small>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;" >
+                                Coca Cola <br/>
+                                2 x 4,90
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                                <small>Nº 18900</small><br/>
+                                <small >03/06/2020 23:16</small>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;" >
+                                Coca Cola <br/>
+                                2 x 4,90
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                                <small>Nº 18900</small><br/>
+                                <small >03/06/2020 23:16</small>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="ui-g-12 ui-md-4 ui-lg-3" style="    border: 1px solid #ccc;border-radius: 5px;padding-top: 0; margin-left: 15px;">
+                    <h3>Top Clientes</h3>
+                    <table style="width: 100%;">
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center>
+                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
+                                </center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
+                                <strong>(34)99975-3064</strong><br/>
+                                <small>
+                                    Renato Gonçalves
+                                </small>
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                               <small>R$ 800,00</small><br/>
+                                <small>19 Pedidos</small><br/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center>
+                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
+                                </center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
+                                <strong>(34)99975-3064</strong><br/>
+                                <small>
+                                    Renato Gonçalves
+                                </small>
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                                <small>R$ 800,00</small><br/>
+                                <small>17 Pedidos</small><br/>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #b6c2c9;">
+                            <td style="width: 10%">
+                                <center>
+                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
+                                </center>
+                            </td>
+                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
+                                <strong>(34)99975-3064</strong><br/>
+                                <small>
+                                    Renato Gonçalves
+                                </small>
+                            </td>
+                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
+                                <small>R$ 800,00</small><br/>
+                                <small>12 Pedidos</small><br/>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </section>
+    </h:form>
+
+    <script>
+        $(document).ready(function () {
+            $(".dial").knob(({'fgColor': 'rgb(59, 175, 218)', 'bgColor': 'rgb(65, 77, 88)', 'height': 100}));
+            $(".dial1").knob(({'fgColor': 'rgb(59, 175, 218)', 'bgColor': 'rgb(65, 77, 88)', 'height': 100}));
+        });
+    </script>
 </ui:composition>

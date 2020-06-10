@@ -22,11 +22,11 @@ ul.dropdown-menu > li.user-header {
 }
 
 a.dropdown-toggle {
-    background-color: #3c8dbc!important;
+    background-color: #5da32d !important;
 }
 
 a#logout {
-    color: #3c8dbc!important;
+    color: #5da32d !important;
     background: transparent;
 }
 
@@ -37,8 +37,8 @@ a#logout {
 }
 
 body fieldset.ui-fieldset legend.ui-fieldset-legend {
-    background: #3c8dbc !important;
-    border-color: #3c8dbc !important;
+    background: #5da32d !important;
+    border-color: #5da32d !important;
     color: white !important;
     width: auto !important;
     text-shadow: none !important;

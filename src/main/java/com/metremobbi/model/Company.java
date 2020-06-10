@@ -24,8 +24,9 @@ public class Company {
     private String color;
     private String logo;
     private String owner;
+    private String cgccpf;
     private Address address;
-    private BigDecimal deliveryCost;
+    private BigDecimal deliveryCost = BigDecimal.ZERO;
     private TimeOpen time;
     private String funcionamento;
     private String messageWelcome;

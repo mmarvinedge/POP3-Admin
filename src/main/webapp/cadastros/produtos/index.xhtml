@@ -98,10 +98,10 @@
                         <p:column headerText="Categoria" sortBy="#{p.categoryMain.name}" filterBy="#{p.categoryMain.name}" filterMatchMode="contains">
                             <h:outputText value="#{p.categoryMain.name}" />
                         </p:column>
-                        <p:column headerText="Ativo" >
-                            <p:toggleSwitch value="#{p.enabled}" >
+                        <p:column headerText="Ativo" class="text-center" width="100" >
+                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{p.enabled}">
                                 <p:ajax event="change" update="@this"  listener="#{productMB.update(p)}"/>
-                            </p:toggleSwitch>
+                            </p:selectBooleanButton>
                         </p:column>
 
                         <p:column headerText="Impressora" >
@@ -143,7 +143,7 @@
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
-                        <p:panel id="pnl" styleClass="box-primary card">
+                        <p:panel id="pnl" styleClass="box-primary cardMdl">
                             <div class="box-primary">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-3 ui-g-3 ">
@@ -165,8 +165,7 @@
                                         <p:outputLabel value="Categoria" for="category"/>
                                         <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
                                                          value="#{productMB.product.categoryMain}" id="category" filter="true"
-                                                         filterMatchMode="contains" effect="fade" converter="Converter" disabled="#{param['acao']}"
-                                                         >
+                                                         filterMatchMode="contains" effect="fade" converter="Converter" disabled="#{param['acao']}">
                                             <f:selectItem itemLabel="Selecione uma categoria..." itemValue=""/>
                                             <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
                                             <p:ajax event="itemSelect" update="@this, :frmNewProduct:tabs:pnl2" listener="#{productMB.debug()}" />
@@ -257,7 +256,7 @@
                         </p:panel>
                     </p:tab>
                     <p:tab title="Regras" >
-                        <p:panel id="pnl2" styleClass="box-primary card">
+                        <p:panel id="pnl2" styleClass="box-primary cardMdl">
 
                             <div class="box-primary" style="width: 770px !important;">
                                 <div class="ui-g ui-fluid">
@@ -300,7 +299,7 @@
                                                                             </div>
                                                                             <div class="ui-sm-2 ui-g-2">
                                                                                 Parar a venda?
-                                                                                <p:toggleSwitch value="#{atr.disabled}"  />
+                                                                                <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{atr.disabled}"/>
                                                                             </div>
                                                                             <div class="ui-sm-12 ui-g-12">
                                                                                 <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" update=":frmNewProduct:tabs:rpt:#{vari.index}:acord:tblAttributes" class="btn-success" style="position: absolute !important;right: 60px !important;margin-top: -75px !important;width: 50px;;" action="#{productMB.addAttributeValue(atr)}"  immediate="true"  />
@@ -308,7 +307,7 @@
                                                                                 <p:dataTable value="#{atr.values}" var="att" id="tblAttributes" style="width: 100% !important;"
                                                                                              rowIndexVar="index" emptyMessage="Nenhum produto adicionado!"  >
                                                                                     <p:column  headerText="Parar a venda" width="90" style="text-align: left">
-                                                                                        <p:toggleSwitch value="#{att.disabled}"  />
+                                                                                        <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{att.disabled}"/>
                                                                                     </p:column>
                                                                                     <p:column headerText="SKU" width="80" style="text-align: left">
                                                                                         <p:inputText disabled="#{param['acao']}" value="#{att.sku}"  placeholder="Opcional" >
@@ -422,12 +421,12 @@
                         </p:panel>
                     </p:tab>
                     <p:tab title="Disponibilidade" >
-                        <p:panel  styleClass="box-primary card">
+                        <p:panel  styleClass="box-primary cardMdl">
                             <div class="box-primary" style="width: 770px !important;">
                                 <p:fieldset legend="Dias não vendidos">
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-sm-12 ui-g-12">
-                                            <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
+                                            <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
                                                 <tr>
                                                     <th colspan="7" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><center>Habilite os dias que este produto não é vendido</center></th>
                                                 </tr>
@@ -441,13 +440,13 @@
                                                     <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sabado</th>
                                                 </tr>
                                                 <tr>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderDom}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSeg}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderTer}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderQua}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderQui}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSex}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:toggleSwitch value="#{productMB.product.productDay.naoVenderSab}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderDom}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderSeg}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderTer}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderQua}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderQui}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderSex}" /></td>
+                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.productDay.naoVenderSab}" /></td>
                                                 </tr>
                                             </table>
                                         </div>
