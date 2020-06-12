@@ -38,8 +38,7 @@
                         <p:commandButton value="Deletar" icon="fa fa-trash" styleClass="btn-danger"
                                          action="#{couponMB.delete()}"
                                          disabled="#{empty couponMB.couponsSelected or couponMB.couponsSelected.size() == 0}"
-                                         process="@this" update="@form"
-                                         >
+                                         process="@this" update="@form">
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
                         </p:commandButton>
                     </div>
@@ -57,8 +56,8 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <p:dataTable id="tblCoupon" widgetVar="couponsTable" var="c" value="#{couponMB.coupons}" rows="5"
-                                 rowKey="#{c.slug}" paginator="true" emptyMessage="Nenhum cupom cadastrado"
+                    <p:dataTable id="tblCoupon" widgetVar="couponsTable" var="c" value="#{couponMB.couponModel}" rows="5"
+                                 rowKey="#{c.id}" paginator="true" emptyMessage="Nenhum cupom cadastrado"
                                  paginatorPosition="bottom" selection="#{couponMB.couponsSelected}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
@@ -75,16 +74,16 @@
                         <p:column headerText="Nome" sortBy="#{c.slug}" filterBy="#{c.slug}" filterMatchMode="contains">
                             <h:outputText value="#{c.slug}"/>
                         </p:column>
-                        <p:column headerText="Limite de uso" sortBy="#{c.quantity}" filterBy="#{c.quantity}" filterMatchMode="contains">
+                        <p:column headerText="Limite de uso" sortBy="#{c.quantity}" class="text-right" filterBy="#{c.quantity}" filterMatchMode="contains">
                             <h:outputText value="#{c.quantity}"/>
                         </p:column>
-                        <p:column headerText="Desconto" sortBy="#{c.discount}" filterBy="#{c.discount}" filterMatchMode="contains">
+                        <p:column headerText="Desconto" sortBy="#{c.discount}" filterBy="#{c.discount}" class="text-right" filterMatchMode="contains">
                             <h:outputText value="#{c.discount}%"/>
                         </p:column>
-                        <p:column headerText="Ativado" filterMatchMode="contains">
-                            <p:toggleSwitch value="#{c.enable}" >
+                        <p:column headerText="Ativado" filterMatchMode="contains" width="100" class="text-center">
+                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{c.enable}">
                                 <p:ajax event="change" update="@this"  listener="#{couponMB.update(c)}"/>
-                            </p:toggleSwitch>
+                            </p:selectBooleanButton>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -98,41 +97,41 @@
         </h:form>
 
         <p:dialog widgetVar="modalNewCoupon" id="modalNewCoupon" header="Cadastro de cupom de desconto"
-                  modal="true" position="top" responsive="true" resizable="false">
+                  modal="true" position="center" responsive="true" resizable="false" width="400">
             <h:form id="frmNewCoupon">
-                <p:panel styleClass="box-primary card">
+                <p:panel styleClass="box-primary cardMdl">
 
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
                             <p:messages closable="true" />
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="Nome" for="inptSlug"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptSlug" value="#{couponMB.coupon.slug}" required="true"/>
+                                    <p:inputText id="inptSlug" value="#{couponMB.coupon.slug}" placeholder="Ex: ALMOCO10" required="true"/>
                                     <span class="help-block"> 
                                         <p:message for="inptSlug" /> 
                                     </span>
                                 </div>
                             </div>
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="Limite de uso" for="inptQnt"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptQnt" value="#{couponMB.coupon.quantity}" type="number" required="true"/>
+                                    <p:inputText id="inptQnt" value="#{couponMB.coupon.quantity}" placeholder="Quantidade máxima que este cupom será utilizado" type="number" required="true"/>
                                     <span class="help-block">
                                         <p:message for="inptQnt" /> 
                                     </span>
                                 </div>
                             </div>
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
                                     <p:outputLabel value="Desconto" for="inptDsc"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptDsc" value="#{couponMB.coupon.discount}" type="number" required="true"/>
+                                    <p:inputText id="inptDsc" value="#{couponMB.coupon.discount}" placeholder="Porcentagem de desconto do cupom" type="number" required="true"/>
                                     <span class="help-block">
                                         <p:message for="inptDsc" /> 
                                     </span>

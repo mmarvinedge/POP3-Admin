@@ -7,6 +7,7 @@ package com.metremobbi.model;
 
 import com.metremobbi.model.dto.Bairro;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 
@@ -51,6 +52,13 @@ public class Company {
             worksCoupon = Boolean.FALSE;
         }
         return worksCoupon;
+    }
+    
+    public List<CouponCode> getCoupons() {
+        if(coupons == null) {
+            coupons = new ArrayList();
+        }
+        return coupons;
     }
 
 }

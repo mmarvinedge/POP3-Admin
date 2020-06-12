@@ -7,11 +7,13 @@ package com.metremobbi.bean;
 
 import com.metremobbi.model.Company;
 import com.metremobbi.model.CouponCode;
+import com.metremobbi.model.dto.CouponDataModel;
 import com.metremobbi.service.CompanyService;
 import com.metremobbi.service.CouponService;
 import com.metremobbi.util.Utils;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,7 +29,7 @@ import lombok.Setter;
  */
 @ManagedBean(eager = true)
 @ViewScoped
-public class CouponMB {
+public class CouponMB implements Serializable {
 
     @Getter
     @Setter
@@ -47,6 +49,9 @@ public class CouponMB {
     @Getter
     @Setter
     private List<CouponCode> couponsSelected;
+    @Getter
+    @Setter
+    private CouponDataModel couponModel;
 
     @PostConstruct
     public void init() {
@@ -66,6 +71,7 @@ public class CouponMB {
     public void get() throws Exception {
         Company company = companyService.loadCompany(Utils.usuarioLogado().getCompanyId());
         coupons = company.getCoupons();
+        couponModel = new CouponDataModel(coupons);
     }
 
     public void novo() {

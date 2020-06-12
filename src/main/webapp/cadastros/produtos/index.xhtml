@@ -68,6 +68,10 @@
                             <strong>ATENÇÃO!</strong> <small>Você possui integração, portanto só são permitidas edições de regras exclusivas do cardápio, as demais alterações devem ser feitas em seu sistema, esta regra também se aplica à novos produtos.</small>
                         </div>
                     </h:panelGroup>
+                    <div class="text-right">
+                        <p:commandButton value="Ativar/inativar por categoria" styleClass="btn-danger" oncomplete="PF('mdlPararVenda').show()"
+                                         update="@(.ui-dialog)"/>
+                    </div>
                     <p:separator/>
                     <p:dataTable id="tblProduct" widgetVar="productsTable" var="p" value="#{productMB.productModel}" rows="10"
                                  rowKey="#{p.id}" paginator="true" emptyMessage="Nenhum Produto encontrado"
@@ -488,6 +492,30 @@
         </p:dialog>
 
 
-
+        <p:dialog header="Ativar/inativar por categoria" id="mdlPararVenda" widgetVar="mdlPararVenda" height="auto" modal="true"
+                  position="center">
+            <h:form id="frmPararVenda">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <p:outputLabel value="Situação"/><br/>
+                        <p:selectBooleanButton value="#{productMB.situation}" offLabel="Inativo" onLabel="Ativo" required="true">
+                            <p:ajax event="change" update="@this"/>
+                        </p:selectBooleanButton>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:outputLabel value="Selecione uma categoria"/><br/>
+                        <p:selectOneMenu value="#{productMB.category}" filter="true" filterMatchMode="contains" required="true" converter="Converter">
+                            <f:selectItem itemLabel="Selecione uma categoria..." itemValue=""/>
+                            <f:selectItems value="#{productMB.categoryList}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat}" />
+                            <p:ajax event="itemSelect" update="@this"/>
+                        </p:selectOneMenu>
+                    </div>
+                </div><br/>
+                <div id="main-buttons" style="text-align: right;">
+                    <p:commandButton class="text-right" styleClass="btn-primary" action="#{productMB.stopSelling()}" value="Salvar" immediate="true" update=":frmProduct:tblProduct, @form"
+                                     oncomplete="if (!args.validationFailed)  {PF('mdlPararVenda').hide();}"/>
+                </div>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>
