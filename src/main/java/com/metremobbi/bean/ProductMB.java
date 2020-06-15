@@ -92,6 +92,12 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private List<Order> listOrder;
+    @Getter
+    @Setter
+    private Category category;
+    @Getter
+    @Setter
+    private Boolean situation;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -104,6 +110,8 @@ public class ProductMB implements Serializable {
         attribute = new Attribute();
         listOrder = new ArrayList();
         orderService = new OrderService();
+        category = new Category();
+        situation = true;
     }
 
     public void novo() {
@@ -124,6 +132,7 @@ public class ProductMB implements Serializable {
         products = service.getProducts();
         productModel = new ProductDataModel(products);
         categoryList = service.getCategoryList();
+        selectedProducts = new ArrayList();
     }
 
     public void update(Product p) throws IOException {
@@ -279,6 +288,8 @@ public class ProductMB implements Serializable {
         product.setId(null);
         product.setSku(null);
         product.setOrder(null);
+        product.setImageBase64(null);
+        product.setImageType(null);
         attribute.setId(null);
         attribute.setSku(null);
     }
@@ -304,6 +315,26 @@ public class ProductMB implements Serializable {
             addDetailMessage("Não foi possível Atualizar", FacesMessage.SEVERITY_ERROR);
         }
 
+    }
+
+    public void stopSelling() {
+        try {
+            if (category.getName() == null) {
+                addDetailMessage("É necessário selecionar uma categoria!", FacesMessage.SEVERITY_ERROR);
+            } else {
+                String set = "";
+                if (situation) {
+                    set = "true";
+                } else {
+                    set = "false";
+                }
+                service.disableProducts(category, set);
+                addDetailMessage("Produtos atualizados com sucesso", FacesMessage.SEVERITY_INFO);
+                category = new Category();
+            }
+        } catch (Exception e) {
+            addDetailMessage("Não foi possível parar a venda dessa categoria", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
 }

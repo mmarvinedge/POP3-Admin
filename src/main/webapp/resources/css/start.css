@@ -22,11 +22,11 @@ ul.dropdown-menu > li.user-header {
 }
 
 a.dropdown-toggle {
-    background-color: #3c8dbc!important;
+    background-color: #5da32d !important;
 }
 
 a#logout {
-    color: #3c8dbc!important;
+    color: #5da32d !important;
     background: transparent;
 }
 
@@ -37,8 +37,8 @@ a#logout {
 }
 
 body fieldset.ui-fieldset legend.ui-fieldset-legend {
-    background: #3c8dbc !important;
-    border-color: #3c8dbc !important;
+    background: #5da32d !important;
+    border-color: #5da32d !important;
     color: white !important;
     width: auto !important;
     text-shadow: none !important;
@@ -116,4 +116,20 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend {
 body fieldset.ui-fieldset legend.ui-fieldset-legend{
     font-size: 12px  !important;
     padding: 5px  !important;
+}
+
+.tblDias table th td {
+    width: 100%; 
+    border: 1px solid black; 
+    border-collapse: collapse;
+}
+
+/* {
+  border: 1px solid grey;
+  border-collapse: collapse;
+}*/
+
+.tblDias th td {
+  padding: 15px;
+  text-align: left;
 }

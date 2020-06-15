@@ -127,5 +127,10 @@ public class UserMB implements Serializable {
             return true;
         }
     }
+    
+    public void setUserAlter(User u){
+        user = u;
+        user.setPassword("");
+    }
 
 }

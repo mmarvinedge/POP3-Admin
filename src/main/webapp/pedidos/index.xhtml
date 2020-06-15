@@ -35,14 +35,16 @@
             <div class="box box-primary">
                 <div class="ui-g">
                     <div class="ui-g-3" style="">
-                        <p:outputLabel value="Período" />
-                        <p:datePicker value="#{orderMB.filtro.datas}" selectionMode="range" pattern="dd/MM/yyyy" showButtonBar="true"  showOtherMonths="true" />
+                        <p:outputLabel value="Período" /><br/>
+                        <p:datePicker value="#{orderMB.filtro.datas}" selectionMode="range" maxdate="#{orderMB.maxDate()}" pattern="dd/MM/yyyy" showButtonBar="true"  showOtherMonths="true" locale="pt" />
                     </div>
-                    <div class="ui-g-6" style="">
-                        <p:outputLabel value="Pedido" />
+                    <div class="ui-g-3" style="">
+                        <p:outputLabel value="Pedido" /><br/>
                         <p:inputText value="#{orderMB.filtro.pedido}"  />
                         <p:spacer width="30"/>
-                        <p:outputLabel value="Telefone" />
+                    </div>
+                    <div class="ui-g-3" style="">
+                        <p:outputLabel value="Telefone" /><br/>
                         <p:inputText value="#{orderMB.filtro.phone}"  />
                     </div>
                     <div class="ui-g-12" style="">

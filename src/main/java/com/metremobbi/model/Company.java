@@ -7,7 +7,7 @@ package com.metremobbi.model;
 
 import com.metremobbi.model.dto.Bairro;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 
@@ -25,6 +25,7 @@ public class Company {
     private String color;
     private String logo;
     private String owner;
+    private String cgccpf;
     private Address address;
     private BigDecimal deliveryCost = BigDecimal.ZERO;
     private TimeOpen time;
@@ -36,12 +37,28 @@ public class Company {
     private Boolean trial;
     private String trialDate;
     private String aproxTime;
+    private List<CouponCode> coupons;
+    private Boolean worksCoupon;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
             messageWelcome = "Para iniciar seu pedido";
         }
         return messageWelcome;
+    }
+    
+    public Boolean getWorksCoupon() {
+        if(worksCoupon == null){
+            worksCoupon = Boolean.FALSE;
+        }
+        return worksCoupon;
+    }
+    
+    public List<CouponCode> getCoupons() {
+        if(coupons == null) {
+            coupons = new ArrayList();
+        }
+        return coupons;
     }
 
 }

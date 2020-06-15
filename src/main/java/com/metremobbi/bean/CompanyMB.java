@@ -171,6 +171,7 @@ public class CompanyMB {
             } else {
                 addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
             }
+            bairroCadastro = "";
         } catch (IOException e) {
             e.printStackTrace();
             addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);

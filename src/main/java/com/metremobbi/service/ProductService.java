@@ -152,5 +152,20 @@ public class ProductService {
             e.printStackTrace();
         }
     }
+    
+    public void disableProducts(Category category, String situation) throws IOException {
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/product/disableProducts/"+ category.getName() + "/"+ situation)
+                .header("company_id", companyID)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if(!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
