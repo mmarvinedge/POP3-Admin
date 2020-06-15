@@ -290,14 +290,14 @@
                                                                         <div class="ui-g ui-fluid">
                                                                             <div class="ui-sm-6 ui-g-6">
                                                                                 Grupo
-                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.description}"  >
+                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.description}" required="true" >
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>
 
                                                                             <div class="ui-sm-2 ui-g-2">
                                                                                 Max
-                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.quantity}" >
+                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.quantity}" required="true" >
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>
