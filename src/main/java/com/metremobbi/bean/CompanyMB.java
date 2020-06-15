@@ -66,9 +66,14 @@ public class CompanyMB {
 
     public CompanyMB() {
         try {
-            System.out.println("ID DA COMPANY: "+companyID);
+            System.out.println("ID DA COMPANY: " + companyID);
             company = service.loadCompany(companyID);
-            taxaUnicaEntrega = company.getDeliveryCost().doubleValue() != 0;
+            try {
+                taxaUnicaEntrega = company.getDeliveryCost().doubleValue() != 0;
+            } catch (Exception ex) {
+                System.err.println("Erro ao carregar delivery cost");
+            }
+
             if (company.getTime() == null) {
                 company.setTime(new TimeOpen());
             }
@@ -140,7 +145,7 @@ public class CompanyMB {
             for (Bairro bairroSelecionado : dualBairros.getTarget()) {
                 bairroSelecionado.setTaxa(company.getDeliveryCost());
             }
-        }else{
+        } else {
             company.setDeliveryCost(BigDecimal.ZERO);
         }
         company.setBairros(dualBairros.getTarget());
@@ -149,7 +154,7 @@ public class CompanyMB {
 
     public void cadastrarBairro() {
         try {
-            if(!dualBairros.getSource().stream().filter(f->f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()){
+            if (!dualBairros.getSource().stream().filter(f -> f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()) {
                 addDetailMessage("Bairro já cadastrado!", FacesMessage.SEVERITY_ERROR);
                 return;
             }

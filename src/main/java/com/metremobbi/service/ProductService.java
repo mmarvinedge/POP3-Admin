@@ -83,7 +83,7 @@ public class ProductService {
         product.setCompanyId(companyID);
         product.setCategories(new ArrayList());
         product.getCategories().add(product.getCategoryMain());
-        System.out.println("JSON: "+new Gson().toJson(product));
+//        System.out.println("JSON: "+new Gson().toJson(product));
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()

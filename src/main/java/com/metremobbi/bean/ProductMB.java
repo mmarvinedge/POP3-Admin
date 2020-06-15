@@ -137,7 +137,7 @@ public class ProductMB implements Serializable {
                 service.postProduct(product);
                 //products.add(product);
                 addDetailMessage("Produto Salvo com sucesso!");
-                System.out.println("INDEX:> " + products.indexOf(product));
+//                System.out.println("INDEX:> " + products.indexOf(product));
                 if (products.indexOf(product) > -1) {
                     products.set(products.indexOf(product), product);
                 } else {
@@ -171,8 +171,9 @@ public class ProductMB implements Serializable {
             IOUtils.copy(is, out);
 
             String imageBase64 = ImageFile.encoder(tempFile.getAbsolutePath());
-            System.out.println(imageBase64.length());
+            System.out.println(imageBase64);
             product.setImageBase64(imageBase64);
+            System.out.println("PRODUCT: " + product.getImageBase64());
         } catch (IOException e) {
             System.out.println("Erro ao converter a imagem em base64");
             e.printStackTrace();
@@ -292,7 +293,7 @@ public class ProductMB implements Serializable {
 
     public void removeFlavor(FlavorPizza fla) {
         product.getFlavorsPizza().remove(fla);
-        System.out.println("SIZE: " + product.getFlavorsPizza());
+//        System.out.println("SIZE: " + product.getFlavorsPizza());
     }
 
     public void updateCategorys() {
