@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -199,6 +200,38 @@ public class OUtils {
         cal.setTime(data);
         cal.add(Calendar.HOUR, qtd);
         return cal.getTime();
+    }
+
+    public static String getMonth(Date d) {
+        LocalDate localDate = d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int month = localDate.getMonthValue();
+        int year = localDate.getYear();
+        return month + "/" + year;
+//        if(month == 1){
+//            return "01";
+//        }else if(month == 2){
+//            return "02/";
+//        }else if(month == 3){
+//            return "03/";
+//        }else if(month == 4){
+//            return "04/";
+//        }else if(month == 5){
+//            return "05/";
+//        }else if(month == 6){
+//            return "06/";
+//        }else if(month == 7){
+//            return "07/";
+//        }else if(month == 8){
+//            return "08/";
+//        }else if(month == 9){
+//            return "09/";
+//        }else if(month == 10){
+//            return "10/";
+//        }else if(month == 11){
+//            return "11/";
+//        }else{
+//            return "12/";
+//        }
     }
 
 }

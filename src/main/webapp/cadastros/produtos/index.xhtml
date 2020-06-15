@@ -147,7 +147,6 @@
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
-                        <p:panel id="pnl" styleClass="box-primary cardMdl">
                             <div class="box-primary">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-3 ui-g-3 ">
@@ -225,8 +224,7 @@
                                         </h:panelGroup>
                                     </div>     
 
-                                </div>
-                                <div class="ui-g ui-fluid">
+
                                     <div class="ui-sm-6 ui-g-6 ">
                                         <p:outputLabel value="Descrição" for="inptObs"/>
                                         <p:inputTextarea id="inptObs" disabled="#{param['acao']}" value="#{productMB.product.description}" />
@@ -257,7 +255,6 @@
                                     </div>-->
                                 </div>
                             </div>
-                        </p:panel>
                     </p:tab>
                     <p:tab title="Regras" >
                         <p:panel id="pnl2" styleClass="box-primary cardMdl">

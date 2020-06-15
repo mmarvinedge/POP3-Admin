@@ -165,14 +165,145 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend{
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-
-    width: 200px;
-    min-width: 200px;
+    padding: 5px;
+    width: 300px;
+    min-width: 300px;
     margin: 5px;
+    border-left: 4px solid #95c70d;
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.ciimage{
+    width: 70%;
+    text-align: right;
+}
+.cidatas{
+    width: 30%;
+    text-align: left;
 }
 .cds span{
     font-size: 15px;
     color: #aaa;
+}
+
+.bg-white{
+    background: white;
+}
+.bd-gray{
+    border: 1px solid #ccc;
+}
+.br-5{
+    border-radius: 5px;
+}
+.pd-0{
+    padding: 0;
+}
+.pd-1{
+    padding: 1px;
+}
+.pd-2{
+    padding: 2px;
+}
+.pd-3{
+    padding: 3px;
+}
+.pd-4{
+    padding: 4px;
+}
+.pd-5{
+    padding: 5px;
+}
+
+
+
+.pdt-0{
+    padding-top: 0;
+}
+.pdt-1{
+    padding-top: 1px;
+}
+.pdt-2{
+    padding-top: 2px;
+}
+.pdt-3{
+    padding-top: 3px;
+}
+.pdt-4{
+    padding-top: 4px;
+}
+.pdt-5{
+    padding-top: 5px;
+}
+
+.pdb-0{
+    padding-bottom: 0;
+}
+.pdb-1{
+    padding-bottom: 1px;
+}
+.pdb-2{
+    padding-bottom: 2px;
+}
+.pdb-3{
+    padding-bottom: 3px;
+}
+.pdb-4{
+    padding-bottom: 4px;
+}
+.pdb-5{
+    padding-bottom: 5px;
+}
+.mgl-5{
+    margin-left: 5px;
+}
+.ui-g{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.text-primary{
+    color: rgb(0, 123, 255);
+}
+.text-danger{
+    color: rgb(220, 53, 69);
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    margin-top: 10px !important;
+}
+.m-0{
+    margin: 0px;
+}
+
+.green-text{
+    color: #95c70d;
+}
+.gray-text{
+    color: #b6c2c9;
+
+}
+.fs-20{
+    font-size: 20px;
+}
+.fs-15{
+    font-size: 15px;
+}
+
+.daterangepicker .ranges li.active{
+    background-color: #95c70d !important;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover{
+    background-color: #95c70d !important;
+}
+.btn-primary{
+    background-color: #95c70d !important;
+    border-color: #95c70d !important;
+}
+.daterangepicker td.in-range{
+    background-color: #ebf8ec !important;
+}
+
+button.ui-button.btn-primary:hover, button.ui-button.btn-primary.ui-state-hover{
+    background-color: #4cc70d !important;
 }
