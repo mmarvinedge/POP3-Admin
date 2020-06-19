@@ -39,7 +39,8 @@ public class Company {
     private String aproxTime;
     private List<CouponCode> coupons;
     private Boolean worksCoupon;
-    private Boolean uniqueTax;
+    private Boolean uniqueDeliveryCost;
+    private Boolean onlyMenu;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -47,19 +48,26 @@ public class Company {
         }
         return messageWelcome;
     }
-    
+
     public Boolean getWorksCoupon() {
-        if(worksCoupon == null){
+        if (worksCoupon == null) {
             worksCoupon = Boolean.FALSE;
         }
         return worksCoupon;
     }
-    
+
     public List<CouponCode> getCoupons() {
-        if(coupons == null) {
+        if (coupons == null) {
             coupons = new ArrayList();
         }
         return coupons;
+    }
+
+    public Boolean getOnlyMenu() {
+        if (onlyMenu == null) {
+            onlyMenu = false;
+        }
+        return onlyMenu;
     }
 
 }

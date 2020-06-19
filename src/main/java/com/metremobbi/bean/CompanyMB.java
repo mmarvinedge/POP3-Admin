@@ -5,6 +5,7 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.infra.model.BairroDataModel;
 import com.metremobbi.model.Company;
 import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
@@ -53,6 +54,9 @@ public class CompanyMB {
     private List<Bairro> bairros = new ArrayList();
     @Getter
     @Setter
+    private BairroDataModel bairroModel;
+    @Getter
+    @Setter
     private DualListModel<Bairro> dualBairros = new DualListModel<>();
     @Getter
     @Setter
@@ -97,7 +101,7 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            System.out.println(company.getUniqueTax());
+            System.out.println(company.getUniqueDeliveryCost());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -121,7 +125,6 @@ public class CompanyMB {
                     bairro.setTaxa(b.getTaxa());
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

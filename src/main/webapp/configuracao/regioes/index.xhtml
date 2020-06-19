@@ -26,14 +26,14 @@
                             <h:outputText value="Taxa de Entrega Unica" />
                         </div>
                         <div class="ui-g-12">
-                            <p:toggleSwitch value="#{companyMB.company.uniqueTax}">
+                            <p:toggleSwitch value="#{companyMB.company.uniqueDeliveryCost}">
                                 <p:ajax event="change" process="@this" update="pnl" />
                             </p:toggleSwitch>
                         </div>
                         <div class="ui-g-12">
                             <h:panelGroup id="pnl">
                                 <div class="ui-g-3">
-                                    <h:panelGroup rendered="#{companyMB.company.uniqueTax}">
+                                    <h:panelGroup rendered="#{companyMB.company.uniqueDeliveryCost}">
                                         <div class="ui-g-12">
                                             <p:outputLabel value="Taxa de Entrega Única" /><br/>
                                             <small style="    background: #e75f6d;
@@ -54,17 +54,10 @@
                                     </h:panelGroup>
                                 </div>
                                 <div class="ui-g-12">
-                                    <h:panelGroup rendered="#{!companyMB.company.uniqueTax}">
-                                        <!--                                <div class="ui-g-12">
-                                                                            <strong>Caso o bairro não esteja disponível</strong><br/>
-                                                                            <p:commandButton value="Novo Bairro" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
-                                                                        </div>-->
-                                        <h3 style="text-align: center;">Selecione o bairro, informe a taxa e arraste para segundo quadro!</h3>
-                                        
-                                        
+                                    <h:panelGroup rendered="#{!companyMB.company.uniqueDeliveryCost}">
                                         <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
                                         <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
-                                            <p:column headerText="Bairro" filterBy="#{bairro.bairro}" filterMatchMode="contains">
+                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}">
                                                 #{bairro.bairro}
                                             </p:column>
                                             <p:column headerText="Entrega?">

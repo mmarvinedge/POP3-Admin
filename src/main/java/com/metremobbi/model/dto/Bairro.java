@@ -33,6 +33,9 @@ public class Bairro {
     }
 
     public Boolean getEntrega() {
+        if(entrega == null){
+            entrega = false;
+        } 
         return entrega;
     }
 
