@@ -68,9 +68,7 @@ public class ProductService {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            // Get response body
             String json = response.body().string();
-
             saida = new Gson().fromJson(json, Product.class);
         } catch (Exception e) {
             e.printStackTrace();

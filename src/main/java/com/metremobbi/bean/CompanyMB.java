@@ -97,9 +97,7 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            if (!taxaUnicaEntrega) {
-                company.setDeliveryCost(BigDecimal.ZERO);
-            }
+            System.out.println(company.getUniqueTax());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -110,18 +108,20 @@ public class CompanyMB {
     public void loadBairros() {
         try {
             List<String> bairros = service.getBairros(company.getAddress().getCity());
+            System.out.println("VEIO: " + bairros.size());
             for (String bairro : bairros) {
                 this.bairros.add(new Bairro(bairro));
             }
 
-            List<Bairro> themesSource = this.bairros;
-
-            List<Bairro> themesTarget = new ArrayList<Bairro>();
-            if (company.getBairros() != null) {
-                themesTarget.addAll(company.getBairros());
+            for (Bairro bairro : this.bairros) {
+                Bairro b = company.getBairros().stream().filter(p -> p.getBairro().equalsIgnoreCase(bairro.getBairro())).findFirst().orElse(null);
+                if (b != null) {
+                    System.out.println("BAIRRO: " + b.getBairro());
+                    bairro.setEntrega(true);
+                    bairro.setTaxa(b.getTaxa());
+                }
             }
-            themesSource.removeAll(themesTarget);
-            dualBairros = new DualListModel<Bairro>(themesSource, themesTarget);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,14 +141,7 @@ public class CompanyMB {
     }
 
     public void confirmarRegioes() {
-        if (taxaUnicaEntrega) {
-            for (Bairro bairroSelecionado : dualBairros.getTarget()) {
-                bairroSelecionado.setTaxa(company.getDeliveryCost());
-            }
-        } else {
-            company.setDeliveryCost(BigDecimal.ZERO);
-        }
-        company.setBairros(dualBairros.getTarget());
+        company.setBairros(bairros.stream().filter(c -> c.getEntrega()).collect(Collectors.toList()));
         save2();
     }
 
@@ -197,4 +190,7 @@ public class CompanyMB {
             tempFile.deleteOnExit();
         }
     }
+    
+    
+    
 }

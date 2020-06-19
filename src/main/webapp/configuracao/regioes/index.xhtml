@@ -26,15 +26,14 @@
                             <h:outputText value="Taxa de Entrega Unica" />
                         </div>
                         <div class="ui-g-12">
-                            <p:toggleSwitch value="#{companyMB.taxaUnicaEntrega}">
+                            <p:toggleSwitch value="#{companyMB.company.uniqueTax}">
                                 <p:ajax event="change" process="@this" update="pnl" />
                             </p:toggleSwitch>
                         </div>
                         <div class="ui-g-12">
                             <h:panelGroup id="pnl">
-                                <hr/>
                                 <div class="ui-g-3">
-                                    <h:panelGroup rendered="#{companyMB.taxaUnicaEntrega}">
+                                    <h:panelGroup rendered="#{companyMB.company.uniqueTax}">
                                         <div class="ui-g-12">
                                             <p:outputLabel value="Taxa de Entrega Única" /><br/>
                                             <small style="    background: #e75f6d;
@@ -55,45 +54,28 @@
                                     </h:panelGroup>
                                 </div>
                                 <div class="ui-g-12">
-                                    <h:panelGroup rendered="#{!companyMB.taxaUnicaEntrega}">
+                                    <h:panelGroup rendered="#{!companyMB.company.uniqueTax}">
                                         <!--                                <div class="ui-g-12">
                                                                             <strong>Caso o bairro não esteja disponível</strong><br/>
                                                                             <p:commandButton value="Novo Bairro" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
                                                                         </div>-->
                                         <h3 style="text-align: center;">Selecione o bairro, informe a taxa e arraste para segundo quadro!</h3>
-                                        <br/>
-                                        <p:pickList id="PojoPickList" value="#{companyMB.dualBairros}" var="baic" effect="bounce" 
-                                                    addAllLabel="Adicionar Todos"  
-                                                    itemValue="#{baic}" itemLabel="#{baic.bairro}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
-                                                    converter="Converter" responsive="true">
-                                            <f:facet name="sourceCaption">
-                                                <!--<center>-->
-                                                <!--<div  style="width: 150px !important;" >-->
-                                                <div class="ui-g">
-                                                    <div class="ui-g-1">
-                                                        <p:outputLabel value="Taxa: "/>
-                                                    </div>
-                                                    <div class="ui-g-7">
-                                                        <p:inputNumber value="#{companyMB.taxa}" placeholder="Taxa Entrega" decimalPlaces="2" symbol="R$ " minValue="0" />
-                                                    </div>
-                                                    <div class="ui-g-4">
-                                                        <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
-                                                    </div>
-                                                </div>
-                                                <!--</div>-->
-                                                <!--</center>-->
-                                            </f:facet>
-                                            <p:ajax event="transfer" listener="#{companyMB.onTransfer}" update="@form" />
-                                            <f:facet name="targetCaption">Bairros de Entregas</f:facet>
-                                            <p:column style="width:85%;">
-                                                <h:outputText value="#{baic.bairro}" />
+                                        
+                                        
+                                        <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
+                                        <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
+                                            <p:column headerText="Bairro" filterBy="#{bairro.bairro}" filterMatchMode="contains">
+                                                #{bairro.bairro}
                                             </p:column>
-                                            <p:column style="width:15%;">
-                                                Taxa <h:outputText value="#{baic.taxa}" >
-                                                    <f:convertNumber type="currency" />
-                                                </h:outputText>
+                                            <p:column headerText="Entrega?">
+                                                <p:toggleSwitch value="#{bairro.entrega}" >
+                                                    <p:ajax event="change" update="frmProduct:tblBairros:#{ind}:iptTaxa" />
+                                                </p:toggleSwitch>
                                             </p:column>
-                                        </p:pickList>
+                                            <p:column headerText="Taxa">
+                                                <p:inputNumber id="iptTaxa" value="#{bairro.taxa}" decimalPlaces="2" symbol="R$ " minValue="0"  disabled="#{!bairro.entrega}" required="true" requiredMessage="Informe a taxa do bairro #{bairro.bairro}!" />
+                                            </p:column>
+                                        </p:dataTable>
                                     </h:panelGroup>
                                 </div>
                             </h:panelGroup>

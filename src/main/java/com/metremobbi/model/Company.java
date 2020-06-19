@@ -39,6 +39,7 @@ public class Company {
     private String aproxTime;
     private List<CouponCode> coupons;
     private Boolean worksCoupon;
+    private Boolean uniqueTax;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
