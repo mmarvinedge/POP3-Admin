@@ -5,6 +5,7 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.infra.model.BairroDataModel;
 import com.metremobbi.model.Company;
 import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
@@ -53,6 +54,9 @@ public class CompanyMB {
     private List<Bairro> bairros = new ArrayList();
     @Getter
     @Setter
+    private BairroDataModel bairroModel;
+    @Getter
+    @Setter
     private DualListModel<Bairro> dualBairros = new DualListModel<>();
     @Getter
     @Setter
@@ -94,6 +98,7 @@ public class CompanyMB {
 
     public void save2() {
         try {
+            System.out.println(company.getUniqueDeliveryCost());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -104,18 +109,19 @@ public class CompanyMB {
     public void loadBairros() {
         try {
             List<String> bairros = service.getBairros(company.getAddress().getCity());
+            System.out.println("VEIO: " + bairros.size());
             for (String bairro : bairros) {
                 this.bairros.add(new Bairro(bairro));
             }
 
-            List<Bairro> themesSource = this.bairros;
-
-            List<Bairro> themesTarget = new ArrayList<Bairro>();
-            if (company.getBairros() != null) {
-                themesTarget.addAll(company.getBairros());
+            for (Bairro bairro : this.bairros) {
+                Bairro b = company.getBairros().stream().filter(p -> p.getBairro().equalsIgnoreCase(bairro.getBairro())).findFirst().orElse(null);
+                if (b != null) {
+                    System.out.println("BAIRRO: " + b.getBairro());
+                    bairro.setEntrega(true);
+                    bairro.setTaxa(b.getTaxa());
+                }
             }
-            themesSource.removeAll(themesTarget);
-            dualBairros = new DualListModel<Bairro>(themesSource, themesTarget);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,6 +142,7 @@ public class CompanyMB {
 
     public void confirmarRegioes() {
         company.setBairros(dualBairros.getTarget());
+        company.setBairros(bairros.stream().filter(c -> c.getEntrega()).collect(Collectors.toList()));
         save2();
     }
 
@@ -184,19 +191,19 @@ public class CompanyMB {
             tempFile.deleteOnExit();
         }
     }
-    
+
     public void updateDeliveryCostType(Boolean b) throws Exception {
         company.setUniqueDeliveryCost(b);
         Company c = company;
         service.saveCompany(c);
         System.out.println(c.getUniqueDeliveryCost());
     }
-    
+
     public void updateWorksCoupon(Boolean b) throws Exception {
         company.setWorksCoupon(b);
         Company c = company;
         service.saveCompany(c);
         System.out.println(c.getWorksCoupon());
     }
-    
+
 }

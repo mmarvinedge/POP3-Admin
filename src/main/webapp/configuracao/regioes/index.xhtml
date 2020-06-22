@@ -26,84 +26,59 @@
                             <h:outputText value="Taxa de entrega única?" />
                         </div>
                         <div class="ui-g-1">
-                            <p:selectBooleanButton value="#{companyMB.company.uniqueDeliveryCost}" offLabel="Não" onLabel="Sim">
-                                <p:ajax event="change" process="@this" update="panelTaxaUnica" listener="#{companyMB.updateDeliveryCostType(companyMB.company.uniqueDeliveryCost)}" />
+                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{companyMB.company.uniqueDeliveryCost}">
+                                <p:ajax event="change" process="@this" update="pnl" listener="#{companyMB.updateDeliveryCostType(companyMB.company.uniqueDeliveryCost)}" />
                             </p:selectBooleanButton>
                         </div>
                         <div class="ui-g-12">
-                            <div class="ui-g-2">
-                                <div class="ui-g-12">
-                                    <h:panelGroup id="panelTaxaUnica">
-
-                                        <p:outputLabel value="Taxa de entrega única" /><br/>
-
-                                        <p:inputNumber id="inptTaxa" disabled="#{!companyMB.company.uniqueDeliveryCost}" value="#{companyMB.company.deliveryCost}" 
-                                                       decimalPlaces="2"  placeholder="Taxa Global"/>
-                                        <h:panelGroup rendered="#{companyMB.company.uniqueDeliveryCost}">
-                                            <br/>
+                            <h:panelGroup id="pnl">
+                                <div class="ui-g-3">
+                                    <h:panelGroup rendered="#{companyMB.company.uniqueDeliveryCost}">
+                                        <div class="ui-g-12">
+                                            <p:outputLabel value="Taxa de Entrega Única" /><br/>
                                             <small style="    background: #e75f6d;
                                                    padding: 5px;
                                                    line-height: 3rem;
                                                    border-radius: 5px;
                                                    color: white;"> 
                                                 <i class="fa fa-warning"></i>
-                                                Informe o valor!</small>
-                                        </h:panelGroup>
+                                                Caso taxa única informar o valor!</small>
+                                            <br/>
+                                            <p:inputNumber value="#{companyMB.company.deliveryCost}" decimalPlaces="2"  placeholder="Taxa Global"/>
+                                        </div>
+
+                                        <div class="ui-g-12">
+                                            <p:outputLabel value="Cidade" /><br/>
+                                            <p:inputText readonly="true" value="#{companyMB.company.address.city}" />
+                                        </div>
                                     </h:panelGroup>
                                 </div>
-
                                 <div class="ui-g-12">
-                                    <p:outputLabel value="Cidade" /><br/>
-                                    <p:inputText readonly="true" value="#{companyMB.company.address.city}" />
+                                    <h:panelGroup rendered="#{!companyMB.company.uniqueDeliveryCost}">
+                                        <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
+                                        <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
+                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}" filterBy="#{bairro.bairro}">
+                                                #{bairro.bairro}
+                                            </p:column>
+                                            <p:column headerText="Entrega?" width="150" styleClass="text-center">
+                                                <p:toggleSwitch value="#{bairro.entrega}" >
+                                                    <p:ajax event="change" update="frmProduct:tblBairros:#{ind}:iptTaxa" />
+                                                </p:toggleSwitch>
+                                            </p:column>
+                                            <p:column headerText="Taxa" width="150" styleClass="text-right">
+                                                <p:inputNumber id="iptTaxa" value="#{bairro.taxa}" decimalPlaces="2" symbol="R$ " minValue="0"  disabled="#{!bairro.entrega}" required="true" requiredMessage="Informe a taxa do bairro #{bairro.bairro}!" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:panelGroup>
                                 </div>
-                            </div>
-                            <div class="ui-g-10">
-                                <!--                                <div class="ui-g-12">
-                                                                    <strong>Caso o bairro não esteja disponível</strong><br/>
-                                                                    <p:commandButton value="Novo Bairro" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
-                                                                </div>-->
-                                <h3 style="text-align: center;">Selecione o bairro, informe a taxa e arraste para segundo quadro!</h3>
-                                <br/>
-                                <p:pickList id="PojoPickList" value="#{companyMB.dualBairros}" var="baic" effect="bounce" 
-                                            addAllLabel="Adicionar Todos"  
-                                            itemValue="#{baic}" itemLabel="#{baic.bairro}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
-                                            converter="Converter" responsive="true">
-                                    <f:facet name="sourceCaption">
-                                        <!--<center>-->
-                                        <!--<div  style="width: 150px !important;" >-->
-                                        <div class="ui-g">
-                                            <div class="ui-g-2">
-                                                <p:outputLabel value="Taxa: "/>
-                                            </div>
-                                            <div class="ui-g-6">
-                                                <p:inputNumber value="#{companyMB.taxa}" placeholder="Taxa Entrega" decimalPlaces="2" symbol="R$ " minValue="0" />
-                                            </div>
-                                            <div class="ui-g-4">
-                                                <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" /> 
-                                            </div>
-                                        </div>
-                                        <!--</div>-->
-                                        <!--</center>-->
-                                    </f:facet>
-                                    <p:ajax event="transfer" listener="#{companyMB.onTransfer}" update="@form" />
-                                    <f:facet name="targetCaption">Bairros de Entregas</f:facet>
-                                    <p:column style="width:85%;">
-                                        <h:outputText value="#{baic.bairro}" />
-                                    </p:column>
-                                    <p:column style="width:15%;">
-                                        Taxa <h:outputText value="#{baic.taxa}" >
-                                            <f:convertNumber type="currency" />
-                                        </h:outputText>
-                                    </p:column>
-                                </p:pickList>
-                            </div>
-                        </div>
-                        <div class="ui-g-1 main-buttons" style="float: right !important">
-                            <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
+                            </h:panelGroup>
                         </div>
                     </div>
                 </div>
-
+                <div class="ui-g-12">
+                    <hr/>
+                    <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
+                </div>
             </p:panel>
         </h:form>
         <script>

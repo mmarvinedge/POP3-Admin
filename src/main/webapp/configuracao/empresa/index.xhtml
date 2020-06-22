@@ -6,7 +6,7 @@
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="title" value="Horarios" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <ui:param name="title" value="Configurações" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
         <style type="text/css">
             .ui-datatable .ui-datatable-header {
@@ -22,11 +22,16 @@
     <ui:define name="body">
         <h:form id="frmProduct" >
             <p:panel>
+
                 <div class="ui-g ui-fluid" >
                     <div class="ui-sm-12 ui-g-6 ">
-                        <div class="ui-sm-12 ui-g-12 ">
+                        <div class="ui-sm-12 ui-g-8 ">
                             <p:outputLabel value="Company ID" /><br/>
                             <p:inputText value="#{companyMB.company.id}" readonly="true" />
+                        </div>
+                        <div class="ui-sm-12 ui-g-4 ">
+                            <p:outputLabel value="Somente Menu" /><br/>
+                            <p:toggleSwitch value="#{companyMB.company.onlyMenu}" disabled="true" />
                         </div>
                         <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="CNPJ" /><br/>
@@ -50,6 +55,7 @@
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
                     </div>
+
                     <div class="ui-sm-12 ui-g-6 ">
                         <div class="img-wrap">
                             <p:outputLabel value="Logo da Empresa (até 100KB)" />
@@ -69,6 +75,19 @@
                     </div>
                 </div>
 
+
+                <div class="ui-g ui-fluid" >
+                    <div class="ui-sm-12 ui-g-6 ">
+                        <p:fieldset legend="QR Code Menu">
+                            <center>
+                                <small>
+                                    Salve a imagem e imprima
+                                </small><br/>
+                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="70%"  />
+                            </center>
+                        </p:fieldset>
+                    </div>
+                </div>
                 <div class="ui-g" style="border-bottom: 1px solid #ccc;">
                     <div class="ui-g-12">
                         <hr/>

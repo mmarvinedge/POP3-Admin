@@ -56,7 +56,7 @@ public class CompanyService {
     }
 
     public Company saveCompany(Company c) throws IOException, Exception {
-
+        System.out.println("JSON: "+new Gson().toJson(c));
         RequestBody body = RequestBody.create(new Gson().toJson(c), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()

@@ -315,3 +315,11 @@ button.ui-button.btn-primary:hover, button.ui-button.btn-primary.ui-state-hover{
 .skin-blue a.dropdown-toggle {
     background-color: #62a12b !important;
 }
+
+div.ui-toggleswitch.ui-toggleswitch-checked div.ui-toggleswitch-slider {
+    background: #32a852;
+}
+
+div.ui-toggleswitch div.ui-toggleswitch-slider {
+    background: #c92424;
+}
