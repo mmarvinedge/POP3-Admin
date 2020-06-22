@@ -298,8 +298,9 @@ public class ProductMB implements Serializable {
         if (product.getFlavorsPizza() == null) {
             product.setFlavorsPizza(new ArrayList());
         }
-        product.getFlavorsPizza().add(flavorPizza);
-        flavorPizza = new FlavorPizza();
+        product.getFlavorsPizza().add(new FlavorPizza());
+//        product.getFlavorsPizza().add(flavorPizza);
+//        flavorPizza = new FlavorPizza();
     }
 
     public void removeFlavor(FlavorPizza fla) {

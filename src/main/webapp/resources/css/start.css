@@ -22,11 +22,11 @@ ul.dropdown-menu > li.user-header {
 }
 
 a.dropdown-toggle {
-    background-color: #5da32d !important;
+    background-color: #62a12b !important;
 }
 
 a#logout {
-    color: #5da32d !important;
+    color: #2f7d28 !important;
     background: transparent;
 }
 
@@ -132,4 +132,12 @@ body fieldset.ui-fieldset legend.ui-fieldset-legend{
 .tblDias th td {
   padding: 15px;
   text-align: left;
+}
+
+.skin-blue .main-header li.user-header {
+    background-color: #2f7d28 !important;
+}
+
+.skin-blue a.dropdown-toggle {
+    background-color: #62a12b !important;
 }

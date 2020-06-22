@@ -25,13 +25,13 @@ import okhttp3.Response;
  */
 @ViewScoped
 public class CouponService {
-    
+
     OkHttpClient client = new OkHttpClient();
 
     private final OkHttpClient httpClient = new OkHttpClient();
-    
+
     private final String companyID = Utils.usuarioLogado().getCompanyId();
-    
+
     public List<CouponCode> getCouponCodes() {
         List<CouponCode> saida = new ArrayList();
         Request request = new Request.Builder()
@@ -54,42 +54,51 @@ public class CouponService {
         return saida;
     }
 
-    public void postCouponCode(CouponCode coupon) {
+    public Boolean postCouponCode(CouponCode coupon) {
         try {
-        coupon.setEnable(Boolean.TRUE);
-        RequestBody body = RequestBody.create(new Gson().toJson(coupon), Constantes.JSON); // new
-        // RequestBody body = RequestBody.create(JSON, json); // old
-        Request request = new Request.Builder()
-                .url(Constantes.URL + "/coupon/")
-                .header("company_id", companyID)
-                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        String json = response.body().string();
+            coupon.setEnable(Boolean.TRUE);
+            RequestBody body = RequestBody.create(new Gson().toJson(coupon), Constantes.JSON); // new
+            // RequestBody body = RequestBody.create(JSON, json); // old
+            Request request = new Request.Builder()
+                    .url(Constantes.URL + "/coupon/")
+                    .header("company_id", companyID)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            if (response.code() == 407) {
+                return false;
+            } else {
+                String json = response.body().string();
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    public void deleteCouponCode(List<CouponCode> users) throws IOException {
+    public void deleteCouponCode(List<CouponCode> users, String companyId) throws IOException {
         for (CouponCode u : users) {
             RequestBody body = RequestBody.create(new Gson().toJson(u), Constantes.JSON); // new
             Request request = new Request.Builder()
                     .url(Constantes.URL + "/coupon/")
                     .delete(body)
+                    .header("company_id", companyId)
                     .build();
             Response response = client.newCall(request).execute();
             String json = response.body().string();
         }
     }
 
-    public void putCouponCode(CouponCode user) throws IOException {
-        RequestBody body = RequestBody.create(new Gson().toJson(user), Constantes.JSON); // new
+    public void putCouponCode(CouponCode coupon) throws IOException {
+        RequestBody body = RequestBody.create(new Gson().toJson(coupon), Constantes.JSON); // new
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/coupon/")
+                .header("company_id", companyID)
                 .put(body)
                 .build();
         Response response = client.newCall(request).execute();
         String json = response.body().string();
     }
+    
 }

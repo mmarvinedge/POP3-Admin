@@ -39,7 +39,13 @@ public class UserService {
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
             System.out.println("codeeeeeeeeeeee " + response.code());
-            System.out.println("codeeeeeeeeeeee " + response.message());
+            
+            if(response.code() == 408) {
+                User block = new User();
+                block.setName("block");
+                return block;
+            }
+            
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }

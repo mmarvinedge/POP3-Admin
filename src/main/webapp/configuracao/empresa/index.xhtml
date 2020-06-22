@@ -30,7 +30,7 @@
                         </div>
                         <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="CNPJ" /><br/>
-                            <p:inputText value="#{companyMB.company.cgccpf}" readonly="true" />
+                            <p:inputText value="#{companyMB.company.cgccpf}" readonly="#{companyMB.company.cgccpf != null}" />
                         </div>
                         <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="Nome Empresa" /><br/>

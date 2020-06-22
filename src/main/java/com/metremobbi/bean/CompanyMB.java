@@ -85,9 +85,6 @@ public class CompanyMB {
 
     public void save() {
         try {
-            if (!taxaUnicaEntrega) {
-                company.setDeliveryCost(BigDecimal.ZERO);
-            }
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -97,9 +94,6 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            if (!taxaUnicaEntrega) {
-                company.setDeliveryCost(BigDecimal.ZERO);
-            }
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -141,13 +135,6 @@ public class CompanyMB {
     }
 
     public void confirmarRegioes() {
-        if (taxaUnicaEntrega) {
-            for (Bairro bairroSelecionado : dualBairros.getTarget()) {
-                bairroSelecionado.setTaxa(company.getDeliveryCost());
-            }
-        } else {
-            company.setDeliveryCost(BigDecimal.ZERO);
-        }
         company.setBairros(dualBairros.getTarget());
         save2();
     }
@@ -197,4 +184,19 @@ public class CompanyMB {
             tempFile.deleteOnExit();
         }
     }
+    
+    public void updateDeliveryCostType(Boolean b) throws Exception {
+        company.setUniqueDeliveryCost(b);
+        Company c = company;
+        service.saveCompany(c);
+        System.out.println(c.getUniqueDeliveryCost());
+    }
+    
+    public void updateWorksCoupon(Boolean b) throws Exception {
+        company.setWorksCoupon(b);
+        Company c = company;
+        service.saveCompany(c);
+        System.out.println(c.getWorksCoupon());
+    }
+    
 }

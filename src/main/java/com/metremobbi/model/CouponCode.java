@@ -19,6 +19,7 @@ public class CouponCode {
     private String id;
     private String slug;
     private Integer quantity;
+    private Integer count;
     private BigDecimal discount;
     private Boolean enable;
     
@@ -64,7 +65,13 @@ public class CouponCode {
     public void setEnable(Boolean enable) {
         this.enable = enable;
     }
-    
-    
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+    
 }

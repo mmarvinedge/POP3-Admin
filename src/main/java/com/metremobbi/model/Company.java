@@ -39,6 +39,7 @@ public class Company {
     private String aproxTime;
     private List<CouponCode> coupons;
     private Boolean worksCoupon;
+    private Boolean uniqueDeliveryCost;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -59,6 +60,13 @@ public class Company {
             coupons = new ArrayList();
         }
         return coupons;
+    }
+    
+    public Boolean getUniqueDeliveryCost() {
+        if(uniqueDeliveryCost == null){
+            uniqueDeliveryCost = true;
+        } 
+        return uniqueDeliveryCost;
     }
 
 }

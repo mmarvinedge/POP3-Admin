@@ -82,9 +82,12 @@ public class CouponMB implements Serializable {
         if (coupon.getId() == null) {
             try {
                 coupon.setEnable(Boolean.TRUE);
-                service.postCouponCode(coupon);
-                coupons.add(coupon);
-                addDetailMessage("Cupom inserido com sucesso.");
+                if (service.postCouponCode(coupon)) {
+                    coupons.add(coupon);
+                    addDetailMessage("Cupom inserido com sucesso.");
+                } else {
+                    addDetailMessage("Nome de cupom já utilizado, clique em renovar para zerar sua utilização!", FacesMessage.SEVERITY_ERROR);
+                }
                 novo();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,7 +108,7 @@ public class CouponMB implements Serializable {
 
     public void delete() throws IOException {
         Integer size = coupons.size();
-        service.deleteCouponCode(couponsSelected);
+        service.deleteCouponCode(couponsSelected, Utils.usuarioLogado().getCompanyId());
         coupons.remove(couponsSelected);
         if (size > 1) {
             addDetailMessage("Cupons deletados com sucesso.");
@@ -115,7 +118,14 @@ public class CouponMB implements Serializable {
     }
 
     public void update(CouponCode c) throws IOException {
+        System.out.println(c.getEnable());
         service.putCouponCode(c);
     }
-
+    
+    public void resetCoupon() throws IOException {
+        CouponCode c = couponsSelected.get(0);
+        c.setCount(0);
+        service.putCouponCode(c);
+    }
+    
 }
