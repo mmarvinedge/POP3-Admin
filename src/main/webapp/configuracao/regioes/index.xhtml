@@ -57,7 +57,7 @@
                                     <h:panelGroup rendered="#{!companyMB.company.uniqueDeliveryCost}">
                                         <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
                                         <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
-                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}" filterBy="#{bairro.bairro}">
+                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}">
                                                 #{bairro.bairro}
                                             </p:column>
                                             <p:column headerText="Entrega?" width="150" styleClass="text-center">
