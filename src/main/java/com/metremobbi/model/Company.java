@@ -41,6 +41,7 @@ public class Company {
     private Boolean worksCoupon;
     private Boolean uniqueDeliveryCost;
     private Boolean onlyMenu;
+    private Boolean freeVersion;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -75,6 +76,13 @@ public class Company {
             onlyMenu = false;
         }
         return onlyMenu;
+    }
+    
+    public Boolean getFreeVersion() {
+        if(freeVersion == null){
+            freeVersion = false;
+        }
+        return freeVersion;
     }
 
 }
