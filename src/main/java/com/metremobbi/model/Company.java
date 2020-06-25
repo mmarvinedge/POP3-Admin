@@ -42,6 +42,7 @@ public class Company {
     private Boolean uniqueDeliveryCost;
     private Boolean onlyMenu;
     private Boolean freeVersion;
+    private Boolean deliveryOnly, withdrawalOnly, decimalQuantity;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -63,11 +64,11 @@ public class Company {
         }
         return coupons;
     }
-    
+
     public Boolean getUniqueDeliveryCost() {
-        if(uniqueDeliveryCost == null){
+        if (uniqueDeliveryCost == null) {
             uniqueDeliveryCost = true;
-        } 
+        }
         return uniqueDeliveryCost;
     }
 
@@ -77,12 +78,45 @@ public class Company {
         }
         return onlyMenu;
     }
-    
+
     public Boolean getFreeVersion() {
-        if(freeVersion == null){
+        if (freeVersion == null) {
             freeVersion = false;
         }
         return freeVersion;
+    }
+
+    public Boolean getDeliveryOnly() {
+        if (deliveryOnly == null) {
+            deliveryOnly = true;
+        }
+        return deliveryOnly;
+    }
+
+    public void setDeliveryOnly(Boolean deliveryOnly) {
+        this.deliveryOnly = deliveryOnly;
+    }
+
+    public Boolean getWithdrawalOnly() {
+        if (withdrawalOnly == null) {
+            withdrawalOnly = true;
+        }
+        return withdrawalOnly;
+    }
+
+    public void setWithdrawalOnly(Boolean withdrawalOnly) {
+        this.withdrawalOnly = withdrawalOnly;
+    }
+
+    public Boolean getDecimalQuantity() {
+        if (decimalQuantity == null) {
+            decimalQuantity = false;
+        }
+        return decimalQuantity;
+    }
+
+    public void setDecimalQuantity(Boolean decimalQuantity) {
+        this.decimalQuantity = decimalQuantity;
     }
 
 }

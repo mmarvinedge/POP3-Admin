@@ -13,7 +13,7 @@ import java.util.List;
  * @author JOAO PAULO
  */
 public class Order {
-    
+
     private String id;
 
     private String num_order;
@@ -46,8 +46,13 @@ public class Order {
     private String observations;
     private Integer deliveryLimit;
     private String discount;
-    
+
     private Date dtRegister;
+
+    private Date dtAcept;
+    private Date dtRefuse;
+    private Date dtDelivery;
+    private Date dtFinish;
 
     public String getId() {
         return id;
@@ -303,6 +308,38 @@ public class Order {
 
     public void setDtRegister(Date dtRegister) {
         this.dtRegister = dtRegister;
+    }
+
+    public Date getDtAcept() {
+        return dtAcept;
+    }
+
+    public void setDtAcept(Date dtAcept) {
+        this.dtAcept = dtAcept;
+    }
+
+    public Date getDtRefuse() {
+        return dtRefuse;
+    }
+
+    public void setDtRefuse(Date dtRefuse) {
+        this.dtRefuse = dtRefuse;
+    }
+
+    public Date getDtDelivery() {
+        return dtDelivery;
+    }
+
+    public void setDtDelivery(Date dtDelivery) {
+        this.dtDelivery = dtDelivery;
+    }
+
+    public Date getDtFinish() {
+        return dtFinish;
+    }
+
+    public void setDtFinish(Date dtFinish) {
+        this.dtFinish = dtFinish;
     }
 
 }
