@@ -49,11 +49,13 @@
                             <p:outputLabel value="Tempo Médio de Entrega" /><br/>
                             <p:inputText value="#{companyMB.company.aproxTime}"  />
                         </div>
-                        <div class="ui-sm-6 ui-g-6 ">
+                        <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="Mensagem de Boas Vindas" /><br/>
                             <small>Máximo 30 car.</small><br/>
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
+
+
                     </div>
 
                     <div class="ui-sm-12 ui-g-6 ">
@@ -97,22 +99,45 @@
                                     <p:ajax event="change" update="@this"/>
                                 </p:toggleSwitch>
                             </div>
-<!--                            <div class="ui-sm-6 ui-g-3">
-                                <p:outputLabel value="Faz entrega?"/><br/>
-                                <p:toggleSwitch id="delivery" value="#{companyMB.company.makeDelivery}" disabled="#{!companyMB.company.makeWithdrawal}">
-                                    <p:ajax event="change" update="@this, retirada"/>
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Trabalha Com Entrega" /><br/>
+                                <p:toggleSwitch id="deliveryOnly"  value="#{companyMB.company.deliveryOnly}" disabled="#{!companyMB.company.withdrawalOnly}"  >
+                                    <p:ajax update="withdrawalOnly" event="change"/>
                                 </p:toggleSwitch>
                             </div>
-                            <div class="ui-sm-6 ui-g-3">
-                                <p:outputLabel value="Trabalha com retirada no local?"/><br/>
-                                <p:toggleSwitch id="retirada" value="#{companyMB.company.makeWithdrawal}" disabled="#{!companyMB.company.makeDelivery}">
-                                    <p:ajax event="change" update="@this, delivery"/>
+
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Trabalha com Retirada" /><br/>
+                                <p:toggleSwitch id="withdrawalOnly" value="#{companyMB.company.withdrawalOnly}" disabled="#{!companyMB.company.deliveryOnly}" >
+                                    <p:ajax update="deliveryOnly" event="change"/>
                                 </p:toggleSwitch>
                             </div>
-                            <p:dataTable>
-                                <p:column headerText="Manhã" colspan="2">
-                                </p:column>
-                            </p:dataTable> -->
+
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Quantidade Decimal no Pedido" /><br/>
+                                <p:toggleSwitch  value="#{companyMB.company.decimalQuantity}"  />
+                            </div>
+                            <div class="ui-sm-12 ui-g-12">
+                                <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
+                                    <thead>
+                                        <td colspan="6" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center; font-weight: bold">Prametrize aqui os horários dos turnos, esses horário iram impactar na exibição dos protudos no cardápio
+                                         conforme o cadastro</td>
+                                    </thead>
+                                    <tr>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Manhã</td>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Tarde</td>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Noite</td>
+                                    </tr>
+                                    <tbody>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginMorning}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endMorning}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginAfternoon}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endAfternoon}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginNight}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endNight}"/></td>
+                                    </tbody>
+                                </table>
+                            </div>
                         </p:fieldset>
                     </div>
                 </div>

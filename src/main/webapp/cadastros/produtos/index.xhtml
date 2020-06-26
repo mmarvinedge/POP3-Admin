@@ -62,11 +62,14 @@
                         </p:menuitem>
                     </p:splitButton>
                     <p:spacer height="20"/>
+
                     <h:panelGroup rendered="#{companyMB.company.integration}">
                         <div style="border: 1px; background-color: #ff8080; padding: 1%; border-radius: 17px;">
                             <strong>ATENÇÃO!</strong> <small>Você possui integração, portanto só são permitidas edições de regras exclusivas do cardápio, as demais alterações devem ser feitas em seu sistema, esta regra também se aplica à novos produtos.</small>
                         </div>
+                        <p:spacer height="20"/>
                     </h:panelGroup>
+                    <p:spacer height="20"/>
                     <div class="text-right">
                         <p:commandButton value="Ativar/inativar por categoria" styleClass="btn-danger" oncomplete="PF('mdlPararVenda').show()"
                                          update="@(.ui-dialog)"/>
@@ -214,7 +217,7 @@
                                 <div class="ui-sm-6 ui-g-3 ">
                                     <h:panelGroup id="ogirinalPrice" >
                                         <h:panelGroup rendered="#{productMB.product.promo}">
-                                            <p:outputLabel value="Preço promocional" for="inptPriceOriginal"/>
+                                            <p:outputLabel value="Preço Original" for="inptPriceOriginal"/>
                                             <p:inputNumber id="inptPriceOriginal" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
                                             <span class="help-block"> 
                                                 <p:message for="inptPriceOriginal" /> 
@@ -262,7 +265,7 @@
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-sm-12 ui-g-8">
                                         <h:outputLabel value="Tipo do produto" /><br/>
-                                        <p:selectOneButton id="buttonTipoProduto" disabled="#{param['acao']}" value="#{productMB.type}">
+                                        <p:selectOneButton id="buttonTipoProduto" value="#{productMB.type}">
                                             <f:selectItem itemValue="normal" itemLabel="Normal"/>
                                             <f:selectItem itemValue="pizza" itemLabel="Pizza" itemDisabled="#{productMB.product.categoryMain.name != 'Pizzas' and productMB.product.categoryMain.name != 'Pizzas Doces'}"/>
                                             <p:ajax update="@this, typeProduct" event="change"/>
@@ -427,49 +430,49 @@
                                                     <th colspan="7" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><center>Habilite os dias que este produto não é vendido</center></th>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Domingo</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Segunda</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Terça</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quarta</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quinta</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sexta</th>
-                                                    <th style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sabado</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Domingo</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Segunda</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Terça</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quarta</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Quinta</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sexta</th>
+                                                    <th style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;">Sabado</th>
                                                 </tr>
                                                 <tr>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderDom}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSeg}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderTer}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderQua}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderQui}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSex}" /></td>
-                                                    <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSab}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderDom}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSeg}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderTer}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderQua}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderQui}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSex}" /></td>
+                                                    <td style="width: 14.28%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:selectBooleanButton offLabel="Sim" onLabel="Não" value="#{productMB.product.productDay.naoVenderSab}" /></td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                 </p:fieldset><br/><br/>
-                                <!--                                <p:fieldset legend="Turnos">
-                                                                    <div class="ui-g ui-fluid">
-                                                                        <div class="ui-sm-12 ui-g-12">
-                                                                            <small>Defina aqui os turnos que você vende este produto</small>
-                                                                        </div>
-                                                                        <div class="ui-sm-4 ui-g-4">
-                                                                            <h:outputLabel value="Manhã"/><br/>
-                                                                            <p:selectBooleanButton value="{productMB.product.shift.morning}" onLabel="Sim" offLabel="Não"/>
-                                                                            <small>Abertura até 12:00</small>
-                                                                        </div>
-                                                                        <div class="ui-sm-4 ui-g-4">
-                                                                            <h:outputLabel value="Tarde"/><br/>
-                                                                            <p:selectBooleanButton value="{productMB.product.shift.afternoon}" onLabel="Sim" offLabel="Não"/>
-                                                                            <small>12:00 até 18:00</small>
-                                                                        </div>
-                                                                        <div class="ui-sm-4 ui-g-4">
-                                                                            <h:outputLabel value="Noite"/><br/>
-                                                                            <p:selectBooleanButton value="{productMB.product.shift.night}" onLabel="Sim" offLabel="Não"/>
-                                                                            <small>18:00 até fechamento</small>
-                                                                        </div>
-                                                                    </div>
-                                                                </p:fieldset>-->
+                                <p:fieldset legend="Turnos">
+                                    <div class="ui-g ui-fluid">
+                                        <div class="ui-sm-12 ui-g-12">
+                                            <small>Defina aqui os turnos que você vende este produto</small>
+                                        </div>
+                                        <div class="ui-sm-4 ui-g-4">
+                                            <h:outputLabel value="Manhã"/><br/>
+                                            <p:selectBooleanButton value="#{productMB.product.shift.morning}" onLabel="Sim" offLabel="Não" disabled="#{companyMB.company.shift.begginMorning == null and companyMB.company.shift.endMorning == null}"/>
+                                            <h:outputText value="De #{companyMB.company.shift.begginMorning} até #{companyMB.company.shift.endMorning}" rendered="#{companyMB.company.shift.begginMorning != null and companyMB.company.shift.endMorning != null}"/>
+                                        </div>
+                                        <div class="ui-sm-4 ui-g-4">
+                                            <h:outputLabel value="Tarde"/><br/>
+                                            <p:selectBooleanButton value="#{productMB.product.shift.afternoon}" onLabel="Sim" offLabel="Não" disabled="#{companyMB.company.shift.begginAfternoon == null and companyMB.company.shift.endAfternoon == null}"/>
+                                            <h:outputText value="De #{companyMB.company.shift.begginAfternoon} até #{companyMB.company.shift.endAfternoon}" rendered="#{companyMB.company.shift.begginAfternoon != null and companyMB.company.shift.endAfternoon != null}"/>
+                                        </div>
+                                        <div class="ui-sm-4 ui-g-4">
+                                            <h:outputLabel value="Noite"/><br/>
+                                            <p:selectBooleanButton value="#{productMB.product.shift.night}" onLabel="Sim" offLabel="Não" disabled="#{companyMB.company.shift.begginNight == null and companyMB.company.shift.endNight == null}"/>
+                                            <h:outputText value="De #{companyMB.company.shift.begginNight} até #{companyMB.company.shift.endNight}" rendered="#{companyMB.company.shift.begginNight != null and companyMB.company.shift.endNight != null}"/>
+                                        </div>
+                                    </div>
+                                </p:fieldset>
                             </div>
                         </p:panel>
                     </p:tab>
