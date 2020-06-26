@@ -39,8 +39,12 @@ public class Company {
     private String aproxTime;
     private List<CouponCode> coupons;
     private Boolean worksCoupon;
+    private Integer licenseType;
+    private String licenseDate;
     private Boolean uniqueDeliveryCost;
     private Boolean onlyMenu;
+    private Boolean makeDelivery;
+    private Boolean makeWithdrawal;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -75,6 +79,20 @@ public class Company {
             onlyMenu = false;
         }
         return onlyMenu;
+    }
+    
+    public Boolean getMakeDelivery(){
+        if (makeDelivery == null) {
+            makeDelivery = true;
+        }
+        return makeDelivery;
+    }
+    
+    public Boolean getMakeWithdrawal() {
+        if (makeWithdrawal == null) {
+            makeWithdrawal = true;
+        }
+        return makeWithdrawal;
     }
 
 }

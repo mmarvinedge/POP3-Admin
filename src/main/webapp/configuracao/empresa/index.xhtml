@@ -65,7 +65,7 @@
                             <hr/>
                             <h:panelGroup id="photo">
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and companyMB.company.logo.startsWith('http')}">
-                                    <img src="#{companyMB.company.logo}" style="width: 50%"/>
+                                    <img src="#{companyMB.company.logo}" style="width: 40%"/>
                                 </h:panelGroup>
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and !companyMB.company.logo.startsWith('http')}">
                                     <img src="data:logo/png;base64, #{companyMB.company.logo}" style="width: 25%"/>
@@ -76,15 +76,43 @@
                 </div>
 
 
-                <div class="ui-g ui-fluid" >
+                <div class="ui-g ui-fluid"  >
                     <div class="ui-sm-12 ui-g-6 ">
-                        <p:fieldset legend="QR Code Menu">
+                        <p:fieldset legend="QR Code Menu" rendered="#{companyMB.company.onlyMenu}">
                             <center>
                                 <small>
                                     Salve a imagem e imprima
                                 </small><br/>
-                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="70%"  />
+                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="50%"  />
                             </center>
+                        </p:fieldset>
+                    </div>
+                </div>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-sm-12 ui-g-12">
+                        <p:fieldset legend="Parametros">
+                            <div class="ui-sm-6 ui-g-3">
+                                <p:outputLabel value="Trabalha com cupom de desconto?"/><br/>
+                                <p:toggleSwitch value="#{companyMB.company.worksCoupon}">
+                                    <p:ajax event="change" update="@this"/>
+                                </p:toggleSwitch>
+                            </div>
+<!--                            <div class="ui-sm-6 ui-g-3">
+                                <p:outputLabel value="Faz entrega?"/><br/>
+                                <p:toggleSwitch id="delivery" value="#{companyMB.company.makeDelivery}" disabled="#{!companyMB.company.makeWithdrawal}">
+                                    <p:ajax event="change" update="@this, retirada"/>
+                                </p:toggleSwitch>
+                            </div>
+                            <div class="ui-sm-6 ui-g-3">
+                                <p:outputLabel value="Trabalha com retirada no local?"/><br/>
+                                <p:toggleSwitch id="retirada" value="#{companyMB.company.makeWithdrawal}" disabled="#{!companyMB.company.makeDelivery}">
+                                    <p:ajax event="change" update="@this, delivery"/>
+                                </p:toggleSwitch>
+                            </div>
+                            <p:dataTable>
+                                <p:column headerText="Manhã" colspan="2">
+                                </p:column>
+                            </p:dataTable> -->
                         </p:fieldset>
                     </div>
                 </div>

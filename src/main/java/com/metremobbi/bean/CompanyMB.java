@@ -198,12 +198,6 @@ public class CompanyMB {
         service.saveCompany(c);
         System.out.println(c.getUniqueDeliveryCost());
     }
-
-    public void updateWorksCoupon(Boolean b) throws Exception {
-        company.setWorksCoupon(b);
-        Company c = company;
-        service.saveCompany(c);
-        System.out.println(c.getWorksCoupon());
-    }
+    
 
 }
