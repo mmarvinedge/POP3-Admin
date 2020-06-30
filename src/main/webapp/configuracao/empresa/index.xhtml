@@ -55,20 +55,7 @@
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
 
-                        <div class="ui-sm-6 ui-g-6 ">
-                            <p:outputLabel value="Trabalha Com Entrega" /><br/>
-                            <p:toggleSwitch  value="#{companyMB.company.deliveryOnly}"  />
-                        </div>
-                        
-                        <div class="ui-sm-6 ui-g-6 ">
-                            <p:outputLabel value="Trabalha com Retirada" /><br/>
-                            <p:toggleSwitch  value="#{companyMB.company.withdrawalOnly}"  />
-                        </div>
 
-                        <div class="ui-sm-6 ui-g-6 ">
-                            <p:outputLabel value="Quantidade Decimal no Pedido" /><br/>
-                            <p:toggleSwitch  value="#{companyMB.company.decimalQuantity}"  />
-                        </div>
                     </div>
 
                     <div class="ui-sm-12 ui-g-6 ">
@@ -80,7 +67,7 @@
                             <hr/>
                             <h:panelGroup id="photo">
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and companyMB.company.logo.startsWith('http')}">
-                                    <img src="#{companyMB.company.logo}" style="width: 50%"/>
+                                    <img src="#{companyMB.company.logo}" style="width: 40%"/>
                                 </h:panelGroup>
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and !companyMB.company.logo.startsWith('http')}">
                                     <img src="data:logo/png;base64, #{companyMB.company.logo}" style="width: 25%"/>
@@ -91,15 +78,66 @@
                 </div>
 
 
-                <div class="ui-g ui-fluid" >
+                <div class="ui-g ui-fluid"  >
                     <div class="ui-sm-12 ui-g-6 ">
-                        <p:fieldset legend="QR Code Menu">
+                        <p:fieldset legend="QR Code Menu" rendered="#{companyMB.company.onlyMenu}">
                             <center>
                                 <small>
                                     Salve a imagem e imprima
                                 </small><br/>
-                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="70%"  />
+                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="50%"  />
                             </center>
+                        </p:fieldset>
+                    </div>
+                </div>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-sm-12 ui-g-12">
+                        <p:fieldset legend="Parametros">
+                            <div class="ui-sm-6 ui-g-3">
+                                <p:outputLabel value="Trabalha com cupom de desconto?"/><br/>
+                                <p:toggleSwitch value="#{companyMB.company.worksCoupon}">
+                                    <p:ajax event="change" update="@this"/>
+                                </p:toggleSwitch>
+                            </div>
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Trabalha Com Entrega" /><br/>
+                                <p:toggleSwitch id="deliveryOnly"  value="#{companyMB.company.deliveryOnly}" disabled="#{!companyMB.company.withdrawalOnly}"  >
+                                    <p:ajax update="withdrawalOnly" event="change"/>
+                                </p:toggleSwitch>
+                            </div>
+
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Trabalha com Retirada" /><br/>
+                                <p:toggleSwitch id="withdrawalOnly" value="#{companyMB.company.withdrawalOnly}" disabled="#{!companyMB.company.deliveryOnly}" >
+                                    <p:ajax update="deliveryOnly" event="change"/>
+                                </p:toggleSwitch>
+                            </div>
+
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Quantidade Decimal no Pedido" /><br/>
+                                <p:toggleSwitch  value="#{companyMB.company.decimalQuantity}"  />
+                            </div>
+                            <div class="ui-sm-12 ui-g-12">
+                                <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
+                                    <thead>
+                                        <td colspan="6" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center; font-weight: bold">Prametrize aqui os horários dos turnos, esses horário iram impactar na exibição dos protudos no cardápio
+                                         conforme o cadastro</td>
+                                    </thead>
+                                    <tr>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Manhã</td>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Tarde</td>
+                                        <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Noite</td>
+                                    </tr>
+                                    <tbody>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginMorning}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endMorning}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginAfternoon}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endAfternoon}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginNight}"/></td>
+                                        <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endNight}"/></td>
+                                    </tbody>
+                                </table>
+                            </div>
                         </p:fieldset>
                     </div>
                 </div>

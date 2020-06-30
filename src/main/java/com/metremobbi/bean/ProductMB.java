@@ -13,6 +13,7 @@ import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.FlavorPizza;
 import com.metremobbi.model.Order;
+import com.metremobbi.model.Shift;
 import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.OrderService;
 import com.metremobbi.service.ProductService;
@@ -216,8 +217,8 @@ public class ProductMB implements Serializable {
         product.getAttributes().remove(atr);
     }
 
-    public void removeAtributeValue(Attribute at, AttributeValue atv) {
-        at.getValues().remove(atv);
+    public void removeAtributeValue(Attribute at, int index) throws IOException {
+        at.getValues().remove(index);
     }
 
     public void addAttribute() throws IOException {
@@ -277,6 +278,11 @@ public class ProductMB implements Serializable {
     //se nao for na linha nao precisa desse
     public void setProductComplete() {
         product = selectedProducts.get(0);
+        
+        if(product.getShift() == null) {
+            product.setShift(new Shift());
+        } 
+        
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }

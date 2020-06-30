@@ -7,6 +7,7 @@ package com.metremobbi.bean;
 
 import com.metremobbi.infra.model.BairroDataModel;
 import com.metremobbi.model.Company;
+import com.metremobbi.model.Shift;
 import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
 import com.metremobbi.service.CompanyService;
@@ -81,6 +82,9 @@ public class CompanyMB {
             if (company.getTime() == null) {
                 company.setTime(new TimeOpen());
             }
+            if (company.getShift() == null) {
+                company.setShift(new Shift());
+            }
             loadBairros();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +102,8 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            System.out.println(company.getUniqueDeliveryCost());
+            System.out.println(company.getShift().getBegginMorning());
+            System.out.println(company.getLicenseDate());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -198,12 +203,6 @@ public class CompanyMB {
         service.saveCompany(c);
         System.out.println(c.getUniqueDeliveryCost());
     }
-
-    public void updateWorksCoupon(Boolean b) throws Exception {
-        company.setWorksCoupon(b);
-        Company c = company;
-        service.saveCompany(c);
-        System.out.println(c.getWorksCoupon());
-    }
+    
 
 }

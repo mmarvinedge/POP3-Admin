@@ -39,10 +39,13 @@ public class Company {
     private String aproxTime;
     private List<CouponCode> coupons;
     private Boolean worksCoupon;
+    private Integer licenseType;
+    private String licenseDate;
     private Boolean uniqueDeliveryCost;
     private Boolean onlyMenu;
     private Boolean freeVersion;
     private Boolean deliveryOnly, withdrawalOnly, decimalQuantity;
+    private Shift shift;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {
@@ -78,7 +81,7 @@ public class Company {
         }
         return onlyMenu;
     }
-
+    
     public Boolean getFreeVersion() {
         if (freeVersion == null) {
             freeVersion = false;
