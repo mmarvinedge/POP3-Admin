@@ -20,7 +20,7 @@
             </p:link>
         </li>
         <li>
-            <p:link outcome="/cadastros/usuarios/index">
+            <p:link outcome="/cadastros/usuarios/index" rendered="#{!logonMB.company.freeVersion}">
                 <i class="fa fa-user"></i>
                 <span>Usuários</span>
             </p:link>
@@ -29,7 +29,7 @@
             Pedidos
         </li>
         <li>
-            <p:link outcome="/pedidos/index">
+            <p:link outcome="/pedidos/index" rendered="#{!logonMB.company.freeVersion}">
                 <i class="fa fa-cart-plus"></i>
                 <span>Meus Pedidos</span>
             </p:link>
@@ -38,7 +38,7 @@
             Programas
         </li>
         <li>
-            <p:link outcome="/delivery/cupons/index">
+            <p:link outcome="/delivery/cupons/index" rendered="#{!logonMB.company.freeVersion}">
                 <i class="fa fa-ticket"></i>
                 <span>Cupons de desconto</span>
             </p:link>
