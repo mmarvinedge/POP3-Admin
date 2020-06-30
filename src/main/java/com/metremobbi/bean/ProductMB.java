@@ -217,8 +217,8 @@ public class ProductMB implements Serializable {
         product.getAttributes().remove(atr);
     }
 
-    public void removeAtributeValue(Attribute at, AttributeValue atv) {
-        at.getValues().remove(atv);
+    public void removeAtributeValue(Attribute at, int index) throws IOException {
+        at.getValues().remove(index);
     }
 
     public void addAttribute() throws IOException {

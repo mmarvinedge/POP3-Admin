@@ -334,7 +334,7 @@
                                                                                     </p:column>
                                                                                     <p:column width="60" style="text-align: center">
                                                                                         <center>
-                                                                                            <p:commandButton disabled="#{param['acao']}" icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes" action="#{productMB.removeAtributeValue(atr, att)}" />
+                                                                                            <p:commandButton disabled="#{param['acao']}" icon="fa fa-trash" styleClass="btn btn-danger" immediate="true" update="tblAttributes, @this" process="@this" action="#{productMB.removeAtributeValue(atr, index)}" />
                                                                                         </center>
                                                                                     </p:column>
                                                                                 </p:dataTable>
