@@ -233,5 +233,31 @@ public class OUtils {
 //            return "12/";
 //        }
     }
+    
+    public static String formataTelefone(String phone) {
+        //formata o Telefone
+        String phoneFormatted = retiraCaracteresEspeciais(phone);
+        switch (phoneFormatted.length()) {
+            case 8:
+                return "(34)" + phoneFormatted.replaceFirst("(\\d{4})(\\d{4})", "$1-$2");
+            case 9:
+                return "(34)" + phoneFormatted.replaceFirst("(\\d{5})(\\d{4})", "$1-$2");
+            case 10:
+                return phoneFormatted.replaceFirst("(\\d{2})(\\d{4})(\\d{4})", "($1)$2-$3");
+            case 12:
+                return phoneFormatted.substring(2, 12).replaceFirst("(\\d{2})(\\d{4})(\\d{4})", "($1)$2-$3");
+            case 13:
+                return phoneFormatted.substring(2, 13).replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1)$2-$3");
+            default:
+                return phone;
+        }
+    }
+    
+    public static String retiraCaracteresEspeciais(String phone) {
+        if (phone != null) {
+            return phone.replace("(", "").replace(")", "").replace("-", "").replace("/", "").replace(".", "").trim();
+        }
+        return "";
+    }
 
 }

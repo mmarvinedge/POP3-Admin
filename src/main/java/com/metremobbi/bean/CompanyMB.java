@@ -12,6 +12,7 @@ import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
 import com.metremobbi.service.CompanyService;
 import com.metremobbi.util.ImageFile;
+import com.metremobbi.util.OUtils;
 import com.metremobbi.util.Utils;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.File;
@@ -102,7 +103,6 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            System.out.println(company.getShift().getBegginMorning());
             System.out.println(company.getLicenseDate());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
@@ -204,5 +204,5 @@ public class CompanyMB {
         System.out.println(c.getUniqueDeliveryCost());
     }
     
-
+    
 }
