@@ -32,7 +32,7 @@
                         <p:splitButton value="Editar" action="#{productMB.setProductComplete()}" update="@(.ui-dialog)" styleClass="btn-info"
                                        disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
                                        oncomplete="PF('modalNewProduct').show()" icon="fa fa-edit">
-                            <p:menuitem styleClass="btn-primary" icon="fa fa-copy" value="Copiar"  action="#{productMB.copyProduct()}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()"  />
+                            <p:menuitem styleClass="btn-primary" icon="fa fa-copy" value="Copiar" disabled="#{companyMB.company.integration}" action="#{productMB.copyProduct()}" immediate="true" update=":frmNewProduct" oncomplete="PF('modalNewProduct').show()"  />
                             <f:param name="acao" value="#{companyMB.company.integration}"/>
                         </p:splitButton>
                         <p:spacer width="5"/>
@@ -269,6 +269,7 @@
                                             <f:selectItem itemValue="normal" itemLabel="Normal"/>
                                             <f:selectItem itemValue="pizza" itemLabel="Pizza" itemDisabled="#{productMB.product.categoryMain.name != 'Pizzas' and productMB.product.categoryMain.name != 'Pizzas Doces'}"/>
                                             <p:ajax update="@this, typeProduct" event="change"/>
+                                            <f:param value="#{companyMB.company.integration}" name="acao"/>
                                         </p:selectOneButton>
                                     </div>
                                 </div>
@@ -398,7 +399,7 @@
                                                                 <p:inputText value="#{flav.description}" disabled="#{param['acao']}" style="width:100%" label="Descrição"/>
                                                             </p:column>
                                                             <p:column headerText="Preço">
-                                                                <p:inputText value="#{flav.price}" disabled="#{param['acao']}" style="width:100%" label="Preço"/>
+                                                                <p:inputNumber symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{flav.price}" disabled="#{param['acao']}" style="width:100%" label="Preço"/>
                                                             </p:column>
 
                                                             <p:column headerText="*" width="50">

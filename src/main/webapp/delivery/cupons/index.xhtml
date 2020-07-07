@@ -74,14 +74,22 @@
                         <p:column headerText="Nome" sortBy="#{c.slug}" filterBy="#{c.slug}" filterMatchMode="contains">
                             <h:outputText value="#{c.slug}"/>
                         </p:column>
-                        <p:column headerText="Limite de uso" sortBy="#{c.quantity}" class="text-right" filterBy="#{c.quantity}" filterMatchMode="contains">
+                        <p:column headerText="Limite de uso" width="150" sortBy="#{c.quantity}" class="text-right" filterBy="#{c.quantity}" filterMatchMode="contains">
                             <h:outputText value="#{c.quantity}"/>
                         </p:column>
-                        <p:column headerText="Utilizações do cupom" class="text-right">
+                        <p:column headerText="Utilizações do cupom" width="150" class="text-right">
                             <h:outputText value="#{c.count}"/>
                         </p:column>
-                        <p:column headerText="Desconto" sortBy="#{c.discount}" filterBy="#{c.discount}" class="text-right" filterMatchMode="contains">
-                            <h:outputText value="#{c.discount}%"/>
+                        <p:column headerText="Desconto" width="150" sortBy="#{c.discount}" filterBy="#{c.discount}" class="text-right" filterMatchMode="contains">
+                            <h:panelGroup rendered="#{c.percentual}">
+                                <h:outputText value="#{c.discount}%"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!c.percentual}">
+                                <h:outputText value="R$ #{c.discount}"/>
+                            </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="Desconto na taxa de entrega?" width="150" class="text-center">
+                            <h:outputText value="#{c.deliveryCost ? 'Sim' : 'Não'}"/>
                         </p:column>
                         <p:column headerText="Ativado" filterMatchMode="contains" width="100" class="text-center">
                             <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{c.enable}" disabled="#{!companyMB.company.worksCoupon}">
@@ -131,21 +139,51 @@
                             </div>
                             <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
                                 <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Desconto" for="inptDsc"/>
+                                    <p:outputLabel value="Desconto por?"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptDsc" value="#{couponMB.coupon.discount}" placeholder="Porcentagem de desconto do cupom" type="number" required="true"/>
-                                    <span class="help-block">
-                                        <p:message for="inptDsc" /> 
-                                    </span>
+                                    <p:selectBooleanButton offLabel="Valor" onLabel="Percentual" value="#{couponMB.coupon.percentual}">
+                                        <p:ajax event="change" update="@this, pnlPercentual"/>
+                                    </p:selectBooleanButton>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Desconto"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12" >
+                                    <h:panelGroup id="pnlPercentual">
+                                        <h:panelGroup rendered="#{couponMB.coupon.percentual}">
+                                            <p:inputNumber symbol=" %" decimalPlaces="0" symbolPosition="s" value="#{couponMB.coupon.discount}" placeholder="Porcentagem de desconto do cupom" required="true"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{!couponMB.coupon.percentual}">
+                                            <p:inputNumber symbol="R$ " placeholder="Informe o valor" decimalSeparator="," thousandSeparator="." value="#{couponMB.coupon.discount}"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Valor minimo para utilização do cupom"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:inputNumber symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{couponMB.coupon.minimalValue}"/>
+                                </div>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:outputLabel value="Aplica desconto na taxa de entrega?"/>
+                                </div>
+                                <div class="ui-sm-12 ui-g-12">
+                                    <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{couponMB.coupon.deliveryCost}"/>
                                 </div>
                             </div>
                         </div>
-                        <div id="main-buttons" style="text-align: right;">
-                            <p:commandButton value="Salvar" action="#{couponMB.save()}" update="@form, frmCoupon"
-                                             icon="fa fa-check" type="submit" styleClass="btn-primary"
-                                             onerror="PF('msgs').show();" onsuccess="PF('modalNewCoupon').hide();" />
-                        </div>
+                    </div>
+                    <div id="main-buttons" style="text-align: right;">
+                        <p:commandButton value="Salvar" action="#{couponMB.save()}" update="@form, frmCoupon"
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary"
+                                         onerror="PF('msgs').show();" onsuccess="PF('modalNewCoupon').hide();" />
                     </div>
                 </p:panel>
             </h:form>
