@@ -84,6 +84,7 @@ public class LogonMB extends AdminSession implements Serializable {
                 Faces.validationFailed();
                 currentUser = null;
             } else {
+                OUtils.setUser(currentUser);
                 company = companyService.loadCompany(currentUser.getCompanyId());
                 addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
                 Faces.getExternalContext().getFlash().setKeepMessages(true);

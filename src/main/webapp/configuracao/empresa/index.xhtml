@@ -54,6 +54,19 @@
                             <small>Máximo 30 car.</small><br/>
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
+                        <div class="ui-sm-6 ui-g-6">
+                            <p:outputLabel value="Tipo da licença: " />
+                            <h:outputText value="#{companyMB.company.freeVersion ? ' Grátis ' : companyMB.company.trial ? ' Teste 15 dias ' : companyMB.company.licenseType == 3 ? ' Trimestral '
+                                                   : companyMB.company.licenseType == 6 ? ' Semestral ' : companyMB.company.licenseType == 12 ? ' Anual ' : ''}"
+                                          class="text-primary btn-primary" style="font-weight: bold"/>
+                        </div>
+                        <h:panelGroup rendered="#{companyMB.company.licenseType != null or companyMB.company.trial}">
+                            <div class="ui-sm-6 ui-g-6">
+                                <p:outputLabel value="Vencimento: " />
+                                <h:outputText value="#{companyMB.calcExpiredLicese()}" rendered="#{!companyMB.company.trial}"/>
+                                <h:outputText value="#{companyMB.calcExpiredTrial()}" rendered="#{companyMB.company.trial}"/>
+                            </div>
+                        </h:panelGroup>
 
 
                     </div>
@@ -117,11 +130,18 @@
                                 <p:outputLabel value="Quantidade Decimal no Pedido" /><br/>
                                 <p:toggleSwitch  value="#{companyMB.company.decimalQuantity}"  />
                             </div>
+
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Valor mínimo para entrega" /><br/>
+                                <p:inputNumber id="minimalValue" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{companyMB.company.minimalValue}">
+                                    <p:ajax event="blur" process="@this" />
+                                </p:inputNumber>
+                            </div>
                             <div class="ui-sm-12 ui-g-12">
                                 <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
                                     <thead>
                                         <td colspan="6" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center; font-weight: bold">Prametrize aqui os horários dos turnos, esses horário iram impactar na exibição dos protudos no cardápio
-                                         conforme o cadastro</td>
+                                            conforme o cadastro<br/> <p style="color: red">ATENÇÃO, OS HORÁRIOS DOS TURNOS NÃO PODEM CONFLITAR</p></td>
                                     </thead>
                                     <tr>
                                         <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Manhã</td>

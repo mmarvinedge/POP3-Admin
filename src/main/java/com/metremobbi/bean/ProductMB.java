@@ -194,6 +194,7 @@ public class ProductMB implements Serializable {
 
     public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
+        System.out.println("product type: "+ type);
     }
 
     public void addAttributeCorrect() throws IOException {

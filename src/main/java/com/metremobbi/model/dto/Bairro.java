@@ -26,6 +26,7 @@ public class Bairro {
     public Bairro(String bairro) {
         this.bairro = bairro;
         this.taxa = BigDecimal.ZERO;
+        this.entrega = true;
     }
 
     public String getBairro() {
@@ -34,7 +35,7 @@ public class Bairro {
 
     public Boolean getEntrega() {
         if(entrega == null){
-            entrega = false;
+            entrega = true;
         } 
         return entrega;
     }

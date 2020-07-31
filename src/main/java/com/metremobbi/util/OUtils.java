@@ -5,6 +5,7 @@
  */
 package com.metremobbi.util;
 
+import com.metremobbi.model.User;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,8 @@ import java.util.Locale;
  * @author Renato
  */
 public class OUtils {
+    
+    public static User user;
 
     public static String formataData(Date data, String pattern) {
         DateFormat df = new SimpleDateFormat(pattern, new Locale("pt", "BR"));
@@ -260,4 +263,12 @@ public class OUtils {
         return "";
     }
 
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        OUtils.user = user;
+    }
+    
 }

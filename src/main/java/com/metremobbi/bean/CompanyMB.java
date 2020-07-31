@@ -103,7 +103,6 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            System.out.println(company.getLicenseDate());
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -113,18 +112,30 @@ public class CompanyMB {
 
     public void loadBairros() {
         try {
-            List<String> bairros = service.getBairros(company.getAddress().getCity());
-            System.out.println("VEIO: " + bairros.size());
-            for (String bairro : bairros) {
-                this.bairros.add(new Bairro(bairro));
-            }
+            if (company.getBairros() != null && !company.getBairros().isEmpty() && company.getBairros().size() > 0) {
+                List<String> bairrosMetre = service.getBairros(company.getAddress().getCity());
+                if(company.getBairros().size() < bairrosMetre.size()) {
+                    for (String b : bairrosMetre) {
+                        if(company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
+                            company.getBairros().add(new Bairro(b));
+                        }
+                    }
+                }
+                bairros = company.getBairros();
+            } else {
+                List<String> bairros = service.getBairros(company.getAddress().getCity());
+                System.out.println("VEIO: " + bairros.size());
+                for (String bairro : bairros) {
+                    this.bairros.add(new Bairro(bairro));
+                }
 
-            for (Bairro bairro : this.bairros) {
-                Bairro b = company.getBairros().stream().filter(p -> p.getBairro().equalsIgnoreCase(bairro.getBairro())).findFirst().orElse(null);
-                if (b != null) {
-                    System.out.println("BAIRRO: " + b.getBairro());
-                    bairro.setEntrega(true);
-                    bairro.setTaxa(b.getTaxa());
+                for (Bairro bairro : this.bairros) {
+                    Bairro b = company.getBairros().stream().filter(p -> p.getBairro().equalsIgnoreCase(bairro.getBairro())).findFirst().orElse(null);
+                    if (b != null) {
+                        System.out.println("BAIRRO: " + b.getBairro());
+                        bairro.setEntrega(true);
+                        bairro.setTaxa(b.getTaxa());
+                    }
                 }
             }
         } catch (Exception e) {
@@ -146,9 +157,12 @@ public class CompanyMB {
     }
 
     public void confirmarRegioes() {
-        company.setBairros(dualBairros.getTarget());
-        company.setBairros(bairros.stream().filter(c -> c.getEntrega()).collect(Collectors.toList()));
-        save2();
+        try {
+            company.setBairros(bairros);
+            service.saveCompany(company);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void cadastrarBairro() {
@@ -203,6 +217,17 @@ public class CompanyMB {
         service.saveCompany(c);
         System.out.println(c.getUniqueDeliveryCost());
     }
-    
-    
+
+    public String calcExpiredLicese() {
+        return OUtils.formataData(OUtils.addMes(OUtils.getDataByTexto(company.getLicenseDate(), "yyyy-MM-dd"), company.getLicenseType()), "dd/MM/yyyy");
+    }
+
+    public String calcExpiredTrial() {
+        return OUtils.formataData(OUtils.addDia(OUtils.getDataByTexto(company.getTrialDate(), "yyyy-MM-dd"), 15), "dd/MM/yyyy");
+    }
+
+    public void debugEntrega(Bairro b) {
+        System.out.println(b.getEntrega());
+    }
+
 }

@@ -267,7 +267,7 @@
                                         <h:outputLabel value="Tipo do produto" /><br/>
                                         <p:selectOneButton id="buttonTipoProduto" value="#{productMB.type}">
                                             <f:selectItem itemValue="normal" itemLabel="Normal"/>
-                                            <f:selectItem itemValue="pizza" itemLabel="Pizza" itemDisabled="#{productMB.product.categoryMain.name != 'Pizzas' and productMB.product.categoryMain.name != 'Pizzas Doces'}"/>
+                                            <f:selectItem itemValue="pizza" itemLabel="Pizza" itemDisabled="#{productMB.product.categoryMain.name != 'Pizzas' and productMB.product.categoryMain.name != 'Pizzas Doces' and productMB.product.categoryMain.name != 'Italian Pizza Express'}"/>
                                             <p:ajax update="@this, typeProduct" event="change"/>
                                             <f:param value="#{companyMB.company.integration}" name="acao"/>
                                         </p:selectOneButton>
@@ -350,7 +350,7 @@
                                                 </div>
                                             </p:fieldset>
                                         </h:panelGroup>
-                                        <h:panelGroup rendered="#{productMB.type == 'pizza' and productMB.product.categoryMain.name == 'Pizzas' or productMB.product.categoryMain.name == 'Pizzas Doces'}">
+                                        <h:panelGroup rendered="#{productMB.type == 'pizza' and (productMB.product.categoryMain.name == 'Pizzas' or productMB.product.categoryMain.name == 'Pizzas Doces' or productMB.product.categoryMain.name == 'Italian Pizza Express')}">
                                             <p:fieldset legend="Configuracoes de Pizza" style="width: 770px;">
                                                 <div class="ui-g ui-fluid">
                                                     <div class="ui-sm-4 ui-g-4">
@@ -392,13 +392,13 @@
                                                             <p:column headerText="SKU" width="100" style="text-align: left">
                                                                 <p:inputText value="#{flav.sku}" placeholder="Opcional" disabled="#{param['acao']}"/>
                                                             </p:column>
-                                                            <p:column headerText="Sabor" style="text-align: left">
+                                                            <p:column headerText="Sabor" width="150" style="text-align: left">
                                                                 <p:inputText value="#{flav.flavor}" disabled="#{param['acao']}"/>
                                                             </p:column>
                                                             <p:column headerText="Sinopse">
                                                                 <p:inputText value="#{flav.description}" disabled="#{param['acao']}" style="width:100%" label="Descrição"/>
                                                             </p:column>
-                                                            <p:column headerText="Preço">
+                                                            <p:column headerText="Preço" width="100">
                                                                 <p:inputNumber symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{flav.price}" disabled="#{param['acao']}" style="width:100%" label="Preço"/>
                                                             </p:column>
 

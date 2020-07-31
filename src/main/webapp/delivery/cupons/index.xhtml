@@ -40,6 +40,7 @@
                         <p:commandButton action="#{couponMB.resetCoupon()}" icon="fa fa-repeat"
                                          disabled="#{empty couponMB.couponsSelected or couponMB.couponsSelected.size() > 1 or !companyMB.company.worksCoupon}"
                                          value="Renovar" styleClass="btn-info" immediate="true" update="@form">
+                            <p:confirm header="Confirmação" message="A renovação deste cupom irá zerar sua utilização para zero, tem certeza disso?" icon="ui-icon-info"/>
                         </p:commandButton>
                     </div>
 
@@ -120,7 +121,7 @@
                                     <p:outputLabel value="Nome" for="inptSlug"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptSlug" value="#{couponMB.coupon.slug}" placeholder="Ex: ALMOCO10" required="true"/>
+                                    <p:inputText id="inptSlug" value="#{couponMB.coupon.slug}" placeholder="Ex: ALMOCO10" required="true" requiredMessage="Nome do cupom é obrigatório"/>
                                     <span class="help-block"> 
                                         <p:message for="inptSlug" /> 
                                     </span>
@@ -131,7 +132,8 @@
                                     <p:outputLabel value="Limite de uso" for="inptQnt"/>
                                 </div>
                                 <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptQnt" value="#{couponMB.coupon.quantity}" placeholder="Quantidade máxima que este cupom será utilizado" type="number" required="true"/>
+                                    <p:inputText id="inptQnt" value="#{couponMB.coupon.quantity}" placeholder="Quantidade máxima que este cupom será utilizado" type="number" required="true" 
+                                                 requiredMessage="Limite de uso é obrigatório"/>
                                     <span class="help-block">
                                         <p:message for="inptQnt" /> 
                                     </span>
@@ -157,7 +159,7 @@
                                             <p:inputNumber symbol=" %" decimalPlaces="0" symbolPosition="s" value="#{couponMB.coupon.discount}" placeholder="Porcentagem de desconto do cupom" required="true"/>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{!couponMB.coupon.percentual}">
-                                            <p:inputNumber symbol="R$ " placeholder="Informe o valor" decimalSeparator="," thousandSeparator="." value="#{couponMB.coupon.discount}"/>
+                                            <p:inputNumber symbol="R$ " placeholder="Informe o valor" decimalSeparator="," thousandSeparator="." value="#{couponMB.coupon.discount}" required="true"/>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </div>
@@ -182,8 +184,8 @@
                     </div>
                     <div id="main-buttons" style="text-align: right;">
                         <p:commandButton value="Salvar" action="#{couponMB.save()}" update="@form, frmCoupon"
-                                         icon="fa fa-check" type="submit" styleClass="btn-primary"
-                                         onerror="PF('msgs').show();" onsuccess="PF('modalNewCoupon').hide();" />
+                                         icon="fa fa-check" type="submit" styleClass="btn-primary" 
+                                         oncomplete="if (!args.validationFailed)  {PF('modalNewCoupon').hide();}" />
                     </div>
                 </p:panel>
             </h:form>
