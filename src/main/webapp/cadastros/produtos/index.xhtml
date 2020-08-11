@@ -251,6 +251,7 @@
                                         </h:panelGroup>
                                     </div>
                                 </div>
+
                                 <!--<div class="ui-sm-12 ui-g-8 ">
                                     <p:outputLabel value="URL Foto" />
                                     <p:inputText value="{productMB.product.imageBase64}" />
@@ -396,7 +397,7 @@
                                                                 <p:inputText value="#{flav.flavor}" disabled="#{param['acao']}"/>
                                                             </p:column>
                                                             <p:column headerText="Sinopse">
-                                                                <p:inputText value="#{flav.description}" disabled="#{param['acao']}" style="width:100%" label="Descrição"/>
+                                                                <p:inputText value="#{flav.description}" style="width:100%" label="Descrição"/>
                                                             </p:column>
                                                             <p:column headerText="Preço" width="100">
                                                                 <p:inputNumber symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{flav.price}" disabled="#{param['acao']}" style="width:100%" label="Preço"/>
@@ -416,7 +417,19 @@
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </div>
-
+                                <h:panelGroup rendered="#{companyMB.company.onlyMenu}">
+                                    <p:fieldset legend="Regras do menu">
+                                        <div class="ui-sm-6 ui-g-4 ">     
+                                            <p:outputLabel value="Preço no menu" for="inptPriceMenu"/>
+                                            <p:inputNumber id="inptPriceMenu" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceMenu}"/><br/>
+                                            <small>Insira um valor aqui caso o preço do seu produto seja diferente no menu</small>
+                                        </div>
+<!--                                        <div class="ui-sm-6 ui-g-4 ">
+                                            <p:outputLabel value="Vísivel somente no menu?" /><br/>
+                                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.onlyMenu}"/>
+                                        </div>-->
+                                    </p:fieldset>
+                                </h:panelGroup>
                             </div>
                         </p:panel>
                     </p:tab>

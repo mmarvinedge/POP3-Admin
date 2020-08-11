@@ -9,7 +9,7 @@
     <ui:define name="title">
         <!--<ui:include src="dashboardFuture.xhtml"/>-->
 
-        <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == false and logonMB.company.onlyMenu == false}">
+        <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == false}">
             <ui:include src="dashboard.xhtml"/>
             <!--<center><h1>Dashboard em manutenção!</h1></center>-->
         </h:panelGroup>

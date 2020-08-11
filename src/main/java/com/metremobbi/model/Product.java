@@ -47,6 +47,8 @@ public class Product implements Serializable {
     private String rulePricePizza;
     private ProductDay productDay;
     private Shift shift;
+    private BigDecimal priceMenu;
+    private Boolean onlyMenu;
 
     public Product() {
 
@@ -223,6 +225,22 @@ public class Product implements Serializable {
         this.priceOriginal = priceOriginal;
     }
 
+    public BigDecimal getPriceMenu() {
+        return priceMenu;
+    }
+
+    public void setPriceMenu(BigDecimal priceMenu) {
+        this.priceMenu = priceMenu;
+    }
+
+    public Boolean getOnlyMenu() {
+        return onlyMenu;
+    }
+
+    public void setOnlyMenu(Boolean showMenu) {
+        this.onlyMenu = showMenu;
+    }
+    
     public Shift getShift() {
         if (shift == null) {
             return shift = new Shift();
