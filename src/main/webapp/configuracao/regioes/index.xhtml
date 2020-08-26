@@ -62,7 +62,7 @@
                                             </p:column>
                                             <p:column headerText="Entrega?" width="150" styleClass="text-center">
                                                 <p:toggleSwitch value="#{bairro.entrega}" >
-                                                    <p:ajax event="change" update="@this" listener="#{companyMB.debugEntrega(bairro)}" />
+                                                    <p:ajax event="change" update="@this, iptTaxa" listener="#{companyMB.debugEntrega(bairro)}" />
                                                 </p:toggleSwitch>
                                             </p:column>
                                             <p:column headerText="Taxa" width="150" styleClass="text-right" rendered="#{!companyMB.company.uniqueDeliveryCost}">
