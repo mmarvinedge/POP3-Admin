@@ -47,6 +47,7 @@ public class Company {
     private Boolean deliveryOnly, withdrawalOnly, decimalQuantity;
     private Shift shift;
     private BigDecimal minimalValue = BigDecimal.ZERO;
+    private Boolean openForClient;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {

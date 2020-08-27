@@ -137,6 +137,13 @@
                                     <p:ajax event="blur" process="@this" />
                                 </p:inputNumber>
                             </div>
+                            
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Abre estabelecimento no gestor" /><br/>
+                                <p:toggleSwitch id="openOnClient" value="#{companyMB.company.openForClient}"  >
+                                    <p:ajax update="openOnClient" event="change"/>
+                                </p:toggleSwitch>
+                            </div>
                             <div class="ui-sm-12 ui-g-12">
                                 <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
                                     <thead>
