@@ -387,7 +387,7 @@
                                                     <div class="ui-sm-12 ui-g-12">
                                                         <p:outputLabel value="Sabores / Preço" /><br/>
                                                         <p:commandButton disabled="#{param['acao']}" icon="fa fa-plus" styleClass="btn-primary" style="position: absolute !important;right: 4% !important;margin-top: 0px !important;width: 8%;"
-                                                                         action="#{productMB.addFlavor()}" update="tblFlavors"/>
+                                                                         action="#{productMB.addFlavor()}" update="tblFlavors" immediate="true" />
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" editable="true" >
                                                             <p:column headerText="SKU" width="100" style="text-align: left">

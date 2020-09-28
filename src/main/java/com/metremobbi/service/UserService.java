@@ -26,8 +26,6 @@ import okhttp3.Response;
  */
 public class UserService {
 
-    OkHttpClient client = new OkHttpClient();
-
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public User login(User user) throws IOException, NoSuchAlgorithmException {
@@ -39,13 +37,21 @@ public class UserService {
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
             System.out.println("codeeeeeeeeeeee " + response.code());
-            
-            if(response.code() == 408) {
+
+            //Cliente com licença expirada
+            if (response.code() == 408) {
                 User block = new User();
-                block.setName("block");
+                block.setName("expired");
                 return block;
             }
-            
+
+            // Cliente está bloqueado
+            if (response.code() == 409) {
+                User b = new User();
+                b.setName("block");
+                return b;
+            }
+
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
@@ -56,7 +62,6 @@ public class UserService {
         } catch (ProtocolException e) {
             User uu = new User();
             uu.setName("trialexpired");
-            uu.setCompanyId("0");
             System.out.println("entrei no 407");
             return uu;
         } catch (IOException e) {
@@ -94,7 +99,7 @@ public class UserService {
                 .url(Constantes.URL + "/user/")
                 .post(body)
                 .build();
-        Response response = client.newCall(request).execute();
+        Response response = httpClient.newCall(request).execute();
         String json = response.body().string();
     }
 
@@ -105,7 +110,7 @@ public class UserService {
                     .url(Constantes.URL + "/user/")
                     .delete(body)
                     .build();
-            Response response = client.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
             String json = response.body().string();
         }
     }
@@ -116,7 +121,7 @@ public class UserService {
                 .url(Constantes.URL + "/user/")
                 .put(body)
                 .build();
-        Response response = client.newCall(request).execute();
+        Response response = httpClient.newCall(request).execute();
         String json = response.body().string();
     }
 

@@ -54,19 +54,7 @@
                             <small>Máximo 30 car.</small><br/>
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
-                        <div class="ui-sm-6 ui-g-6">
-                            <p:outputLabel value="Tipo da licença: " />
-                            <h:outputText value="#{companyMB.company.freeVersion ? ' Grátis ' : companyMB.company.trial ? ' Teste 15 dias ' : companyMB.company.licenseType == 3 ? ' Trimestral '
-                                                   : companyMB.company.licenseType == 6 ? ' Semestral ' : companyMB.company.licenseType == 12 ? ' Anual ' : ''}"
-                                          class="text-primary btn-primary" style="font-weight: bold"/>
-                        </div>
-                        <h:panelGroup rendered="#{companyMB.company.licenseType != null or companyMB.company.trial}">
-                            <div class="ui-sm-6 ui-g-6">
-                                <p:outputLabel value="Vencimento: " />
-                                <h:outputText value="#{companyMB.calcExpiredLicese()}" rendered="#{!companyMB.company.trial}"/>
-                                <h:outputText value="#{companyMB.calcExpiredTrial()}" rendered="#{companyMB.company.trial}"/>
-                            </div>
-                        </h:panelGroup>
+                        
 
 
                     </div>
@@ -137,11 +125,17 @@
                                     <p:ajax event="blur" process="@this" />
                                 </p:inputNumber>
                             </div>
-                            
+
                             <div class="ui-sm-6 ui-g-3 ">
                                 <p:outputLabel value="Abre estabelecimento no gestor" /><br/>
                                 <p:toggleSwitch id="openOnClient" value="#{companyMB.company.openForClient}"  >
                                     <p:ajax update="openOnClient" event="change"/>
+                                </p:toggleSwitch>
+                            </div>
+                            <div class="ui-sm-6 ui-g-3 ">
+                                <p:outputLabel value="Busca de endereço no cardápio" /><br/>
+                                <p:toggleSwitch id="autoAddress" value="#{companyMB.company.autoAdress}"  >
+                                    <p:ajax update="autoAddress" event="change"/>
                                 </p:toggleSwitch>
                             </div>
                             <div class="ui-sm-12 ui-g-12">
