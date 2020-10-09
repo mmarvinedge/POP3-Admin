@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,7 @@ public class Product implements Serializable {
     private String id;
     private String sku;
     private String name;
-    @JsonIgnore
-    private String order;
+    private Integer order;
     private Boolean enabled;
     private String description;
     private Boolean availability;
@@ -102,11 +102,11 @@ public class Product implements Serializable {
         this.enabled = enabled;
     }
 
-    public String getOrder() {
+    public Integer getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(Integer order) {
         this.order = order;
     }
 
@@ -202,6 +202,9 @@ public class Product implements Serializable {
     }
 
     public List<FlavorPizza> getFlavorsPizza() {
+        if(flavorsPizza == null) {
+            flavorsPizza = new ArrayList();
+        }
         return flavorsPizza;
     }
 

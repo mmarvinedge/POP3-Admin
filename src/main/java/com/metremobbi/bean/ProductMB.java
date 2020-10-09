@@ -302,9 +302,9 @@ public class ProductMB implements Serializable {
     }
 
     public void addFlavor() {
-        if (product.getFlavorsPizza() == null) {
-            product.setFlavorsPizza(new ArrayList());
-        }
+//        if (product.getFlavorsPizza() == null) {
+//            product.setFlavorsPizza(new ArrayList());
+//        }
         product.getFlavorsPizza().add(new FlavorPizza());
 //        product.getFlavorsPizza().add(flavorPizza);
 //        flavorPizza = new FlavorPizza();

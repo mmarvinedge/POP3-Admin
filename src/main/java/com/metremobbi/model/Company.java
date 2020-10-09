@@ -55,6 +55,7 @@ public class Company {
     private Boolean openForClient;
     private String payLink;
     private Boolean autoAdress;
+    private String orderProducts;
 
     public String getMessageWelcome() {
         if (messageWelcome == null) {

@@ -6,6 +6,7 @@
 package com.metremobbi.util;
 
 import com.metremobbi.model.User;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ import java.util.Locale;
  * @author Renato
  */
 public class OUtils {
-    
+
     public static User user;
 
     public static String formataData(Date data, String pattern) {
@@ -183,7 +184,7 @@ public class OUtils {
                 .toLocalDateTime();
         return ldt;
     }
-    
+
     public static Date addSegundo(Date data, int qtd) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
@@ -236,7 +237,7 @@ public class OUtils {
 //            return "12/";
 //        }
     }
-    
+
     public static String formataTelefone(String phone) {
         //formata o Telefone
         String phoneFormatted = retiraCaracteresEspeciais(phone);
@@ -255,7 +256,7 @@ public class OUtils {
                 return phone;
         }
     }
-    
+
     public static String retiraCaracteresEspeciais(String phone) {
         if (phone != null) {
             return phone.replace("(", "").replace(")", "").replace("-", "").replace("/", "").replace(".", "").trim();
@@ -270,5 +271,5 @@ public class OUtils {
     public static void setUser(User user) {
         OUtils.user = user;
     }
-    
+
 }

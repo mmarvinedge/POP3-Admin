@@ -91,6 +91,9 @@
                                 </h:panelGroup>
 
                             </p:column>
+                            <p:column headerText="Forma de pagamento" width="150" style="text-align: center;">
+                                <h:outputText value="#{order.forma}"/>
+                            </p:column>
                             <p:column headerText="Situação" width="150" style="text-align: center;">
                                 <span class="#{order.status =='Cancelado' ? 'lbl-danger' : 'lbl-success'  }">
                                     #{order.status}
@@ -121,7 +124,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <span class="pull-left">Valor total:</span>
-                                        <span class="pull-right">#{sessaoMB.formataMoeda(x:sum(pagamentoMB.docsDia, 'total'))}</span>
+                                        <span class="pull-right">#{orderMB.formataMoeda(orderMB.totalRelatorio)}</span>
                                     </div>
                                 </div>
                             </f:facet>
