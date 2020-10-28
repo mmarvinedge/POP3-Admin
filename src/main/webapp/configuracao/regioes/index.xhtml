@@ -82,22 +82,6 @@
                                 <div class="ui-g-12">
                                     <hr/>
                                     <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
-                                    <h:panelGroup>
-                                        <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
-                                        <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
-                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}">
-                                                #{bairro.bairro}
-                                            </p:column>
-                                            <p:column headerText="Entrega?" width="150" styleClass="text-center">
-                                                <p:toggleSwitch value="#{bairro.entrega}" >
-                                                    <p:ajax event="change" update="@this, iptTaxa" listener="#{companyMB.debugEntrega(bairro)}" />
-                                                </p:toggleSwitch>
-                                            </p:column>
-                                            <p:column headerText="Taxa" width="150" styleClass="text-right" rendered="#{!companyMB.company.uniqueDeliveryCost}">
-                                                <p:inputNumber rendered="#{!companyMB.company.uniqueDeliveryCost}" id="iptTaxa" value="#{bairro.taxa}" decimalPlaces="2" symbol="R$ " minValue="0"  disabled="#{!bairro.entrega}" required="true" requiredMessage="Informe a taxa do bairro #{bairro.bairro}!" />
-                                            </p:column>
-                                        </p:dataTable>
-                                    </h:panelGroup>
                                 </div>
                             </div>
                         </div>
