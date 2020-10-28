@@ -8,15 +8,19 @@
 
     <ui:define name="title">
         <!--<ui:include src="dashboardFuture.xhtml"/>-->
-        
+
         <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == false}">
             <ui:include src="dashboard.xhtml"/>
+            <!--<center><h1>Dashboard em manutenção!</h1></center>-->
         </h:panelGroup>
         <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == true}" style="margin-top: 50px;">
             <center >
                 Dashboard Disponível Somente na Versão Premium
             </center>
         </h:panelGroup>
-        
+        <h:panelGroup layout="block" rendered="#{logonMB.company.onlyMenu == true and logonMB.company.freeVersion == false}" style="margin-top: 50px;">
+            
+        </h:panelGroup>
+
     </ui:define>
 </ui:composition>

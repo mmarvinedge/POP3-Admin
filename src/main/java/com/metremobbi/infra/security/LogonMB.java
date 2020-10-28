@@ -79,11 +79,16 @@ public class LogonMB extends AdminSession implements Serializable {
                 addMessage("Seu período teste de 15 dias encerrou, para continuar utilizando entre em contato com seu agente de vendas!");
                 Faces.validationFailed();
                 currentUser = null;
-            } else if (currentUser.getName().equalsIgnoreCase("block")) {
+            } else if (currentUser.getName().equalsIgnoreCase("expired")) {
                 addMessage("Sua licença expirou, para renovar acesse nosso site.");
                 Faces.validationFailed();
                 currentUser = null;
+            } else if (currentUser.getName().equalsIgnoreCase("block")) {
+                addMessage("Acesso negado!\nEntre em contato com o suporte.");
+                Faces.validationFailed();
+                currentUser = null;
             } else {
+                OUtils.setUser(currentUser);
                 company = companyService.loadCompany(currentUser.getCompanyId());
                 addDetailMessage("Bem vindo(a) <b>" + currentUser.getName() + "</b>");
                 Faces.getExternalContext().getFlash().setKeepMessages(true);

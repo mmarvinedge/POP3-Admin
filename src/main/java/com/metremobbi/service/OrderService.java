@@ -202,7 +202,6 @@ public class OrderService {
             if (response.code() == 200) {
                 // Get response body
                 String json = response.body().string();
-                System.out.println("JSON: " + json);
                 if (!json.trim().isEmpty()) {
                     saida = gson.fromJson(json, new TypeToken<List<Product>>() {
                     }.getType());
@@ -256,8 +255,6 @@ public class OrderService {
             }
             // Get response body
             String json = response.body().string();
-            System.out.println(json);
-            System.out.println(response);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             orders = gson.fromJson(json, new TypeToken<List<Order>>() {
             }.getType());

@@ -5,6 +5,8 @@
  */
 package com.metremobbi.util;
 
+import com.metremobbi.model.User;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +27,8 @@ import java.util.Locale;
  * @author Renato
  */
 public class OUtils {
+
+    public static User user;
 
     public static String formataData(Date data, String pattern) {
         DateFormat df = new SimpleDateFormat(pattern, new Locale("pt", "BR"));
@@ -180,7 +184,7 @@ public class OUtils {
                 .toLocalDateTime();
         return ldt;
     }
-    
+
     public static Date addSegundo(Date data, int qtd) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
@@ -232,6 +236,40 @@ public class OUtils {
 //        }else{
 //            return "12/";
 //        }
+    }
+
+    public static String formataTelefone(String phone) {
+        //formata o Telefone
+        String phoneFormatted = retiraCaracteresEspeciais(phone);
+        switch (phoneFormatted.length()) {
+            case 8:
+                return "(34)" + phoneFormatted.replaceFirst("(\\d{4})(\\d{4})", "$1-$2");
+            case 9:
+                return "(34)" + phoneFormatted.replaceFirst("(\\d{5})(\\d{4})", "$1-$2");
+            case 10:
+                return phoneFormatted.replaceFirst("(\\d{2})(\\d{4})(\\d{4})", "($1)$2-$3");
+            case 12:
+                return phoneFormatted.substring(2, 12).replaceFirst("(\\d{2})(\\d{4})(\\d{4})", "($1)$2-$3");
+            case 13:
+                return phoneFormatted.substring(2, 13).replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1)$2-$3");
+            default:
+                return phone;
+        }
+    }
+
+    public static String retiraCaracteresEspeciais(String phone) {
+        if (phone != null) {
+            return phone.replace("(", "").replace(")", "").replace("-", "").replace("/", "").replace(".", "").trim();
+        }
+        return "";
+    }
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        OUtils.user = user;
     }
 
 }

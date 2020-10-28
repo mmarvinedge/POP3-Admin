@@ -182,7 +182,7 @@ public class NovaDashMB {
 
         dataSet.setData(values);
         dataSet.setFill(false);
-        dataSet.setLabel("Meses");
+        dataSet.setLabel("Faturamento");
         dataSet.setBorderColor("#95c70d");
         dataSet.setLineTension(0.1);
         data.addChartDataSet(dataSet);

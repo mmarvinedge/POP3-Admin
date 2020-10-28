@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,7 @@ public class Product implements Serializable {
     private String id;
     private String sku;
     private String name;
-    @JsonIgnore
-    private String order;
+    private Integer order;
     private Boolean enabled;
     private String description;
     private Boolean availability;
@@ -40,7 +40,6 @@ public class Product implements Serializable {
     private List<Attribute> attributes;
     private String printer;
     private Boolean promo;
-    private Boolean fraction;
 
     private String sizePizza;
     private Integer maxPizza;
@@ -48,6 +47,8 @@ public class Product implements Serializable {
     private String rulePricePizza;
     private ProductDay productDay;
     private Shift shift;
+    private BigDecimal priceMenu;
+    private Boolean onlyMenu;
 
     public Product() {
 
@@ -101,11 +102,11 @@ public class Product implements Serializable {
         this.enabled = enabled;
     }
 
-    public String getOrder() {
+    public Integer getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(Integer order) {
         this.order = order;
     }
 
@@ -201,6 +202,9 @@ public class Product implements Serializable {
     }
 
     public List<FlavorPizza> getFlavorsPizza() {
+        if(flavorsPizza == null) {
+            flavorsPizza = new ArrayList();
+        }
         return flavorsPizza;
     }
 
@@ -224,6 +228,22 @@ public class Product implements Serializable {
         this.priceOriginal = priceOriginal;
     }
 
+    public BigDecimal getPriceMenu() {
+        return priceMenu;
+    }
+
+    public void setPriceMenu(BigDecimal priceMenu) {
+        this.priceMenu = priceMenu;
+    }
+
+    public Boolean getOnlyMenu() {
+        return onlyMenu;
+    }
+
+    public void setOnlyMenu(Boolean showMenu) {
+        this.onlyMenu = showMenu;
+    }
+    
     public Shift getShift() {
         if (shift == null) {
             return shift = new Shift();
@@ -279,13 +299,6 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + '}';
-    }
-    
-    public Boolean getFraction() {
-        if (fraction == null) {
-            fraction = false;
-        }
-        return fraction;
     }
 
 }

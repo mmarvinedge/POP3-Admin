@@ -128,4 +128,8 @@ public class CouponMB implements Serializable {
         service.putCouponCode(c);
     }
     
+    public void setCouponSelected(CouponCode c) {
+        this.coupon = c;
+    }
+    
 }

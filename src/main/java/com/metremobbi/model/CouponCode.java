@@ -15,14 +15,17 @@ import lombok.Data;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CouponCode {
-    
+
     private String id;
     private String slug;
     private Integer quantity;
     private Integer count;
     private BigDecimal discount;
+    private Boolean percentual;
+    private BigDecimal minimalValue;
+    private Boolean deliveryCost;
     private Boolean enable;
-    
+
     public CouponCode() {
     }
 
@@ -73,5 +76,35 @@ public class CouponCode {
     public void setCount(Integer count) {
         this.count = count;
     }
-    
+
+    public Boolean getPercentual() {
+        if (percentual == null) {
+            percentual = true;
+        }
+        return percentual;
+    }
+
+    public void setPercentual(Boolean percentual) {
+        this.percentual = percentual;
+    }
+
+    public BigDecimal getMinimalValue() {
+        return minimalValue;
+    }
+
+    public void setMinimalValue(BigDecimal minimalValue) {
+        this.minimalValue = minimalValue;
+    }
+
+    public Boolean getDeliveryCost() {
+        if (deliveryCost == null) {
+            deliveryCost = true;
+        }
+        return deliveryCost;
+    }
+
+    public void setDeliveryCost(Boolean deliveryCost) {
+        this.deliveryCost = deliveryCost;
+    }
+
 }

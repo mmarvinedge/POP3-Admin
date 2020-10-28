@@ -172,6 +172,7 @@ public class ProductMB implements Serializable {
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
+        productModel = new ProductDataModel(products);
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
@@ -198,6 +199,7 @@ public class ProductMB implements Serializable {
 
     public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
+        System.out.println("product type: "+ type);
     }
 
     public void addAttributeCorrect() throws IOException {
@@ -305,9 +307,9 @@ public class ProductMB implements Serializable {
     }
 
     public void addFlavor() {
-        if (product.getFlavorsPizza() == null) {
-            product.setFlavorsPizza(new ArrayList());
-        }
+//        if (product.getFlavorsPizza() == null) {
+//            product.setFlavorsPizza(new ArrayList());
+//        }
         product.getFlavorsPizza().add(new FlavorPizza());
 //        product.getFlavorsPizza().add(flavorPizza);
 //        flavorPizza = new FlavorPizza();
