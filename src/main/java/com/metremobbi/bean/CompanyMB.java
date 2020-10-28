@@ -5,11 +5,14 @@
  */
 package com.metremobbi.bean;
 
+import com.metremobbi.infra.model.BairroDataModel;
 import com.metremobbi.model.Company;
+import com.metremobbi.model.Shift;
 import com.metremobbi.model.TimeOpen;
 import com.metremobbi.model.dto.Bairro;
 import com.metremobbi.service.CompanyService;
 import com.metremobbi.util.ImageFile;
+import com.metremobbi.util.OUtils;
 import com.metremobbi.util.Utils;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.File;
@@ -53,6 +56,9 @@ public class CompanyMB {
     private List<Bairro> bairros = new ArrayList();
     @Getter
     @Setter
+    private BairroDataModel bairroModel;
+    @Getter
+    @Setter
     private DualListModel<Bairro> dualBairros = new DualListModel<>();
     @Getter
     @Setter
@@ -66,10 +72,19 @@ public class CompanyMB {
 
     public CompanyMB() {
         try {
+            System.out.println("ID DA COMPANY: " + companyID);
             company = service.loadCompany(companyID);
-            taxaUnicaEntrega = company.getDeliveryCost().doubleValue() != 0;
+            try {
+                taxaUnicaEntrega = company.getDeliveryCost().doubleValue() != 0;
+            } catch (Exception ex) {
+                System.err.println("Erro ao carregar delivery cost");
+            }
+
             if (company.getTime() == null) {
                 company.setTime(new TimeOpen());
+            }
+            if (company.getShift() == null) {
+                company.setShift(new Shift());
             }
             loadBairros();
         } catch (Exception e) {
@@ -79,9 +94,7 @@ public class CompanyMB {
 
     public void save() {
         try {
-            if (!taxaUnicaEntrega) {
-                company.setDeliveryCost(BigDecimal.ZERO);
-            }
+            
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -91,9 +104,6 @@ public class CompanyMB {
 
     public void save2() {
         try {
-            if (!taxaUnicaEntrega) {
-                company.setDeliveryCost(BigDecimal.ZERO);
-            }
             company = service.saveCompany(company);
             addDetailMessage("Dados atualizados!");
         } catch (Exception e) {
@@ -103,19 +113,32 @@ public class CompanyMB {
 
     public void loadBairros() {
         try {
-            List<String> bairros = service.getBairros(company.getAddress().getCity());
-            for (String bairro : bairros) {
-                this.bairros.add(new Bairro(bairro));
-            }
+            if (company.getBairros() != null && !company.getBairros().isEmpty() && company.getBairros().size() > 0) {
+                List<String> bairrosMetre = service.getBairros(company.getAddress().getCity());
+                if (company.getBairros().size() < bairrosMetre.size()) {
+                    for (String b : bairrosMetre) {
+                        if (company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
+                            company.getBairros().add(new Bairro(b));
+                        }
+                    }
+                }
+                bairros = company.getBairros();
+            } else {
+                List<String> bairros = service.getBairros(company.getAddress().getCity());
+                System.out.println("VEIO: " + bairros.size());
+                for (String bairro : bairros) {
+                    this.bairros.add(new Bairro(bairro));
+                }
 
-            List<Bairro> themesSource = this.bairros;
-
-            List<Bairro> themesTarget = new ArrayList<Bairro>();
-            if (company.getBairros() != null) {
-                themesTarget.addAll(company.getBairros());
+                for (Bairro bairro : this.bairros) {
+                    Bairro b = company.getBairros().stream().filter(p -> p.getBairro().equalsIgnoreCase(bairro.getBairro())).findFirst().orElse(null);
+                    if (b != null) {
+                        System.out.println("BAIRRO: " + b.getBairro());
+                        bairro.setEntrega(true);
+                        bairro.setTaxa(b.getTaxa());
+                    }
+                }
             }
-            themesSource.removeAll(themesTarget);
-            dualBairros = new DualListModel<Bairro>(themesSource, themesTarget);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,20 +158,17 @@ public class CompanyMB {
     }
 
     public void confirmarRegioes() {
-        if (taxaUnicaEntrega) {
-            for (Bairro bairroSelecionado : dualBairros.getTarget()) {
-                bairroSelecionado.setTaxa(company.getDeliveryCost());
-            }
-        }else{
-            company.setDeliveryCost(BigDecimal.ZERO);
+        try {
+            company.setBairros(bairros);
+            service.saveCompany(company);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        company.setBairros(dualBairros.getTarget());
-        save2();
     }
 
     public void cadastrarBairro() {
         try {
-            if(!dualBairros.getSource().stream().filter(f->f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()){
+            if (!dualBairros.getSource().stream().filter(f -> f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()) {
                 addDetailMessage("Bairro já cadastrado!", FacesMessage.SEVERITY_ERROR);
                 return;
             }
@@ -165,6 +185,7 @@ public class CompanyMB {
             } else {
                 addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
             }
+            bairroCadastro = "";
         } catch (IOException e) {
             e.printStackTrace();
             addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
@@ -190,4 +211,47 @@ public class CompanyMB {
             tempFile.deleteOnExit();
         }
     }
+
+    public void updateDeliveryCostType(Boolean b) throws Exception {
+        company.setUniqueDeliveryCost(b);
+        Company c = company;
+        service.saveCompany(c);
+        System.out.println(c.getUniqueDeliveryCost());
+    }
+
+    public String calcExpiredLicese() {
+        return OUtils.formataData(OUtils.addMes(OUtils.getDataByTexto(company.getLicenseDate(), "yyyy-MM-dd"), company.getLicenseType()), "dd/MM/yyyy");
+    }
+
+    public String calcExpiredTrial() {
+        return OUtils.formataData(OUtils.addDia(OUtils.getDataByTexto(company.getTrialDate(), "yyyy-MM-dd"), 15), "dd/MM/yyyy");
+    }
+
+    public void debugEntrega(Bairro b) {
+        System.out.println(b.getEntrega());
+    }
+
+    public Boolean validaHorarios(Company c) {
+        if (c.getTime() != null) {
+            if (c.getTime().getSeg() && Integer.parseInt(c.getTime().getCloseSeg()) < Integer.parseInt(c.getTime().getOpenSeg())) {
+                return false;
+            } else if (c.getTime().getTer() && Integer.parseInt(c.getTime().getCloseTer()) < Integer.parseInt(c.getTime().getOpenTer())) {
+                return false;
+            } else if (c.getTime().getQua() && Integer.parseInt(c.getTime().getCloseQua()) < Integer.parseInt(c.getTime().getOpenQua())) {
+                return false;
+            } else if (c.getTime().getQui() && Integer.parseInt(c.getTime().getCloseQui()) < Integer.parseInt(c.getTime().getOpenQui())) {
+                return false;
+            } else if (c.getTime().getSex() && Integer.parseInt(c.getTime().getCloseSex()) < Integer.parseInt(c.getTime().getOpenSex())) {
+                return false;
+            } else if (c.getTime().getSab() && Integer.parseInt(c.getTime().getCloseSab()) < Integer.parseInt(c.getTime().getOpenSab())) {
+                return false;
+            } else if (c.getTime().getDom() && Integer.parseInt(c.getTime().getCloseDom()) < Integer.parseInt(c.getTime().getOpenDom())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return true;
+    }
+
 }

@@ -1,355 +1,172 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://java.sun.com/jsf/html">
-    <h:form>
-        <section class="content-header" style="padding-left: 0px;">
-            <div class="ui-g">
-                <div class="ui-g-4 ui-md-4 ui-lg-4">
-                    <h1 >Dashboard</h1>
-                </div>
-                <div class="ui-g-8 ui-md-8 ui-lg-8" style="text-align: right !important;">
-                    <p:inputText />
-                </div>
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <section class="content-header" style="padding-left: 0px;">
+        <div class="ui-g">
+            <div class="ui-g-4 ui-md-4 ui-lg-4" style="padding-left: 0; padding-right: 0">
+                <h1 >Dashboard</h1>
             </div>
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-8 ui-lg-9" >
-                    <div class="card" style="height: 100% ; padding: 15px;">
-                        <div class="card-body">
-                            <p:lineChart model="#{novaDashMB.vendasDiarias}" style="width: 100%; height: 400px;"/>
-                        </div>
-                    </div>
+            <div class="ui-g-8 ui-md-8 ui-lg-8" style="text-align: right !important; padding-left: 0; padding-right: 0">
+                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 10px 10px; border: 1px solid #ccc; width: 320px;float: right; margin-top: 20px;">
+                    <i class="fa fa-calendar"></i>
+                    <span></span> <i class="fa fa-caret-down"></i>
                 </div>
-                <div class="ui-g-12 ui-md-4 ui-lg-3" >
 
-                    <div class="card">
-                        <div class="card-head">
-                            PEDIDOS RECEBIDOS<br/>
-                            <small>R$ 58.000,00</small>
+            </div>
+        </div>
+        <h:form id="form">
+            <p:inputText type="hidden" value="#{novaDashMB.dtIni}" id="dtIni"  styleClass="dtIni" />
+            <p:inputText type="hidden" value="#{novaDashMB.dtFim}" id="dtFim"  styleClass="dtFim"/>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12 bg-white bd-gray br-5 pdt-0 "  >
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-8 ui-lg-9 "  >
+                            <p:lineChart model="#{novaDashMB.vendasDiarias}" style="width: 100%; height: 300px;" />
                         </div>
-                        <div class="card-body">
-
-                            <div class="body-knob" >
-                                <input type="text" value="75" class="dial" readonly="true"   data-bgColor="#ccc"   data-thickness=".1"  data-linecap="round"   data-angleArc="250" data-angleOffset="-125" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="margin-top: 10px;">
-                        <div class="card-head">
-                            PEDIDOS CANCELADOS<br/>
-                            <small>R$ 58.000,00</small>
-                        </div>
-                        <div class="card-body">
-                            <div class="body-icon" >
-                            </div>
-                            <div class="body-knob" >
-                                <input type="text" value="75" class="dial1"  readonly="true"   data-bgColor="#ccc"   data-thickness=".1"  data-linecap="round"   data-angleArc="250" data-angleOffset="-125"/>
-                            </div>
+                        <div class="ui-g-12 ui-md-4 ui-lg-3 "  >
+                            <p:pieChart model="#{novaDashMB.pieModel}" style="width: 100%; height: 300px;"/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                    <h2>Produtos mais vendidos</h2>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                    <p:scrollPanel mode="native" style="width: 100%;     display: inline-flex;">
 
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
+                <div class="ui-g-12 ui-md-12 ui-lg-12 bg-white bd-gray br-5 pdt-0">
+                    <h3>Produtos mais vendidos</h3>
+                    <p:scrollPanel mode="native" style="width: 100%;     display: inline-flex; border: none;">
+                        <ui:repeat value="#{novaDashMB.listProdutos}" var="prods">
+                            <div class="c1">
+                                <div class="cidatas">
+                                    <h3 class="m-0 green-text fs-20">#{prods.qnt}</h3>
+                                    <small>VENDAS</small>
+                                </div>
+                                <div class="ciimage">
+                                    <img src="#{novaDashMB.retornaFoto(prods.get_id())}"  height="64"  /><br/>
+                                    <small class="fs-15">#{prods.get_id().length() > 24 ? prods.get_id().subSequence(0, 23) : prods.get_id() }</small>
+                                </div>
                             </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
-                        <div class="c1">
-                            <div class="cp">
-                                <img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/>
-                            </div>
-                            <div class="cd">
-                                <h3>Coca Cola</h3>
-                            </div>
-                            <div class="cds">
-                                <span>Vendido <strong style=" font-size: 20px;color: #0d7cee;">  17</strong> Vezes</span>
-                            </div>
-                        </div>
+                        </ui:repeat>
+
                     </p:scrollPanel>
                 </div>
-
-
-
-
             </div>
             <div class="ui-g">
-                <div class="ui-g-12 ui-md-4 ui-lg-3" style="    border: 1px solid #ccc;border-radius: 5px;padding-top: 0;">
-                    <h3>Ultimos Pedidos</h3>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4  bg-white bd-gray br-5 pdt-0 ">
+                    <h3>Top Clientes</h3>
+                    <hr/>
                     <table style="width: 100%;">
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;" >
-                                Coca Cola <br/>
-                                2 x 4,90
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                                <small>Nº 18900</small><br/>
-                                <small >03/06/2020 23:16</small>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;" >
-                                Coca Cola <br/>
-                                2 x 4,90
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                                <small>Nº 18900</small><br/>
-                                <small >03/06/2020 23:16</small>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center><img src="https://static.carrefour.com.br/medias/sys_master/images/images/h5c/h2c/h00/h00/12175739191326.jpg"  height="64"/></center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;" >
-                                Coca Cola <br/>
-                                2 x 4,90
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                                <small>Nº 18900</small><br/>
-                                <small >03/06/2020 23:16</small>
-                            </td>
-                        </tr>
+                        <ui:repeat value="#{novaDashMB.saidaTopTelefones}" var="fone">
+                            <tr style=" padding-bottom: 2px;     padding: 5px;">
+                                <td style="width: 10%">
+                                    <center>
+                                        <i class="fa fa-phone" style="color: #95c70d"></i>
+                                    </center>
+                                </td>
+                                <td style="width: 60%;     font-size: 15px;     padding-left: 15px;" >
+                                    <strong class="fs-20">
+                                        #{fone.get_id()}
+                                    </strong>
+
+                                </td>
+                                <td style="    width: 40%;text-align: right;      color:#b6c2c9!important; font-size: 15px; ">
+                                    <strong class="green-text">#{fone.qnt}<br/> <small class="gray-text fs-15">Pedidos</small></strong>
+                                </td>
+                            </tr>
+
+                        </ui:repeat>
                     </table>
                 </div>
 
-                <div class="ui-g-12 ui-md-4 ui-lg-3" style="    border: 1px solid #ccc;border-radius: 5px;padding-top: 0; margin-left: 15px;">
-                    <h3>Top Clientes</h3>
-                    <table style="width: 100%;">
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center>
-                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
-                                </center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
-                                <strong>(34)99975-3064</strong><br/>
-                                <small>
-                                    Renato Gonçalves
-                                </small>
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                               <small>R$ 800,00</small><br/>
-                                <small>19 Pedidos</small><br/>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center>
-                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
-                                </center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
-                                <strong>(34)99975-3064</strong><br/>
-                                <small>
-                                    Renato Gonçalves
-                                </small>
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                                <small>R$ 800,00</small><br/>
-                                <small>17 Pedidos</small><br/>
-                            </td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #b6c2c9;">
-                            <td style="width: 10%">
-                                <center>
-                                    <i class="fa fa-phone fa-2x" style="color: #b6c2c9"></i>
-                                </center>
-                            </td>
-                            <td style="width: 70%;     font-size: 19px;     padding-left: 15px;" >
-                                <strong>(34)99975-3064</strong><br/>
-                                <small>
-                                    Renato Gonçalves
-                                </small>
-                            </td>
-                            <td style="    width: 40%;text-align: right;     font-size: 16px; color:#b6c2c9!important ">
-                                <small>R$ 800,00</small><br/>
-                                <small>12 Pedidos</small><br/>
-                            </td>
-                        </tr>
 
+                <div class="ui-g-12 ui-md-6 ui-lg-4  bg-white bd-gray br-5 pdt-0 ">
+                    <h3>Top Bairros</h3>
+                    <hr/>
+                    <table style="width: 100%;">
+                        <ui:repeat value="#{novaDashMB.saidaTopBairros}" var="bairro">
+                            <tr style=" padding-bottom: 2px;     padding: 5px;">
+                                <td style="width: 10%">
+                                    <center>
+                                        <i class="fa fa-map-marker" style="color: #95c70d"></i>
+                                    </center>
+                                </td>
+                                <td style="width: 60%;     font-size: 15px;     padding-left: 15px;" >
+                                    <strong class="fs-20">#{bairro.get_id()}</strong>
+                                </td>
+                                <td style="    width: 40%;text-align: right;     font-size: 15px; ">
+                                    <strong class="green-text">#{bairro.qnt}<br/> <small class="gray-text fs-15">Entregas</small></strong>
+                                </td>
+                            </tr>
+                        </ui:repeat>
                     </table>
+                </div>
+
+                <div class="ui-g-12 ui-md-6 ui-lg-4  bg-white bd-gray br-5 pdt-0 ">
+                    <h3>Tipo Pedidos</h3>
+                    <hr/>
+                    <p:pieChart model="#{novaDashMB.pieModelTipoEntrega}" style="width: 100%; height: 250px;"/>
                 </div>
             </div>
-        </section>
-    </h:form>
+            <p:remoteCommand name="capturarData" action="#{novaDashMB.pesquisar()}"  update="@form" oncomplete="startKnob()"/>
+        </h:form>
+    </section>
+
+
+
 
     <script>
-        $(document).ready(function () {
-            $(".dial").knob(({'fgColor': 'rgb(59, 175, 218)', 'bgColor': 'rgb(65, 77, 88)', 'height': 100}));
-            $(".dial1").knob(({'fgColor': 'rgb(59, 175, 218)', 'bgColor': 'rgb(65, 77, 88)', 'height': 100}));
+
+
+        function startKnob() {
+
+        }
+
+        $(window).on("load", function () {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('DD/MM/YYYY') + ' à ' + end.format('DD/MM/YYYY'));
+                $('.dtIni').val(start.format('DD/MM/YYYY'));
+                $('.dtFim').val(end.format('DD/MM/YYYY'));
+                capturarData();
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                locale: {
+                    format: 'dd/MM/yyyy', applyLabel: 'Aplicar',
+                    cancelLabel: 'Cancelar',
+                    fromLabel: 'De',
+                    toLabel: 'Para',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+                },
+                ranges: {
+                    'Hoje': [moment(), moment()],
+                    'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
+                    'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                    'Este Mês': [moment().startOf('month'), moment().endOf('month')],
+                    'Mês Anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+            cb(start, end);
+
+            startKnob();
+
+
+
         });
     </script>
+
+
 </ui:composition>

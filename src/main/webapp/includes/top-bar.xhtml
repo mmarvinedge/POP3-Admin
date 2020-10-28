@@ -16,18 +16,19 @@
     </style>
     <ul class="nav navbar-nav">
         <li class="hidden-xs">
-            <p:commandLink value="Clique aqui para ver seu cardápio" target="_blank" oncomplete="window.open('http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}#')" />
+            <p:commandLink value="Clique aqui para ver seu cardápio" target="_blank" oncomplete="window.open('http://food.popsales.com.br/popsales/rest/#{companyMB.company.nameUrl}#')" />
         </li>
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <pe:gravatar id="userImage"
                              value="nonexisting"/>
                 <span class="hidden-xs">#{logonMB.currentUser.name}</span>
+                
             </a>
             <ul class="dropdown-menu">
                 <li class="user-header">
                     <div class="hidden-xs">
-                        <img style="border-radius: 50%" width="80" src="#{companyMB.company.logo}"/>
+                        <img style="border-radius: 10%" width="150" src="#{companyMB.company.logo}"/>
                         <br/>
                         <h:outputText value="#{logonMB.currentUser.name}" style="text-transform: uppercase; font-weight: bold; color: white"/>
                     </div>

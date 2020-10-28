@@ -11,7 +11,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <adminfaces.version>1.0.0</adminfaces.version>
     </properties>
 
     <dependencies>
@@ -45,7 +44,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-template</artifactId>
-            <version>${adminfaces.version}</version>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -67,6 +66,17 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.glxn</groupId>
+            <artifactId>qrgen</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j-light</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
     
@@ -100,7 +110,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>admin-starter</finalName>
+        <finalName>pop3</finalName>
     </build>
     <pluginRepositories>
         <pluginRepository>

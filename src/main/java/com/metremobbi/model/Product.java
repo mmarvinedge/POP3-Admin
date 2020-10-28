@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,7 @@ public class Product implements Serializable {
     private String id;
     private String sku;
     private String name;
-    @JsonIgnore
-    private String order;
+    private Integer order;
     private Boolean enabled;
     private String description;
     private Boolean availability;
@@ -46,9 +46,12 @@ public class Product implements Serializable {
     private List<FlavorPizza> flavorsPizza;
     private String rulePricePizza;
     private ProductDay productDay;
+    private Shift shift;
+    private BigDecimal priceMenu;
+    private Boolean onlyMenu;
 
     public Product() {
-        
+
     }
 
     public String getId() {
@@ -99,11 +102,11 @@ public class Product implements Serializable {
         this.enabled = enabled;
     }
 
-    public String getOrder() {
+    public Integer getOrder() {
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(Integer order) {
         this.order = order;
     }
 
@@ -199,6 +202,9 @@ public class Product implements Serializable {
     }
 
     public List<FlavorPizza> getFlavorsPizza() {
+        if(flavorsPizza == null) {
+            flavorsPizza = new ArrayList();
+        }
         return flavorsPizza;
     }
 
@@ -222,6 +228,34 @@ public class Product implements Serializable {
         this.priceOriginal = priceOriginal;
     }
 
+    public BigDecimal getPriceMenu() {
+        return priceMenu;
+    }
+
+    public void setPriceMenu(BigDecimal priceMenu) {
+        this.priceMenu = priceMenu;
+    }
+
+    public Boolean getOnlyMenu() {
+        return onlyMenu;
+    }
+
+    public void setOnlyMenu(Boolean showMenu) {
+        this.onlyMenu = showMenu;
+    }
+    
+    public Shift getShift() {
+        if (shift == null) {
+            return shift = new Shift();
+        } else {
+            return shift;
+        }
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -231,7 +265,7 @@ public class Product implements Serializable {
     }
 
     public ProductDay getProductDay() {
-        if(productDay == null){
+        if (productDay == null) {
             productDay = new ProductDay();
         }
         return productDay;

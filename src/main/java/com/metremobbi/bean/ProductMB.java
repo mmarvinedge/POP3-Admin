@@ -13,6 +13,7 @@ import com.metremobbi.model.AttributeValue;
 import com.metremobbi.model.Category;
 import com.metremobbi.model.FlavorPizza;
 import com.metremobbi.model.Order;
+import com.metremobbi.model.Shift;
 import com.metremobbi.service.AttributeService;
 import com.metremobbi.service.OrderService;
 import com.metremobbi.service.ProductService;
@@ -92,6 +93,12 @@ public class ProductMB implements Serializable {
     @Getter
     @Setter
     private List<Order> listOrder;
+    @Getter
+    @Setter
+    private Category category;
+    @Getter
+    @Setter
+    private Boolean situation;
 
     public ProductMB() {
         products = new ArrayList<>();
@@ -104,6 +111,8 @@ public class ProductMB implements Serializable {
         attribute = new Attribute();
         listOrder = new ArrayList();
         orderService = new OrderService();
+        category = new Category();
+        situation = true;
     }
 
     public void novo() {
@@ -124,6 +133,7 @@ public class ProductMB implements Serializable {
         products = service.getProducts();
         productModel = new ProductDataModel(products);
         categoryList = service.getCategoryList();
+        selectedProducts = new ArrayList();
     }
 
     public void update(Product p) throws IOException {
@@ -137,7 +147,7 @@ public class ProductMB implements Serializable {
                 service.postProduct(product);
                 //products.add(product);
                 addDetailMessage("Produto Salvo com sucesso!");
-                System.out.println("INDEX:> " + products.indexOf(product));
+//                System.out.println("INDEX:> " + products.indexOf(product));
                 if (products.indexOf(product) > -1) {
                     products.set(products.indexOf(product), product);
                 } else {
@@ -155,9 +165,14 @@ public class ProductMB implements Serializable {
         }
     }
 
+    public void trashImage() {
+        product.setImageBase64(null);
+    }
+
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
+        productModel = new ProductDataModel(products);
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }
@@ -171,8 +186,9 @@ public class ProductMB implements Serializable {
             IOUtils.copy(is, out);
 
             String imageBase64 = ImageFile.encoder(tempFile.getAbsolutePath());
-            System.out.println(imageBase64.length());
+            System.out.println(imageBase64);
             product.setImageBase64(imageBase64);
+            System.out.println("PRODUCT: " + product.getImageBase64());
         } catch (IOException e) {
             System.out.println("Erro ao converter a imagem em base64");
             e.printStackTrace();
@@ -183,6 +199,7 @@ public class ProductMB implements Serializable {
 
     public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
+        System.out.println("product type: "+ type);
     }
 
     public void addAttributeCorrect() throws IOException {
@@ -206,8 +223,8 @@ public class ProductMB implements Serializable {
         product.getAttributes().remove(atr);
     }
 
-    public void removeAtributeValue(Attribute at, AttributeValue atv) {
-        at.getValues().remove(atv);
+    public void removeAtributeValue(Attribute at, int index) throws IOException {
+        at.getValues().remove(index);
     }
 
     public void addAttribute() throws IOException {
@@ -267,6 +284,11 @@ public class ProductMB implements Serializable {
     //se nao for na linha nao precisa desse
     public void setProductComplete() {
         product = selectedProducts.get(0);
+
+        if (product.getShift() == null) {
+            product.setShift(new Shift());
+        }
+
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }
@@ -278,21 +300,24 @@ public class ProductMB implements Serializable {
         product.setId(null);
         product.setSku(null);
         product.setOrder(null);
+        product.setImageBase64(null);
+        product.setImageType(null);
         attribute.setId(null);
         attribute.setSku(null);
     }
 
     public void addFlavor() {
-        if (product.getFlavorsPizza() == null) {
-            product.setFlavorsPizza(new ArrayList());
-        }
-        product.getFlavorsPizza().add(flavorPizza);
-        flavorPizza = new FlavorPizza();
+//        if (product.getFlavorsPizza() == null) {
+//            product.setFlavorsPizza(new ArrayList());
+//        }
+        product.getFlavorsPizza().add(new FlavorPizza());
+//        product.getFlavorsPizza().add(flavorPizza);
+//        flavorPizza = new FlavorPizza();
     }
 
     public void removeFlavor(FlavorPizza fla) {
         product.getFlavorsPizza().remove(fla);
-        System.out.println("SIZE: " + product.getFlavorsPizza());
+//        System.out.println("SIZE: " + product.getFlavorsPizza());
     }
 
     public void updateCategorys() {
@@ -303,6 +328,26 @@ public class ProductMB implements Serializable {
             addDetailMessage("Não foi possível Atualizar", FacesMessage.SEVERITY_ERROR);
         }
 
+    }
+
+    public void stopSelling() {
+        try {
+            if (category.getName() == null) {
+                addDetailMessage("É necessário selecionar uma categoria!", FacesMessage.SEVERITY_ERROR);
+            } else {
+                String set = "";
+                if (situation) {
+                    set = "true";
+                } else {
+                    set = "false";
+                }
+                service.disableProducts(category, set);
+                addDetailMessage("Produtos atualizados com sucesso", FacesMessage.SEVERITY_INFO);
+                category = new Category();
+            }
+        } catch (Exception e) {
+            addDetailMessage("Não foi possível parar a venda dessa categoria", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
 }

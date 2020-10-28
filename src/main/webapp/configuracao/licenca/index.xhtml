@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+    <ui:define name="metadata">
+        <ui:param name="title" value="Horarios" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Licença
+    </ui:define>
+    <ui:define name="body">
+        <p:panel>
+            <div class="ui-g" style="border-bottom: 1px solid #ccc;">
+                <div class="ui-sm-12 ui-g-12">
+                    <div class="ui-sm-3 ui-g-3">
+                        <p:outputLabel value="Tipo da licença: " />
+                        <h:outputText value="#{companyMB.company.freeVersion ? ' Grátis ' : companyMB.company.trial ? ' Teste 15 dias ' : companyMB.company.licenseType == 3 ? ' Trimestral '
+                                               : companyMB.company.licenseType == 6 ? ' Semestral ' : companyMB.company.licenseType == 12 ? ' Anual ' : ''}"
+                                      class="text-primary btn-primary" style="font-weight: bold"/>
+                    </div>
+                    <h:panelGroup rendered="#{companyMB.company.licenseType != null or companyMB.company.trial}">
+                        <div class="ui-sm-3 ui-g-3">
+                            <p:outputLabel value="Vencimento: " />
+                            <h:outputText value="#{companyMB.calcExpiredLicese()}" rendered="#{!companyMB.company.trial}"/>
+                            <h:outputText value="#{companyMB.calcExpiredTrial()}" rendered="#{companyMB.company.trial}"/>
+                        </div>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{companyMB.company.payLink != null}">
+                        <div class="ui-sm-12 ui-g-12">
+                            <div class="ui-sm-6 ui-g-6">
+                                <p:link class="btn btn-primary" href="#{companyMB.company.payLink}" target="_blank"><i class="fa fa-check-square"/> Link para pagamento</p:link>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </div>
+        </p:panel>
+    </ui:define>
+</ui:composition>

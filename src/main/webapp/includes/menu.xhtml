@@ -20,7 +20,7 @@
             </p:link>
         </li>
         <li>
-            <p:link outcome="/cadastros/usuarios/index">
+            <p:link outcome="/cadastros/usuarios/index" rendered="#{!logonMB.company.freeVersion}">
                 <i class="fa fa-user"></i>
                 <span>Usuários</span>
             </p:link>
@@ -29,9 +29,18 @@
             Pedidos
         </li>
         <li>
-            <p:link outcome="/pedidos/index">
+            <p:link outcome="/pedidos/index" rendered="#{!logonMB.company.freeVersion}">
                 <i class="fa fa-cart-plus"></i>
                 <span>Meus Pedidos</span>
+            </p:link>
+        </li>
+        <li class="header">
+            Programas
+        </li>
+        <li>
+            <p:link outcome="/delivery/cupons/index" rendered="#{!logonMB.company.freeVersion}">
+                <i class="fa fa-ticket"></i>
+                <span>Cupons de desconto</span>
             </p:link>
         </li>
         <li class="header">
@@ -41,6 +50,12 @@
             <p:link outcome="/configuracao/empresa/index">
                 <i class="fa fa-bars"></i>
                 <span>Empresa</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/configuracao/cardapio/index">
+                <i class="fa fa-cutlery"></i>
+                <span>Cardápio</span>
             </p:link>
         </li>
         <li>
@@ -59,6 +74,12 @@
             <p:link outcome="/configuracao/categorias/index" rendered="false">
                 <i class="fa fa-clock-o"></i>
                 <span>Categorias</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/configuracao/licenca/index">
+                <i class="fa fa-certificate"></i>
+                <span>Licença</span>
             </p:link>
         </li>
         <!--<li class="header">

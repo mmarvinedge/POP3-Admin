@@ -17,6 +17,7 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 public class Bairro {
 
     private String bairro;
+    private Boolean entrega;
     private BigDecimal taxa;
 
     public Bairro() {
@@ -25,10 +26,22 @@ public class Bairro {
     public Bairro(String bairro) {
         this.bairro = bairro;
         this.taxa = BigDecimal.ZERO;
+        this.entrega = true;
     }
 
     public String getBairro() {
         return bairro;
+    }
+
+    public Boolean getEntrega() {
+        if(entrega == null){
+            entrega = true;
+        } 
+        return entrega;
+    }
+
+    public void setEntrega(Boolean entrega) {
+        this.entrega = entrega;
     }
 
     public void setBairro(String bairro) {

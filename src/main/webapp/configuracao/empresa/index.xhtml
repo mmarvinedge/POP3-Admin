@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui" 
                 xmlns:adm="http://github.com/adminfaces"
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="title" value="Horarios" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <ui:param name="title" value="Configurações" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
         <style type="text/css">
             .ui-datatable .ui-datatable-header {
@@ -22,11 +22,20 @@
     <ui:define name="body">
         <h:form id="frmProduct" >
             <p:panel>
+
                 <div class="ui-g ui-fluid" >
                     <div class="ui-sm-12 ui-g-6 ">
-                        <div class="ui-sm-12 ui-g-12 ">
+                        <div class="ui-sm-12 ui-g-8 ">
                             <p:outputLabel value="Company ID" /><br/>
                             <p:inputText value="#{companyMB.company.id}" readonly="true" />
+                        </div>
+                        <div class="ui-sm-12 ui-g-4 ">
+                            <p:outputLabel value="Somente Menu" /><br/>
+                            <p:toggleSwitch value="#{companyMB.company.onlyMenu}" disabled="true" />
+                        </div>
+                        <div class="ui-sm-12 ui-g-12 ">
+                            <p:outputLabel value="CNPJ" /><br/>
+                            <p:inputText value="#{companyMB.company.cgccpf}" readonly="#{companyMB.company.cgccpf != null}" />
                         </div>
                         <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="Nome Empresa" /><br/>
@@ -34,18 +43,22 @@
                         </div>
                         <div class="ui-sm-6 ui-g-6 ">
                             <p:outputLabel value="Telefone Whatsapp" /><br/>
-                            <p:inputMask value="#{companyMB.company.phone}" mask="(99)9999-9999" />
+                            <p:inputMask value="#{companyMB.company.phone}" mask="(99)9999-9999"  />
                         </div>
                         <div class="ui-sm-6 ui-g-6 ">
                             <p:outputLabel value="Tempo Médio de Entrega" /><br/>
                             <p:inputText value="#{companyMB.company.aproxTime}"  />
                         </div>
-                        <div class="ui-sm-6 ui-g-6 ">
+                        <div class="ui-sm-12 ui-g-12 ">
                             <p:outputLabel value="Mensagem de Boas Vindas" /><br/>
                             <small>Máximo 30 car.</small><br/>
                             <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
                         </div>
+                        
+
+
                     </div>
+
                     <div class="ui-sm-12 ui-g-6 ">
                         <div class="img-wrap">
                             <p:outputLabel value="Logo da Empresa (até 100KB)" />
@@ -55,7 +68,7 @@
                             <hr/>
                             <h:panelGroup id="photo">
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and companyMB.company.logo.startsWith('http')}">
-                                    <img src="#{companyMB.company.logo}" style="width: 50%"/>
+                                    <img src="#{companyMB.company.logo}" style="width: 40%"/>
                                 </h:panelGroup>
                                 <h:panelGroup rendered="#{companyMB.company.logo != null and !companyMB.company.logo.startsWith('http')}">
                                     <img src="data:logo/png;base64, #{companyMB.company.logo}" style="width: 25%"/>
@@ -65,6 +78,20 @@
                     </div>
                 </div>
 
+
+                <div class="ui-g ui-fluid"  >
+                    <div class="ui-sm-12 ui-g-6 ">
+                        <p:fieldset legend="QR Code Menu" rendered="#{companyMB.company.onlyMenu}">
+                            <center>
+                                <small>
+                                    Salve a imagem e imprima
+                                </small><br/>
+                                <p:barcode value="http://popsales.ddns.net/popsales/rest/#{companyMB.company.nameUrl}/menu/1" type="qr"  width="50%"  />
+                            </center>
+                        </p:fieldset>
+                    </div>
+                </div>
+                
                 <div class="ui-g" style="border-bottom: 1px solid #ccc;">
                     <div class="ui-g-12">
                         <hr/>

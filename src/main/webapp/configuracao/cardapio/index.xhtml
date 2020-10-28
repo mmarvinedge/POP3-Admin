@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        <ui:param name="title" value="Configurações" /> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Configuração do Cardápio
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="frmParamCardapio" >
+            <p:panel>
+                <div class="ui-g ui-fluid" >
+                    <div class="ui-sm-6 ui-g-3">
+                        <p:outputLabel value="Trabalha com cupom de desconto?"/><br/>
+                        <p:toggleSwitch value="#{companyMB.company.worksCoupon}">
+                            <p:ajax event="change" update="@this"/>
+                        </p:toggleSwitch>
+                    </div>
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Trabalha Com Entrega" /><br/>
+                        <p:toggleSwitch id="deliveryOnly"  value="#{companyMB.company.deliveryOnly}" disabled="#{!companyMB.company.withdrawalOnly}"  >
+                            <p:ajax update="withdrawalOnly" event="change"/>
+                        </p:toggleSwitch>
+                    </div>
+
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Trabalha com Retirada" /><br/>
+                        <p:toggleSwitch id="withdrawalOnly" value="#{companyMB.company.withdrawalOnly}" disabled="#{!companyMB.company.deliveryOnly}" >
+                            <p:ajax update="deliveryOnly" event="change"/>
+                        </p:toggleSwitch>
+                    </div>
+
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Quantidade Decimal no Pedido" /><br/>
+                        <p:toggleSwitch  value="#{companyMB.company.decimalQuantity}"  />
+                    </div>
+
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Valor mínimo para entrega" /><br/>
+                        <p:inputNumber id="minimalValue" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{companyMB.company.minimalValue}">
+                            <p:ajax event="blur" process="@this" />
+                        </p:inputNumber>
+                    </div>
+
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Abre estabelecimento no gestor" /><br/>
+                        <p:toggleSwitch id="openOnClient" value="#{companyMB.company.openForClient}"  >
+                            <p:ajax update="openOnClient" event="change"/>
+                        </p:toggleSwitch>
+                    </div>
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Busca de endereço no cardápio" /><br/>
+                        <p:toggleSwitch id="autoAddress" value="#{companyMB.company.autoAdress}"  >
+                            <p:ajax update="autoAddress" event="change"/>
+                        </p:toggleSwitch>
+                    </div>
+                    <div class="ui-sm-6 ui-g-3 ">
+                        <p:outputLabel value="Ordenação dos produtos" /><br/>
+                        <p:selectOneMenu value="#{companyMB.company.orderProducts}">
+                            <f:selectItem itemValue="natural" itemLabel="Natural"/>
+                            <f:selectItem itemValue="order" itemLabel="Código de ordenação"/>
+                            <f:selectItem itemValue="nome" itemLabel="Nome"/>
+                            <p:ajax event="change" update="@this"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-sm-12 ui-g-12">
+                        <p:separator/>
+                        <table style="width: 100%; border: 1px solid gray; border-collapse: collapse;">
+                            <thead>
+                                <td colspan="6" style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center; font-weight: bold">Prametrize aqui os horários dos turnos, esses horário iram impactar na exibição dos protudos no cardápio
+                                    conforme o cadastro<br/> <p style="color: red">ATENÇÃO, OS HORÁRIOS DOS TURNOS NÃO PODEM CONFLITAR</p></td>
+                            </thead>
+                            <tr>
+                                <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Manhã</td>
+                                <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Tarde</td>
+                                <td style="width: 100%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: center;" colspan="2">Noite</td>
+                            </tr>
+                            <tbody>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginMorning}"/></td>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endMorning}"/></td>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginAfternoon}"/></td>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endAfternoon}"/></td>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Inicial" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.begginNight}"/></td>
+                                <td style="width: 16.66%; border: 1px solid black; border-collapse: collapse; padding: 15px; text-align: left;"><p:outputLabel value="Final" class="text-center"/><br/><p:inputMask mask="99:99" value="#{companyMB.company.shift.endNight}"/></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ui-g" style="border-bottom: 1px solid #ccc;">
+                    <div class="ui-g-12">
+                        <hr/>
+                        <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.save2()}"  update="@form"/>
+                    </div>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

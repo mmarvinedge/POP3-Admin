@@ -8,6 +8,7 @@ package com.metremobbi.bean;
 import com.metremobbi.infra.security.LogonMB;
 import com.metremobbi.model.User;
 import com.metremobbi.service.UserService;
+import com.metremobbi.util.OUtils;
 import static com.metremobbi.util.Utils.addDetailMessage;
 import java.io.IOException;
 import java.io.Serializable;
@@ -125,6 +126,19 @@ public class UserMB implements Serializable {
         } else {
             System.out.println("sem usuário com esse username");
             return true;
+        }
+    }
+
+    public void setUserAlter(User u) {
+        user = u;
+        user.setPassword("");
+    }
+
+    public Boolean validateDeleteUser() {
+        if (usersSelected != null && usersSelected.get(0).getUserName().equalsIgnoreCase(OUtils.getUser().getUserName())) {
+            return true;
+        } else {
+            return false;
         }
     }
 

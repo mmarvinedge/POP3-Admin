@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="#{layoutMB.template}">
+                template="#{layoutMB.template}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:param name="renderBreadCrumb" value="false"/>
 
     <ui:define name="title">
         <!--<ui:include src="dashboardFuture.xhtml"/>-->
-        <ui:include src="dashboard.xhtml"/>
+
+        <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == false}">
+            <ui:include src="dashboard.xhtml"/>
+            <!--<center><h1>Dashboard em manutenção!</h1></center>-->
+        </h:panelGroup>
+        <h:panelGroup layout="block" rendered="#{logonMB.company.freeVersion == true}" style="margin-top: 50px;">
+            <center >
+                Dashboard Disponível Somente na Versão Premium
+            </center>
+        </h:panelGroup>
+        <h:panelGroup layout="block" rendered="#{logonMB.company.onlyMenu == true and logonMB.company.freeVersion == false}" style="margin-top: 50px;">
+            
+        </h:panelGroup>
+
     </ui:define>
 </ui:composition>

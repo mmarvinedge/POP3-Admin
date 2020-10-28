@@ -68,9 +68,7 @@ public class ProductService {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            // Get response body
             String json = response.body().string();
-
             saida = new Gson().fromJson(json, Product.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +81,7 @@ public class ProductService {
         product.setCompanyId(companyID);
         product.setCategories(new ArrayList());
         product.getCategories().add(product.getCategoryMain());
-        System.out.println("JSON: "+new Gson().toJson(product));
+//        System.out.println("JSON: "+new Gson().toJson(product));
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         // RequestBody body = RequestBody.create(JSON, json); // old
         Request request = new Request.Builder()
@@ -108,7 +106,6 @@ public class ProductService {
     }
 
     public void putProduct(Product product) throws IOException {
-        System.out.println("GSON: "+new Gson().toJson(product));
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/")
@@ -146,6 +143,21 @@ public class ProductService {
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void disableProducts(Category category, String situation) throws IOException {
+        Request request = new Request.Builder()
+                .url(Constantes.URL + "/product/disableProducts/"+ category.getName() + "/"+ situation)
+                .header("company_id", companyID)
+                .get()
+                .build();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if(!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
         } catch (Exception e) {

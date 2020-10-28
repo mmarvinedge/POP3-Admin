@@ -30,7 +30,7 @@
                             <f:param name="edit" value="false"/>
                         </p:commandButton>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Editar" action="#{userMB.setUser(userMB.usersSelected.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:commandButton value="Editar" action="#{userMB.setUserAlter(userMB.usersSelected.get(0))}" update="@(.ui-dialog)" styleClass="btn-info"
                                          disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
                                          oncomplete="PF('modalNewUser').show()" icon="fa fa-edit">
                             <f:param name="edit" value="true"/>
@@ -38,7 +38,7 @@
                         <p:spacer width="5"/>
                         <p:commandButton value="Deletar" icon="fa fa-trash" styleClass="btn-danger"
                                          action="#{userMB.delete}"
-                                         disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                         disabled="#{(empty userMB.usersSelected or userMB.usersSelected.size() == 0) or userMB.validateDeleteUser()}"
                                          process="@this" update="@form"
                                          >
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
@@ -48,7 +48,7 @@
                     <p:splitButton value="Novo" action="#{userMB.novo}"
                                    icon="fa fa-plus" update="modalNewUser, frmNewUser" oncomplete="PF('modalNewUser').show()"
                                    styleClass="hidden-md hidden-lg btn-primary" immediate="true">
-                        <p:menuitem value="Editar" update="@(.ui-dialog), frmNewUser" action="#{userMB.setUser(userMB.usersSelected.get(0))}"
+                        <p:menuitem value="Editar" update="@(.ui-dialog), frmNewUser" action="#{userMB.setUserAlter(userMB.usersSelected.get(0))}"
                                     oncomplete="PF('modalNewUser').show()"
                                     disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() > 1}"
                                     icon="fa fa-edit" immediate="true">
@@ -56,7 +56,7 @@
                         </p:menuitem>
                         <p:menuitem value="Deletar" action="#{userMB.delete}"
                                     process="@this" update="@form"
-                                    disabled="#{empty userMB.usersSelected or userMB.usersSelected.size() == 0}"
+                                    disabled="#{(empty userMB.usersSelected or userMB.usersSelected.size() == 0) or userMB.validateDeleteUser()}"
                                     icon="fa fa-trash">
                             <p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-danger"/>
                         </p:menuitem>
@@ -97,45 +97,39 @@
         </h:form>
 
         <p:dialog widgetVar="modalNewUser" id="modalNewUser" header="Cadastro de usuário"
-                  modal="true" position="top" responsive="true" resizable="false">
+                  modal="true" position="top" responsive="true" resizable="false" width="400" height="360">
             <h:form id="frmNewUser">
-                <p:panel styleClass="box-primary card">
+                <p:panel styleClass="box-primary card" style="height: 345px !important">
 
                     <div class="box-primary">
                         <div class="ui-g ui-fluid">
                             <p:messages closable="true" />
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                                <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Nome" for="inptName"/>
-                                </div>
-                                <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptName" value="#{userMB.user.name}" required="true"/>
-                                    <span class="help-block"> 
-                                        <p:message for="inptName" /> 
-                                    </span>
-                                </div>
+                            <div class="ui-sm-12 ui-g-12">
+                                <p:outputLabel value="Nome" for="inptName"/>
                             </div>
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                                <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Usuário" for="inptUsername"/>
-                                </div>
-                                <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText disabled="#{param['edit']}" id="inptUsername" value="#{userMB.user.userName}" required="true"/>
-                                    <span class="help-block">
-                                        <p:message for="inptUsername" /> 
-                                    </span>
-                                </div>
+                            <div class="ui-sm-12 ui-g-12" >
+                                <p:inputText id="inptName" value="#{userMB.user.name}" required="true"/>
+                                <span class="help-block"> 
+                                    <p:message for="inptName" /> 
+                                </span>
                             </div>
-                            <div class="ui-sm-12 ui-g-4 ui-g-nopad">     
-                                <div class="ui-sm-12 ui-g-12">
-                                    <p:outputLabel value="Senha" for="inptPassword"/>
-                                </div>
-                                <div class="ui-sm-12 ui-g-12" >
-                                    <p:inputText id="inptPassword" value="#{userMB.user.password}" type="password" required="true"/>
-                                    <span class="help-block"> 
-                                        <p:message for="inptPassword" /> 
-                                    </span>
-                                </div>
+                            <div class="ui-sm-12 ui-g-12">
+                                <p:outputLabel value="Usuário" for="inptUsername"/>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12" >
+                                <p:inputText disabled="#{param['edit']}" id="inptUsername" value="#{userMB.user.userName}" required="true"/>
+                                <span class="help-block">
+                                    <p:message for="inptUsername" /> 
+                                </span>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12">
+                                <p:outputLabel value="Senha" for="inptPassword"/>
+                            </div>
+                            <div class="ui-sm-12 ui-g-12" >
+                                <p:inputText id="inptPassword" placeholder="Digite aqui a nova senha" value="#{userMB.user.password}" type="password" required="true"/>
+                                <span class="help-block"> 
+                                    <p:message for="inptPassword" /> 
+                                </span>
                             </div>
                         </div>
                         <div id="main-buttons" style="text-align: right;">

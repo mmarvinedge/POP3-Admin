@@ -32,7 +32,7 @@ public class OrderFilter {
 
     public List<Date> getDatas() {
         if (datas.size() == 0) {
-            datas.add(OUtils.addDia(new Date(), -356));
+            datas.add(OUtils.primeiroDiaDoAno());
             datas.add(new Date());
         }
         return datas;
