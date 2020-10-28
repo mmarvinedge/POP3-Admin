@@ -40,6 +40,7 @@ public class Product implements Serializable {
     private List<Attribute> attributes;
     private String printer;
     private Boolean promo;
+    private Boolean fraction;
 
     private String sizePizza;
     private Integer maxPizza;
@@ -202,7 +203,7 @@ public class Product implements Serializable {
     }
 
     public List<FlavorPizza> getFlavorsPizza() {
-        if(flavorsPizza == null) {
+        if (flavorsPizza == null) {
             flavorsPizza = new ArrayList();
         }
         return flavorsPizza;
@@ -243,7 +244,7 @@ public class Product implements Serializable {
     public void setOnlyMenu(Boolean showMenu) {
         this.onlyMenu = showMenu;
     }
-    
+
     public Shift getShift() {
         if (shift == null) {
             return shift = new Shift();
@@ -273,6 +274,17 @@ public class Product implements Serializable {
 
     public void setProductDay(ProductDay productDay) {
         this.productDay = productDay;
+    }
+
+    public Boolean getFraction() {
+        if (fraction == null) {
+            fraction = false;
+        }
+        return fraction;
+    }
+
+    public void setFraction(Boolean fraction) {
+        this.fraction = fraction;
     }
 
     @Override

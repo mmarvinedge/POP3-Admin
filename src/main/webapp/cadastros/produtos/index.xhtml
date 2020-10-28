@@ -22,6 +22,7 @@
             }
 
         </style>
+
     </ui:define>
 
     <ui:define name="description">
@@ -240,8 +241,8 @@
                                 <div class="ui-sm-12 ui-g-6 ">
                                     <div class="ui-sm-12 ui-g-12 ">
                                         <div class="img-wrap">
-                                            <h:panelGroup id="grpImage">
-                                                <h:panelGroup rendered="#{productMB.product.imageBase64 == null}">
+                                            <h:panelGroup id="grpImage" >
+                                                <h:panelGroup rendered="#{productMB.product.imageBase64 == null}" styleClass="animate__animated animate__bounce">
                                                     <p:outputLabel value="Foto (100KB max)" />
                                                     <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
                                                                   uploadLabel="Enviar" disabled="#{param['acao']}" cancelLabel="Cancelar" label="Escolher" auto="false"
@@ -250,14 +251,14 @@
                                                 <h:panelGroup id="photo" layout="block">
                                                     <center>
                                                         <div class="image-product">
-                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and productMB.product.imageBase64.startsWith('http')}">
+                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and productMB.product.imageBase64.startsWith('http')}" styleClass="animate__animated animate__bounce">
                                                                 <p:commandLink action="#{productMB.trashImage()}" update="grpImage"  immediate="true">
                                                                     <i class="fa fa-trash fa-2x"></i>
                                                                 </p:commandLink>
                                                                 <img src="#{productMB.product.imageBase64}" style="max-width: 250px"/>
 
                                                             </h:panelGroup>
-                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and !productMB.product.imageBase64.startsWith('http')}">
+                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and !productMB.product.imageBase64.startsWith('http')}" styleClass="animate__animated animate__bounce">
                                                                 <p:commandLink action="#{productMB.trashImage()}" update="grpImage" immediate="true">
                                                                     <i class="fa fa-trash fa-2x"></i>
                                                                 </p:commandLink>
@@ -379,6 +380,10 @@
                                                                                         <p:inputNumber disabled="#{param['acao']}" id="addPrice" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{att.price}" required="true" requiredMessage="Preço é obrigatório" >
                                                                                             <p:ajax event="blur" process="@this" />
                                                                                         </p:inputNumber>
+                                                                                    </p:column>
+                                                                                    <p:column rendered="#{companyMB.company.orderProducts.equalsIgnoreCase('order')}" headerText="Cod." width="7%" filterBy="#{p.order}" 
+                                                                                              filterMatchMode="contains" sortBy="#{p.order}" styleClass="text-right">
+                                                                                        <h:outputText value="#{p.order}"/>
                                                                                     </p:column>
                                                                                     <p:column width="60" style="text-align: center">
                                                                                         <center>
