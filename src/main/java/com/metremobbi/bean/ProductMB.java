@@ -168,6 +168,7 @@ public class ProductMB implements Serializable {
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
+        productModel = new ProductDataModel(products);
         addDetailMessage("Produtos deletados com sucesso!");
         novo();
     }

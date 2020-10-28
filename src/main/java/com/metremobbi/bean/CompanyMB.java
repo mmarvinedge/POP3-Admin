@@ -94,6 +94,7 @@ public class CompanyMB {
 
     public void save() {
         try {
+            
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -114,9 +115,9 @@ public class CompanyMB {
         try {
             if (company.getBairros() != null && !company.getBairros().isEmpty() && company.getBairros().size() > 0) {
                 List<String> bairrosMetre = service.getBairros(company.getAddress().getCity());
-                if(company.getBairros().size() < bairrosMetre.size()) {
+                if (company.getBairros().size() < bairrosMetre.size()) {
                     for (String b : bairrosMetre) {
-                        if(company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
+                        if (company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
                             company.getBairros().add(new Bairro(b));
                         }
                     }
@@ -228,6 +229,29 @@ public class CompanyMB {
 
     public void debugEntrega(Bairro b) {
         System.out.println(b.getEntrega());
+    }
+
+    public Boolean validaHorarios(Company c) {
+        if (c.getTime() != null) {
+            if (c.getTime().getSeg() && Integer.parseInt(c.getTime().getCloseSeg()) < Integer.parseInt(c.getTime().getOpenSeg())) {
+                return false;
+            } else if (c.getTime().getTer() && Integer.parseInt(c.getTime().getCloseTer()) < Integer.parseInt(c.getTime().getOpenTer())) {
+                return false;
+            } else if (c.getTime().getQua() && Integer.parseInt(c.getTime().getCloseQua()) < Integer.parseInt(c.getTime().getOpenQua())) {
+                return false;
+            } else if (c.getTime().getQui() && Integer.parseInt(c.getTime().getCloseQui()) < Integer.parseInt(c.getTime().getOpenQui())) {
+                return false;
+            } else if (c.getTime().getSex() && Integer.parseInt(c.getTime().getCloseSex()) < Integer.parseInt(c.getTime().getOpenSex())) {
+                return false;
+            } else if (c.getTime().getSab() && Integer.parseInt(c.getTime().getCloseSab()) < Integer.parseInt(c.getTime().getOpenSab())) {
+                return false;
+            } else if (c.getTime().getDom() && Integer.parseInt(c.getTime().getCloseDom()) < Integer.parseInt(c.getTime().getOpenDom())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return true;
     }
 
 }
