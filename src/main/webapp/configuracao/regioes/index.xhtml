@@ -22,63 +22,106 @@
             <p:panel>
                 <div class="ui-fluid">
                     <div class="ui-g">
-                        <div class="ui-g-12">
-                            <h:outputText value="Taxa de entrega única?" />
-                        </div>
-                        <div class="ui-g-1">
-                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{companyMB.company.uniqueDeliveryCost}">
-                                <p:ajax event="change" process="@this" update="pnl" listener="#{companyMB.updateDeliveryCostType(companyMB.company.uniqueDeliveryCost)}" />
-                            </p:selectBooleanButton>
-                        </div>
-                        <div class="ui-g-12">
-                            <h:panelGroup id="pnl">
-                                <div class="ui-g-3">
+                        <div class="ui-sm-12 ui-g-4">
+                            <div class="ui-fluid">
+                                <div class="ui-g-12">
+                                    <h:outputText value="Taxa de entrega única?" />
+                                    <br/>
+                                    <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{companyMB.company.uniqueDeliveryCost}" style="max-width: 100px;">
+                                        <p:ajax event="change" process="@this" update="pnlUnique, bairros" listener="#{companyMB.updateDeliveryCostType(companyMB.company.uniqueDeliveryCost)}" />
+                                    </p:selectBooleanButton>
+                                    <hr/>
+                                </div>
+                                <h:panelGroup id="pnlUnique">
                                     <h:panelGroup rendered="#{companyMB.company.uniqueDeliveryCost}">
-                                        <div class="ui-g-12">
-                                            <p:outputLabel value="Taxa de Entrega Única" /><br/>
-                                            <small style="    background: #e75f6d;
+                                        <p:fieldset legend="TAXA ÚNICA" title="TAXA ÚNICA">
+                                            <small style="background: #ffae00;
+                                                   color: white;
                                                    padding: 5px;
-                                                   line-height: 3rem;
                                                    border-radius: 5px;
-                                                   color: white;"> 
+                                                   margin-left: 5px;"> 
                                                 <i class="fa fa-warning"></i>
                                                 Caso taxa única informar o valor!</small>
-                                            <br/>
-                                            <p:inputNumber value="#{companyMB.company.deliveryCost}" decimalPlaces="2"  placeholder="Taxa Global"/>
-                                        </div>
+                                            <div class="ui-g">
+                                                <div class="ui-g-12">
+                                                    <p:outputLabel value="Taxa de Entrega Única" />
+                                                    <p:inputNumber value="#{companyMB.company.deliveryCost}" decimalPlaces="2"  placeholder="Taxa Global"/>
+                                                </div>
 
-                                        <div class="ui-g-12">
-                                            <p:outputLabel value="Cidade" /><br/>
-                                            <p:inputText readonly="true" value="#{companyMB.company.address.city}" />
+                                                <div class="ui-g-12">
+                                                    <p:outputLabel value="Cidade" /><br/>
+                                                    <p:inputText readonly="true" value="#{companyMB.company.address.city}" />
+                                                </div>
+                                            </div>
+
+                                        </p:fieldset>
+
+
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <p:fieldset legend="PROMOÇÃO TAXA" title="PROMOÇÃO TAXA" style="margin-top: 10px;">
+                                    <small style="background: #ffae00;
+                                           color: white;
+                                           padding: 5px;
+                                           border-radius: 5px;
+                                           margin-left: 5px;">
+                                        <i class="fa fa-warning"></i>    Deixar vazio caso não queira entrar nesta regra!
+                                    </small>
+                                    <div class="ui-g">
+                                        <div class="ui-g-6">
+                                            <h:outputText value="Pedido à Partir de" />
+                                            <p:inputNumber value="#{companyMB.company.valueMaxPromoDelivery}" decimalPlaces="2" decimalSeparator="," symbol="R$ " />
                                         </div>
-                                    </h:panelGroup>
-                                </div>
+                                        <div class="ui-g-6">
+                                            <h:outputText value="Taxa de Entrega de" />
+                                            <p:inputNumber value="#{companyMB.company.valuePromoDelivery}" decimalPlaces="2" decimalSeparator="," symbol="R$ "/>
+                                        </div>
+                                    </div>
+                                </p:fieldset>
                                 <div class="ui-g-12">
-                                    <h:panelGroup rendered="#{!companyMB.company.uniqueDeliveryCost}">
-                                        <p:commandButton value="Novo" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-danger" style="width: 150px;"/> 
-                                        <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
-                                            <p:column headerText="Bairro" sortBy="#{bairro.bairro}">
-                                                #{bairro.bairro}
-                                            </p:column>
-                                            <p:column headerText="Entrega?" width="150" styleClass="text-center">
-                                                <p:toggleSwitch value="#{bairro.entrega}" >
-                                                    <p:ajax event="change" update="frmProduct:tblBairros:#{ind}:iptTaxa" />
-                                                </p:toggleSwitch>
-                                            </p:column>
-                                            <p:column headerText="Taxa" width="150" styleClass="text-right">
-                                                <p:inputNumber id="iptTaxa" value="#{bairro.taxa}" decimalPlaces="2" symbol="R$ " minValue="0"  disabled="#{!bairro.entrega}" required="true" requiredMessage="Informe a taxa do bairro #{bairro.bairro}!" />
-                                            </p:column>
-                                        </p:dataTable>
-                                    </h:panelGroup>
+                                    <hr/>
+                                    <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
                                 </div>
-                            </h:panelGroup>
+                            </div>
                         </div>
+                        <h:panelGroup id="bairros" class="ui-sm-12 ui-g-8" layout="block">
+                            <h:panelGroup  layout="block" rendered="#{!companyMB.company.uniqueDeliveryCost}">
+                                <p:fieldset legend="TAXA POR BAIRRO" title="TAXA POR BAIRRO">
+                                    <p:commandButton value="Novo Bairro" icon="fa fa-plus" onclick="PF('dlgBairro').show()" styleClass="btn-primary" style="width: 150px; "/> 
+                                    <div class="ui-fluid">
+                                        <div class="ui-g-12">
+                                            <h:panelGroup rendered="#{!companyMB.company.uniqueDeliveryCost}">
+
+                                                <p:dataTable id="tblBairros" value="#{companyMB.bairros}" var="bairro" rowIndexVar="ind">
+                                                    <p:column headerText="Bairro" sortBy="#{bairro.bairro}">
+                                                        #{bairro.bairro}
+                                                    </p:column>
+                                                    <p:column headerText="Entrega?" width="150" styleClass="text-center">
+                                                        <p:toggleSwitch value="#{bairro.entrega}" >
+                                                            <p:ajax event="change" update="frmProduct:tblBairros:#{ind}:iptTaxa" />
+                                                        </p:toggleSwitch>
+                                                    </p:column>
+                                                    <p:column headerText="Taxa" width="150" styleClass="text-right">
+                                                        <p:inputNumber id="iptTaxa" value="#{bairro.taxa}" decimalPlaces="2" symbol="R$ " minValue="0"  disabled="#{!bairro.entrega}" required="true" requiredMessage="Informe a taxa do bairro #{bairro.bairro}!" />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGroup>
+                                            <div class="ui-g-12">
+                                                <hr/>
+                                                <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:fieldset>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+
+
                     </div>
                 </div>
-                <div class="ui-g-12">
-                    <hr/>
-                    <p:commandButton value="Salvar" styleClass="btn-primary" action="#{companyMB.confirmarRegioes()}"  update="@form"/>
-                </div>
+
             </p:panel>
         </h:form>
         <script>

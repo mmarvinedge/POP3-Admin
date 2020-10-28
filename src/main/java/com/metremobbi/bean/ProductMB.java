@@ -165,6 +165,10 @@ public class ProductMB implements Serializable {
         }
     }
 
+    public void trashImage() {
+        product.setImageBase64(null);
+    }
+
     public void delete() throws IOException {
         service.deleteProduct(selectedProducts);
         products.removeAll(selectedProducts);
@@ -278,11 +282,11 @@ public class ProductMB implements Serializable {
     //se nao for na linha nao precisa desse
     public void setProductComplete() {
         product = selectedProducts.get(0);
-        
-        if(product.getShift() == null) {
+
+        if (product.getShift() == null) {
             product.setShift(new Shift());
-        } 
-        
+        }
+
         if (product != null && product.getAttributes() != null && product.getAttributes().size() > 0 && product.getAttributes().get(0) != null) {
             attribute = product.getAttributes().get(0);
         }

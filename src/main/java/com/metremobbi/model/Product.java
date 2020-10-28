@@ -40,6 +40,7 @@ public class Product implements Serializable {
     private List<Attribute> attributes;
     private String printer;
     private Boolean promo;
+    private Boolean fraction;
 
     private String sizePizza;
     private Integer maxPizza;
@@ -278,6 +279,13 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "Product{" + "id=" + id + ", sku=" + sku + ", name=" + name + '}';
+    }
+    
+    public Boolean getFraction() {
+        if (fraction == null) {
+            fraction = false;
+        }
+        return fraction;
     }
 
 }

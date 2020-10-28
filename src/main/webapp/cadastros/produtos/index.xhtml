@@ -13,6 +13,14 @@
             .ui-datatable .ui-datatable-header {
                 text-align: right !important;
             }
+            .image-product{
+                width: auto;
+
+                max-width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
         </style>
     </ui:define>
 
@@ -144,113 +152,153 @@
 
 
         <p:dialog widgetVar="modalNewProduct" id="modalNewProduct"  header="Cadastro de Produtos" draggable="false"
-                  modal="true" position="top" responsive="false" resizable="false" positionType="absolute"
-                  width="850" height="620" showEffect="clip" hideEffect="fold" closeOnEscape="true" >
+                  responsive="true" resizable="false" positionType="fixed" style="max-width: 900px;" modal="true"
+                  showEffect="clip" hideEffect="fold" closeOnEscape="true" >
             <h:form id="frmNewProduct">
                 <p:tabView id="tabs">
                     <p:tab title="Dados do Produto">
                         <div class="box-primary">
                             <div class="ui-g ui-fluid">
-                                <div class="ui-sm-3 ui-g-3 ">
-                                    <p:outputLabel value="SKU" for="inptSku"/>
-                                    <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Campo preenchido automáticamente"
-                                                 disabled="#{param['acao']}" />
-                                    <span class="help-block">
-                                        <p:message for="inptSku" /> 
-                                    </span>
+                                <div class="ui-sm-12 ui-g-6 ">
+                                    <div class="ui-g ui-fluid">
+                                        <div class="ui-sm-12 ui-g-12 ">
+                                            <p:outputLabel value="Categoria" for="category"/>
+                                            <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
+                                                             value="#{productMB.product.categoryMain}" id="category" filter="true"
+                                                             filterMatchMode="contains" effect="fade" converter="Converter" disabled="#{param['acao']}">
+                                                <f:selectItem itemLabel="Selecione uma categoria..." itemValue=""/>
+                                                <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
+                                                <p:ajax event="itemSelect" update="@this, :frmNewProduct:tabs:pnl2" listener="#{productMB.debug()}" />
+                                            </p:selectOneMenu>
+                                            <span class="help-block"> 
+                                                <p:message for="category" /> 
+                                            </span>
+                                        </div>
+                                        <div class="ui-sm-12 ui-g-12 ">     
+                                            <p:outputLabel value="Nome" for="inptName"/>
+                                            <p:inputText id="inptName" value="#{productMB.product.name}" required="true" disabled="#{param['acao']}"/>
+                                            <span class="help-block"> 
+                                                <p:message for="inptName" /> 
+                                            </span>
+                                        </div>
+
+
+                                        <div class="ui-sm-12 ui-g-12 ">
+                                            <p:outputLabel value="Descrição" for="inptObs"/>
+                                            <p:inputTextarea id="inptObs" disabled="#{param['acao']}" value="#{productMB.product.description}" />
+                                            <span class="help-block"> 
+                                                <p:message for="inptObs" /> 
+                                            </span>
+                                        </div>
+                                        <div class="ui-sm-12 ui-g-12 "> 
+                                            <p:outputLabel value="Impressora" for="inptPrinter"/>
+                                            <p:selectOneMenu id="inptPrinter" value="#{productMB.product.printer}" 
+                                                             filter="true" required="true" disabled="#{param['acao']}">
+                                                <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
+                                                <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
+                                                <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
+                                                <f:selectItem itemLabel="REFRIGERANTES" itemValue="REFRIGERANTES"/>
+                                                <f:selectItem itemLabel="COZINHA" itemValue="COZINHA"/>
+                                                <f:selectItem itemLabel="PIZZARIA" itemValue="PIZZARIA"/>
+                                                <f:selectItem itemLabel="SALAO" itemValue="SALAO"/>
+                                                <f:selectItem itemLabel="CHURRASCARIA" itemValue="CHURRASCARIA"/>
+                                                <f:selectItem itemLabel="SALAO 2" itemValue="SALAO2"/>
+                                                <f:selectItem itemLabel="SALAO 3" itemValue="SALAO3"/>
+                                            </p:selectOneMenu>
+                                            <span class="help-block"> 
+                                                <p:message for="inptPrinter" /> 
+                                            </span>
+                                        </div>
+
+
+                                        <div class="ui-sm-12 ui-g-12">
+                                            <p:outputLabel value="Promocional" for="promo"/><br/>
+                                            <p:selectBooleanCheckbox id="promo" value="#{productMB.product.promo}" >
+                                                <p:ajax event="change" update="ogirinalPrice" />
+                                            </p:selectBooleanCheckbox>
+                                        </div>    
+                                        <div class="ui-sm-6 ui-g-6 ">     
+                                            <p:outputLabel value="Preço" for="inptPrice"/>
+                                            <p:inputNumber id="inptPrice" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
+                                            <span class="help-block"> 
+                                                <p:message for="inptPrice" /> 
+                                            </span>
+                                        </div>
+                                        <div class="ui-sm-6 ui-g-6 ">
+                                            <h:panelGroup id="ogirinalPrice" >
+                                                <h:panelGroup rendered="#{productMB.product.promo}">
+                                                    <p:outputLabel value="Preço Original" for="inptPriceOriginal"/>
+                                                    <p:inputNumber id="inptPriceOriginal" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
+                                                    <span class="help-block"> 
+                                                        <p:message for="inptPriceOriginal" /> 
+                                                    </span>
+                                                </h:panelGroup>
+                                            </h:panelGroup>
+                                        </div>     
+                                    </div>
                                 </div>
-                                <div class="ui-sm-6 ui-g-6 ">     
-                                    <p:outputLabel value="Nome" for="inptName"/>
-                                    <p:inputText id="inptName" value="#{productMB.product.name}" required="true" disabled="#{param['acao']}"/>
-                                    <span class="help-block"> 
-                                        <p:message for="inptName" /> 
-                                    </span>
+                                <div class="ui-sm-12 ui-g-6 ">
+                                    <div class="ui-sm-12 ui-g-12 ">
+                                        <div class="img-wrap">
+                                            <h:panelGroup id="grpImage">
+                                                <h:panelGroup rendered="#{productMB.product.imageBase64 == null}">
+                                                    <p:outputLabel value="Foto (100KB max)" />
+                                                    <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                                  uploadLabel="Enviar" disabled="#{param['acao']}" cancelLabel="Cancelar" label="Escolher" auto="false"
+                                                                  update="grpImage" sizeLimit="500000" fileLimit="3"   />
+                                                </h:panelGroup>
+                                                <h:panelGroup id="photo" layout="block">
+                                                    <center>
+                                                        <div class="image-product">
+                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and productMB.product.imageBase64.startsWith('http')}">
+                                                                <p:commandLink action="#{productMB.trashImage()}" update="grpImage"  immediate="true">
+                                                                    <i class="fa fa-trash fa-2x"></i>
+                                                                </p:commandLink>
+                                                                <img src="#{productMB.product.imageBase64}" style="max-width: 250px"/>
+
+                                                            </h:panelGroup>
+                                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and !productMB.product.imageBase64.startsWith('http')}">
+                                                                <p:commandLink action="#{productMB.trashImage()}" update="grpImage" immediate="true">
+                                                                    <i class="fa fa-trash fa-2x"></i>
+                                                                </p:commandLink>
+                                                                <img src="data:image/png;base64, #{productMB.product.imageBase64}" style="max-width: 250px"/>
+
+                                                            </h:panelGroup>
+
+                                                        </div>
+                                                    </center>
+                                                </h:panelGroup>
+                                            </h:panelGroup>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8 ">
+                                        <p:outputLabel value="SKU" for="inptSku"/>
+                                        <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Integração PDV"
+                                                     disabled="#{param['acao']}" />
+                                        <span class="help-block">
+                                            <p:message for="inptSku" /> 
+                                        </span>
+                                    </div>
+                                    <div class="ui-sm-12 ui-g-8 ">
+                                        <p:outputLabel value="Permite Venda Fracionada" for="fracionada"/><br/>
+                                        <p:selectBooleanCheckbox id="fracionada" value="#{productMB.product.fraction}" />
+                                    </div>
                                 </div>
-                                <div class="ui-sm-12 ui-g-3 ">
-                                    <p:outputLabel value="Categoria" for="category"/>
-                                    <p:selectOneMenu required="true" requiredMessage="Categoria é obrigatório"
-                                                     value="#{productMB.product.categoryMain}" id="category" filter="true"
-                                                     filterMatchMode="contains" effect="fade" converter="Converter" disabled="#{param['acao']}">
-                                        <f:selectItem itemLabel="Selecione uma categoria..." itemValue=""/>
-                                        <f:selectItems value="#{productMB.categoryList}" var="cats" itemValue="#{cats}" itemLabel="#{cats.name}"/>
-                                        <p:ajax event="itemSelect" update="@this, :frmNewProduct:tabs:pnl2" listener="#{productMB.debug()}" />
-                                    </p:selectOneMenu>
-                                    <span class="help-block"> 
-                                        <p:message for="category" /> 
-                                    </span>
-                                </div>
+
+
+
+
                             </div>
                             <div class="ui-g ui-fluid">
 
-                                <div class="ui-sm-6 ui-g-3 ">     
-                                    <p:outputLabel value="Impressora" for="inptPrinter"/>
-                                    <p:selectOneMenu id="inptPrinter" value="#{productMB.product.printer}" 
-                                                     filter="true" required="true" disabled="#{param['acao']}">
-                                        <f:selectItem itemLabel="NAO IMPRIMIR" itemValue="NAO IMPRIMIR"/>
-                                        <f:selectItem itemLabel="BEBIDAS" itemValue="BEBIDAS"/>
-                                        <f:selectItem itemLabel="SUCOS" itemValue="SUCOS"/>
-                                        <f:selectItem itemLabel="REFRIGERANTES" itemValue="REFRIGERANTES"/>
-                                        <f:selectItem itemLabel="COZINHA" itemValue="COZINHA"/>
-                                        <f:selectItem itemLabel="PIZZARIA" itemValue="PIZZARIA"/>
-                                        <f:selectItem itemLabel="SALAO" itemValue="SALAO"/>
-                                        <f:selectItem itemLabel="CHURRASCARIA" itemValue="CHURRASCARIA"/>
-                                        <f:selectItem itemLabel="SALAO 2" itemValue="SALAO2"/>
-                                        <f:selectItem itemLabel="SALAO 3" itemValue="SALAO3"/>
-                                    </p:selectOneMenu>
-                                    <span class="help-block"> 
-                                        <p:message for="inptPrinter" /> 
-                                    </span>
-                                </div>
-                                <div class="ui-sm-6 ui-g-3 ">     
-                                    <p:outputLabel value="Preço" for="inptPrice"/>
-                                    <p:inputNumber id="inptPrice" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.price}" required="true"/>
-                                    <span class="help-block"> 
-                                        <p:message for="inptPrice" /> 
-                                    </span>
-                                </div>
-                                <div class="ui-sm-6 ui-g-2 ">
-                                    <p:outputLabel value="Promocional" for="promo"/><br/>
-                                    <p:selectBooleanCheckbox id="promo" value="#{productMB.product.promo}" >
-                                        <p:ajax event="change" update="ogirinalPrice" />
-                                    </p:selectBooleanCheckbox>
-                                </div>    
-                                <div class="ui-sm-6 ui-g-3 ">
-                                    <h:panelGroup id="ogirinalPrice" >
-                                        <h:panelGroup rendered="#{productMB.product.promo}">
-                                            <p:outputLabel value="Preço Original" for="inptPriceOriginal"/>
-                                            <p:inputNumber id="inptPriceOriginal" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceOriginal}" required="true"/>
-                                            <span class="help-block"> 
-                                                <p:message for="inptPriceOriginal" /> 
-                                            </span>
-                                        </h:panelGroup>
-                                    </h:panelGroup>
-                                </div>     
 
 
-                                <div class="ui-sm-6 ui-g-6 ">
-                                    <p:outputLabel value="Descrição" for="inptObs"/>
-                                    <p:inputTextarea id="inptObs" disabled="#{param['acao']}" value="#{productMB.product.description}" />
-                                    <span class="help-block"> 
-                                        <p:message for="inptObs" /> 
-                                    </span>
-                                </div>
-                                <div class="ui-sm-6 ui-g-6 ">
-                                    <div class="img-wrap">
-                                        <p:outputLabel value="Foto (100KB max)" />
-                                        <p:fileUpload fileUploadListener="#{productMB.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                      uploadLabel="Enviar" disabled="#{param['acao']}" cancelLabel="Cancelar" label="Escolher" auto="false"
-                                                      update="photo" sizeLimit="500000" fileLimit="3"  />
-                                        <hr/>
-                                        <h:panelGroup id="photo">
-                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and productMB.product.imageBase64.startsWith('http')}">
-                                                <img src="#{productMB.product.imageBase64}" style="width: 50%"/>
-                                            </h:panelGroup>
-                                            <h:panelGroup rendered="#{productMB.product.imageBase64 != null and !productMB.product.imageBase64.startsWith('http')}">
-                                                <img src="data:image/png;base64, #{productMB.product.imageBase64}" style="width: 25%"/>
-                                            </h:panelGroup>
-                                        </h:panelGroup>
-                                    </div>
-                                </div>
+
+
+
+
                                 <!--<div class="ui-sm-12 ui-g-8 ">
                                     <p:outputLabel value="URL Foto" />
                                     <p:inputText value="{productMB.product.imageBase64}" />

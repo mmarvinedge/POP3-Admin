@@ -11,7 +11,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <adminfaces.version>1.0.0</adminfaces.version>
     </properties>
 
     <dependencies>
@@ -45,7 +44,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-template</artifactId>
-            <version>${adminfaces.version}</version>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -111,7 +110,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>admin-starter</finalName>
+        <finalName>pop3</finalName>
     </build>
     <pluginRepositories>
         <pluginRepository>
