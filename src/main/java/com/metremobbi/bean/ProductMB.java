@@ -186,9 +186,9 @@ public class ProductMB implements Serializable {
             IOUtils.copy(is, out);
 
             String imageBase64 = ImageFile.encoder(tempFile.getAbsolutePath());
-            System.out.println(imageBase64);
+//            System.out.println(imageBase64);
             product.setImageBase64(imageBase64);
-            System.out.println("PRODUCT: " + product.getImageBase64());
+//            System.out.println("PRODUCT: " + product.getImageBase64());
         } catch (IOException e) {
             System.out.println("Erro ao converter a imagem em base64");
             e.printStackTrace();
