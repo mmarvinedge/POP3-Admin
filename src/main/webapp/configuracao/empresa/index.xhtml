@@ -49,12 +49,14 @@
                             <p:outputLabel value="Tempo Médio de Entrega" /><br/>
                             <p:inputText value="#{companyMB.company.aproxTime}"  />
                         </div>
-                        <div class="ui-sm-12 ui-g-12 ">
-                            <p:outputLabel value="Mensagem de Boas Vindas" /><br/>
-                            <small>Máximo 30 car.</small><br/>
-                            <p:inputText value="#{companyMB.company.messageWelcome}" maxlength="30" />
-                        </div>
-                        
+                        <h:panelGroup rendered="#{companyMB.company.nameUrl == null}">
+                            <div class="ui-sm-12 ui-g-12 ">
+                                <p:outputLabel value="Insira o nome do seu estabelecimento sem ascento e espaço." /><br/>
+                                <small>Máximo 10 caracteres</small><br/>
+                                <p:inputText value="#{companyMB.company.nameUrl}" maxlength="10" />
+                            </div>
+                        </h:panelGroup>
+
 
 
                     </div>
@@ -91,7 +93,7 @@
                         </p:fieldset>
                     </div>
                 </div>
-                
+
                 <div class="ui-g" style="border-bottom: 1px solid #ccc;">
                     <div class="ui-g-12">
                         <hr/>

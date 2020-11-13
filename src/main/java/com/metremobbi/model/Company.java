@@ -56,6 +56,8 @@ public class Company {
     private String payLink;
     private Boolean autoAdress;
     private String orderProducts;
+    private String nameOwner;
+    private String phoneOwner;
     
     private BigDecimal valueMaxPromoDelivery;
     private BigDecimal valuePromoDelivery;
