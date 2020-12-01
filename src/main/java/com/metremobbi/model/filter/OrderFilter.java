@@ -29,6 +29,9 @@ public class OrderFilter {
     @Getter
     @Setter
     private String phone;
+    @Getter
+    @Setter
+    private String situation;
 
     public List<Date> getDatas() {
         if (datas.size() == 0) {

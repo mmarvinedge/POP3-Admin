@@ -447,6 +447,9 @@
                                                                          action="#{productMB.addFlavor()}" update="tblFlavors"/>
                                                         <hr/>
                                                         <p:dataTable id="tblFlavors" value="#{productMB.product.flavorsPizza}" var="flav" editable="true" >
+                                                            <p:column  headerText="Parar a venda" width="90" style="text-align: left">
+                                                                <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{flav.disabled}"/>
+                                                            </p:column>
                                                             <p:column headerText="SKU" width="100" style="text-align: left">
                                                                 <p:inputText value="#{flav.sku}" placeholder="Opcional" disabled="#{param['acao']}"/>
                                                             </p:column>

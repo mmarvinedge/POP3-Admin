@@ -18,6 +18,7 @@ public class FlavorPizza {
     private String flavor;
     private String description;
     private BigDecimal price;
+    private Boolean disabled;
 
     public FlavorPizza() {
     }
@@ -52,6 +53,14 @@ public class FlavorPizza {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override

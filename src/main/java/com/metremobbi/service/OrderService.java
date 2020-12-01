@@ -97,6 +97,7 @@ public class OrderService {
                 .header("end", OUtils.dateToLocal(filtro.getDatas().get(1)).toString())
                 .header("order", filtro.getPedido() == null ? "" : filtro.getPedido())
                 .header("phone", filtro.getPhone() == null ? "" : filtro.getPhone())
+                .header("status", filtro.getSituation() == null ? "" : filtro.getSituation())
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {

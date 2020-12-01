@@ -47,6 +47,15 @@
                         <p:outputLabel value="Telefone" /><br/>
                         <p:inputText value="#{orderMB.filtro.phone}"  />
                     </div>
+                    <div class="ui-g-3" style="">
+                        <p:outputLabel value="Situação do pedido:" /><br/>
+                        <p:selectOneMenu value="#{orderMB.filtro.situation}" >
+                            <f:selectItem itemValue="" itemLabel="Todos"/>
+                            <f:selectItem itemValue="Cancelado" itemLabel="Cancelado"/>
+                            <f:selectItem itemValue="Finalizado" itemLabel="Finalizado"/>
+                            <p:ajax event="itemSelect" update="@this"/>
+                        </p:selectOneMenu>
+                    </div>
                     <div class="ui-g-12" style="">
                         <p:commandButton styleClass="btn-primary" icon="fa fa-search" value="Pesquisar" action="#{orderMB.pesquisar()}" update="@form" />
                     </div>
@@ -58,7 +67,7 @@
                         <p:dataTable  value="#{orderMB.orders}" var="order" paginator="true" emptyMessage="Nenhum Produto encontrado" 
                                       paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                       currentPageReportTemplate="[ {startRecord} - {endRecord} de {totalRecords} ]"
-                                      rowsPerPageTemplate="10,20,30,40,50">
+                                      rowsPerPageTemplate="10,20,30,40,50" rows="10">
                             <p:column headerText="*" width="50" >
                                 <p:rowToggler />
                             </p:column>
