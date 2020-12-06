@@ -348,7 +348,7 @@
                                                                         <div class="ui-g ui-fluid">
                                                                             <div class="ui-sm-6 ui-g-6">
                                                                                 Grupo
-                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.description}" required="true" >
+                                                                                <p:inputText disabled="#{param['acao']}" value="#{atr.description}" required="true" requiredMessage="Grupo é obrigatório!">
                                                                                     <p:ajax event="blur" update="@this" />
                                                                                 </p:inputText>
                                                                             </div>

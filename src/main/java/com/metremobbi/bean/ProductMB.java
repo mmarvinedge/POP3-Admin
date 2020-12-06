@@ -141,6 +141,14 @@ public class ProductMB implements Serializable {
     }
 
     public void save() throws IOException {
+        if(product.getAttributes() != null && product.getAttributes().size() > 0) {
+            for (Attribute a : product.getAttributes()) {
+                if(a.getValues() == null || a.getValues().size() == 0) {
+                    addDetailMessage("Não foi possível salvar, existe um grupo de adicionais sem itens.", FacesMessage.SEVERITY_ERROR);
+                    return;
+                }
+            }
+        }
 
         if (product.getId() == null) {
             try {
