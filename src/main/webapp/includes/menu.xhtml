@@ -20,7 +20,7 @@
             </p:link>
         </li>
         <li>
-            <p:link outcome="/cadastros/usuarios/index" rendered="#{!logonMB.company.freeVersion}">
+            <p:link outcome="/cadastros/usuarios/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-user"></i>
                 <span>Usuários</span>
             </p:link>
@@ -29,7 +29,7 @@
             Pedidos
         </li>
         <li>
-            <p:link outcome="/pedidos/index" rendered="#{!logonMB.company.freeVersion}">
+            <p:link outcome="/pedidos/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-cart-plus"></i>
                 <span>Meus Pedidos</span>
             </p:link>
@@ -38,7 +38,7 @@
             Programas
         </li>
         <li>
-            <p:link outcome="/delivery/cupons/index" rendered="#{!logonMB.company.freeVersion}">
+            <p:link outcome="/delivery/cupons/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-ticket"></i>
                 <span>Cupons de desconto</span>
             </p:link>
@@ -53,13 +53,13 @@
             </p:link>
         </li>
         <li>
-            <p:link outcome="/configuracao/cardapio/index">
+            <p:link outcome="/configuracao/cardapio/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-cutlery"></i>
                 <span>Cardápio</span>
             </p:link>
         </li>
         <li>
-            <p:link outcome="/configuracao/regioes/index">
+            <p:link outcome="/configuracao/regioes/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-map-marker"></i>
                 <span>Regiões</span>
             </p:link>
@@ -69,15 +69,9 @@
                 <i class="fa fa-clock-o"></i>
                 <span>Horários</span>
             </p:link>
-        </li>
+        </li>      
         <li>
-            <p:link outcome="/configuracao/categorias/index" rendered="false">
-                <i class="fa fa-clock-o"></i>
-                <span>Categorias</span>
-            </p:link>
-        </li>
-        <li>
-            <p:link outcome="/configuracao/licenca/index">
+            <p:link outcome="/configuracao/licenca/index" rendered="#{logonMB.renderedMenu()}">
                 <i class="fa fa-certificate"></i>
                 <span>Licença</span>
             </p:link>

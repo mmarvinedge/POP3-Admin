@@ -535,6 +535,20 @@
                                         </div>
                                     </div>
                                 </p:fieldset>
+                                <h:panelGroup rendered="#{companyMB.company.onlyMenu}">
+                                    <p:separator/>
+                                    <p:fieldset legend="Regras do menu">
+                                        <div class="ui-sm-6 ui-g-4 ">     
+                                            <p:outputLabel value="Preço no menu" for="inptPriceMenu"/>
+                                            <p:inputNumber id="inptPriceMenu" disabled="#{param['acao']}" symbol="R$ " decimalSeparator="," thousandSeparator="." value="#{productMB.product.priceMenu}"/><br/>
+                                            <small>Insira um valor aqui caso o preço do seu produto seja diferente no menu</small>
+                                        </div>
+                                        <div class="ui-sm-6 ui-g-4 ">
+                                            <p:outputLabel value="Vísivel somente no menu?" /><br/>
+                                            <p:selectBooleanButton offLabel="Não" onLabel="Sim" value="#{productMB.product.onlyMenu}"/>
+                                        </div>
+                                    </p:fieldset>
+                                </h:panelGroup>
                             </div>
                         </p:panel>
                     </p:tab>

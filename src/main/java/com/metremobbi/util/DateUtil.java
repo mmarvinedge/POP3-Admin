@@ -369,4 +369,18 @@ public class DateUtil {
         c.set(Calendar.MILLISECOND, t.get(Calendar.MILLISECOND));
         return c.getTime();
     }
+    
+    public static long diferencaEntreDatasMes(String tipo, Date dataInicio, Date dataFim) {
+
+        Date dataDe = dataInicio;
+        Date dataAte = dataFim;
+        long diferencaSegundos = (dataAte.getTime() - dataDe.getTime()) / (1000);
+        long diferencaMinutos = (dataAte.getTime() - dataDe.getTime()) / (1000 * 60);
+        long diferencaHoras = (dataAte.getTime() - dataDe.getTime()) / (1000 * 60 * 60);
+        long diferencaDias = (dataAte.getTime() - dataDe.getTime()) / (1000 * 60 * 60 * 24);
+        long diferencaMeses = (dataAte.getTime() - dataDe.getTime()) / (1000 * 60 * 60 * 24) / 30;
+        long diferencaAnos = ((dataAte.getTime() - dataDe.getTime()) / (1000 * 60 * 60 * 24) / 30) / 12;
+
+        return diferencaMeses;
+    }
 }

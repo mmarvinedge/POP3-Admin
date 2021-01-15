@@ -119,4 +119,45 @@ public class LogonMB extends AdminSession implements Serializable {
         this.remember = remember;
     }
 
+    public Boolean renderedMenu() {
+        if(licenseCheck(company) || trialCheck(company)) {
+            return true;
+        } else if (!licenseCheck(company) || !trialCheck(company)) {
+            return false;
+        } else if (company.getFreeVersion() || company.getOnlyMenu()) {
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean trialCheck(Company c) {
+        Date trial = null, today = new Date();
+        if (c.getTrial()) {
+            trial = OUtils.getDataByTexto(c.getTrialDate(), "yyyy-MM-dd");
+            today = OUtils.getDataByTexto(OUtils.formataData(new Date(), "yyyy-MM-dd"), "yyyy-MM-dd");
+            System.out.println("difff " + DateUtil.diferencaEntreDatas("yyyy-MM-dd", trial, today));
+            if (c.getTrial() && DateUtil.diferencaEntreDatas("yyyy-MM-dd", trial, today) > 15) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean licenseCheck(Company c) {
+        Date license = null, today = new Date();
+        if (c.getLicenseType() != null) {
+            license = OUtils.getDataByTexto(c.getLicenseDate(), "yyyy-MM-dd");
+            today = OUtils.getDataByTexto(OUtils.formataData(new Date(), "yyyy-MM-dd"), "yyyy-MM-dd");
+            if (DateUtil.diferencaEntreDatasMes("yyyy-MM-dd", license, today) >= c.getLicenseType()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

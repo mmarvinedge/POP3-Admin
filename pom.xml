@@ -7,7 +7,7 @@
     <artifactId>dashboard</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>PopSales-Admin</name>
+    <name>POP3-Admin</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
