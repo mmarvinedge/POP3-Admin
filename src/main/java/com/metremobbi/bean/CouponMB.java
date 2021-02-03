@@ -76,6 +76,7 @@ public class CouponMB implements Serializable {
 
     public void novo() {
         coupon = new CouponCode();
+        coupon.setCount(0);
     }
 
     public void save() {

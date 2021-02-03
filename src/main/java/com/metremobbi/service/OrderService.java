@@ -126,6 +126,7 @@ public class OrderService {
                 .header("end", OUtils.dateToLocal(fim).toString())
                 .header("order", "")
                 .header("phone", "")
+                .header("status", "")
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {

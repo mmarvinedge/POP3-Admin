@@ -130,6 +130,18 @@ public class LogonMB extends AdminSession implements Serializable {
             return false;
         }
     }
+    
+    public Boolean renderedMenuFree() {
+        if(licenseCheck(company) || trialCheck(company) || company.getFreeVersion()) {
+            return true;
+        } else if (!licenseCheck(company) || !trialCheck(company)) {
+            return false;
+        } else if (company.getFreeVersion() || company.getOnlyMenu()) {
+            return false;
+        } else {
+            return false;
+        }
+    }
 
     public Boolean trialCheck(Company c) {
         Date trial = null, today = new Date();
