@@ -110,7 +110,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>pop3</finalName>
+        <finalName>POP3-Admin</finalName>
     </build>
     <pluginRepositories>
         <pluginRepository>

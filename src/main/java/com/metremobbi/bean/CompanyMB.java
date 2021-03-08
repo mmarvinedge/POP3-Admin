@@ -94,7 +94,7 @@ public class CompanyMB {
 
     public void save() {
         try {
-            
+
             company = service.saveCompany(company);
             addDetailMessage("Horários atualizados!");
         } catch (Exception e) {
@@ -114,14 +114,14 @@ public class CompanyMB {
     public void loadBairros() {
         try {
             if (company.getBairros() != null && !company.getBairros().isEmpty() && company.getBairros().size() > 0) {
-                List<String> bairrosMetre = service.getBairros(company.getAddress().getCity());
-                if (company.getBairros().size() < bairrosMetre.size()) {
-                    for (String b : bairrosMetre) {
-                        if (company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
-                            company.getBairros().add(new Bairro(b));
-                        }
-                    }
-                }
+//                List<String> bairrosMetre = service.getBairros(company.getAddress().getCity());
+//                if (company.getBairros().size() < bairrosMetre.size()) {
+//                    for (String b : bairrosMetre) {
+//                        if (company.getBairros().stream().filter(c -> c.getBairro().equalsIgnoreCase(b)).collect(Collectors.toList()).size() == 0) {
+//                            company.getBairros().add(new Bairro(b));
+//                        }
+//                    }
+//                }
                 bairros = company.getBairros();
             } else {
                 List<String> bairros = service.getBairros(company.getAddress().getCity());
@@ -166,30 +166,33 @@ public class CompanyMB {
         }
     }
 
-    public void cadastrarBairro() {
+    public void cadastrarBairro() throws Exception {
+        if (!dualBairros.getSource().stream().filter(f -> f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()) {
+            addDetailMessage("Bairro já cadastrado!", FacesMessage.SEVERITY_ERROR);
+            return;
+        }
+        Bairro b = new Bairro();
         try {
-            if (!dualBairros.getSource().stream().filter(f -> f.getBairro().equalsIgnoreCase(bairroCadastro.trim())).collect(Collectors.toList()).isEmpty()) {
-                addDetailMessage("Bairro já cadastrado!", FacesMessage.SEVERITY_ERROR);
-                return;
-            }
-            Bairro b = service.cadastrarBairro(bairroCadastro, company.getAddress().getCity());
-            b.setTaxa(BigDecimal.ZERO);
-            if (b != null) {
-                System.out.println("dualBairrosa.getSource(); " + dualBairros.getSource().size());
-                dualBairros.getSource().add(b);
-                Collections.sort(dualBairros.getSource(), (Bairro o1, Bairro o2) -> o1.getBairro().compareTo(o2.getBairro()));
-                System.out.println("dualBairros.getSource(); " + dualBairros.getSource().size());
-                addDetailMessage("Bairro adicionado!");
-                PrimeFaces.current().executeScript("PF('dlgBairro').hide()");
-                bairroCadastro = null;
-            } else {
-                addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
-            }
-            bairroCadastro = "";
+            b = service.cadastrarBairro(bairroCadastro, company.getAddress().getCity());
         } catch (IOException e) {
             e.printStackTrace();
+            b = new Bairro(bairroCadastro);
+        }
+        b.setTaxa(BigDecimal.ZERO);
+        if (b != null) {
+            company.getBairros().add(b);
+            service.saveCompany(company);
+            System.out.println("dualBairrosa.getSource(); " + dualBairros.getSource().size());
+            dualBairros.getSource().add(b);
+            Collections.sort(dualBairros.getSource(), (Bairro o1, Bairro o2) -> o1.getBairro().compareTo(o2.getBairro()));
+            System.out.println("dualBairros.getSource(); " + dualBairros.getSource().size());
+            addDetailMessage("Bairro adicionado!");
+            PrimeFaces.current().executeScript("PF('dlgBairro').hide()");
+            bairroCadastro = null;
+        } else {
             addDetailMessage("Não foi possível cadastrar o bairro!", FacesMessage.SEVERITY_ERROR);
         }
+        bairroCadastro = "";
     }
 
     public void uploadPhoto(FileUploadEvent event) {
