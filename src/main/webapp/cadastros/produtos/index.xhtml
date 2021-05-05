@@ -36,7 +36,9 @@
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton action="#{productMB.novo}" icon="fa fa-plus" disabled="#{companyMB.company.integration}"
-                                         value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()"/>
+                                         value="Novo" styleClass="btn-primary" update="modalNewProduct" oncomplete="PF('modalNewProduct').show()">
+                            <f:param name="novo" value="true"/>
+                        </p:commandButton>
                         <p:spacer width="5"/>
                         <p:splitButton value="Editar" action="#{productMB.setProductComplete()}" update="@(.ui-dialog)" styleClass="btn-info"
                                        disabled="#{empty productMB.selectedProducts or productMB.selectedProducts.size() > 1}"
@@ -278,7 +280,7 @@
                                         <div class="ui-sm-12 ui-g-8 ">
                                             <p:outputLabel value="SKU" for="inptSku"/>
                                             <p:inputText id="inptSku" value="#{productMB.product.sku}" placeholder="Integração PDV"
-                                                         disabled="#{param['acao']}" />
+                                                         disabled="#{param['acao'] or param['novo']}" />
                                             <span class="help-block">
                                                 <p:message for="inptSku" /> 
                                             </span>

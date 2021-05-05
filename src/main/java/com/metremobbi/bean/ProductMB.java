@@ -141,9 +141,9 @@ public class ProductMB implements Serializable {
     }
 
     public void save() throws IOException {
-        if(product.getAttributes() != null && product.getAttributes().size() > 0) {
+        if (product.getAttributes() != null && product.getAttributes().size() > 0) {
             for (Attribute a : product.getAttributes()) {
-                if(a.getValues() == null || a.getValues().size() == 0) {
+                if (a.getValues() == null || a.getValues().size() == 0) {
                     addDetailMessage("Não foi possível salvar, existe um grupo de adicionais sem itens.", FacesMessage.SEVERITY_ERROR);
                     return;
                 }
@@ -151,10 +151,10 @@ public class ProductMB implements Serializable {
         }
 
         if (product.getId() == null) {
-            try {
-                service.postProduct(product);
+            Integer response = service.postProduct(product);
+            if (response == 200 || response == 201) {
                 //products.add(product);
-                addDetailMessage("Produto Salvo com sucesso!");
+                addDetailMessage("Produto cadastrado com sucesso!");
 //                System.out.println("INDEX:> " + products.indexOf(product));
                 if (products.indexOf(product) > -1) {
                     products.set(products.indexOf(product), product);
@@ -162,14 +162,18 @@ public class ProductMB implements Serializable {
                     products.add(product);
                 }
                 get();
-            } catch (Exception e) {
-                e.printStackTrace();
-                addDetailMessage("Não foi possível salvar", FacesMessage.SEVERITY_ERROR);
+            } else {
+                addDetailMessage("Ocorreu um erro ao cadastrar o produto, verifique os dados inseridos e tente novamente.", FacesMessage.SEVERITY_ERROR);
+                return;
             }
         } else {
-            service.putProduct(product);
-            addDetailMessage("Produto atualizado com sucesso!");
-            get();
+            Integer response = service.putProduct(product);
+            if (response == 200 || response == 201) {
+                addDetailMessage("Produto atualizado com sucesso!");
+                get();
+            } else {
+                addDetailMessage("Ocorreu um erro ao salvar o produto, verifique os dados inseridos e tente novamente.", FacesMessage.SEVERITY_ERROR);
+            }
         }
     }
 
@@ -207,7 +211,7 @@ public class ProductMB implements Serializable {
 
     public void debug() {
         System.out.println("value Category: " + product.getCategoryMain().getName());
-        System.out.println("product type: "+ type);
+        System.out.println("product type: " + type);
     }
 
     public void addAttributeCorrect() throws IOException {

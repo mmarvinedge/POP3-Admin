@@ -77,7 +77,7 @@ public class ProductService {
         return saida;
     }
 
-    public void postProduct(Product product) throws IOException {
+    public Integer postProduct(Product product) {
         product.setCompanyId(companyID);
         product.setCategories(new ArrayList());
         product.getCategories().add(product.getCategoryMain());
@@ -88,9 +88,13 @@ public class ProductService {
                 .url(Constantes.URL + "/product/")
                 .post(body)
                 .build();
-        Response response = client.newCall(request).execute();
-        ResponseBody b = response.body();
-        String json = response.body().string();
+        try (Response response = client.newCall(request).execute()) {;
+            System.out.println(response.code());
+            return response.code();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void deleteProduct(List<Product> products) throws IOException {
@@ -105,14 +109,17 @@ public class ProductService {
         }
     }
 
-    public void putProduct(Product product) throws IOException {
+    public Integer putProduct(Product product) {
         RequestBody body = RequestBody.create(new Gson().toJson(product), Constantes.JSON); // new
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/")
                 .put(body)
                 .build();
-        Response response = client.newCall(request).execute();
-        String json = response.body().string();
+        try (Response response = client.newCall(request).execute()) {
+            return response.code();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     //find the category in api
@@ -136,7 +143,8 @@ public class ProductService {
         }
         return saida;
     }
-    public void  updatecategorys() throws IOException {
+
+    public void updatecategorys() throws IOException {
         Request request = new Request.Builder()
                 .url(Constantes.URL + "/product/updateCategory/")
                 .get()
@@ -149,15 +157,15 @@ public class ProductService {
             e.printStackTrace();
         }
     }
-    
+
     public void disableProducts(Category category, String situation) throws IOException {
         Request request = new Request.Builder()
-                .url(Constantes.URL + "/product/disableProducts/"+ category.getName() + "/"+ situation)
+                .url(Constantes.URL + "/product/disableProducts/" + category.getName() + "/" + situation)
                 .header("company_id", companyID)
                 .get()
                 .build();
         try (Response response = httpClient.newCall(request).execute()) {
-            if(!response.isSuccessful()) {
+            if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
         } catch (Exception e) {
